@@ -53,4 +53,5 @@
     ul.select2-selection__rendered li input {width: 100%!important;}
     ul.dex li {float: left;padding-right: 15px;padding-top: 15px;}
     #combo_truongphong > span {width: 100%!important}
+
     </style>

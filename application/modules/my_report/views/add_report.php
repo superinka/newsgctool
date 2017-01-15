@@ -44,14 +44,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mô tả nhanh <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="description" name="description" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="description" name="description" value="<?php echo set_value("description")?>" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Note <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-							<textarea id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
+							<textarea id="message" required="required" class="form-control" value="<?php echo set_value("description")?>" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
                         </div>
                       </div>
                       <div class="form-group">
@@ -63,13 +63,7 @@
                           <input type="radio" class="flat" name="progress" id="status2" value="0" checked="" required />
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Phần trăm tiến độ <span class="required">*</span>
-                        </label>
-                        <div class="col-md-1 col-sm-1 col-xs-12">
-                          <input type="text" id="pro" name="pro" required="required" value="" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
+
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời gian làm</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -93,13 +87,17 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Chọn công việc báo cáo</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                          <select class="select3_single form-control" required="required" name="task" tabindex="-1">
-                          <option value="0"><strong>Công việc phát sinh</strong></option>
+                          <select class="select3_single form-control" id="list_task" required="required" name="task" tabindex="-1">
+                          <option value="0" completion="100"><strong>Công việc phát sinh</strong></option>
                           <?php foreach ($list_task_active as $key => $value) { ?>
                             
-                          	<option value="<?php echo $value->id ?>"><?php echo $value->name .'('.$value->completion .')' ?></option>
+                          	<option completion ="<?php echo $value->completion ?>" value="<?php echo $value->id ?>"><?php echo $value->name?></option>
                           <?php } ?>
                           </select>
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">Tiến độ</label>
+                        <div class="col-md-1 col-sm-1 col-xs-12">
+                          <input type="number" id="out_pro" name="pro" min="100" max ="100" value="100" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="ln_solid"></div>
@@ -116,3 +114,19 @@
               </div>
 	</form>
 </div>
+
+<script type="text/javascript">
+ var select = document.getElementById('list_task');
+ var input = document.getElementById('out_pro');
+
+  select.onchange = function() {
+
+      var x = this.options[this.selectedIndex].getAttribute("completion");
+      input.value = this.options[this.selectedIndex].getAttribute("completion");
+      var att = document.createAttribute("min");
+      att.value = x;                           // Set the value of the class attribute
+      input.setAttributeNode(att);   
+  } 
+
+
+</script>

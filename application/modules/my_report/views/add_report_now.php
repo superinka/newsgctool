@@ -67,7 +67,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Phần trăm tiến độ <span class="required">*</span>
                         </label>
                         <div class="col-md-1 col-sm-1 col-xs-12">
-                          <input type="text" id="pro" name="pro" required="required" value="<?php echo $task_info->completion ?>" class="form-control col-md-7 col-xs-12">
+                          <input type="number" min="<?php echo $task_info->completion ?>" max="100" id="pro" name="pro" required="required" value="<?php echo $task_info->completion ?>" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">

@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <?php $this->load->view('head');?>
+    <?php 
+    $this->load->view('head');
+    if ($this->uri->segment(2)=='organization') { ?>
+        <link href="<?php echo admin_theme('');?>/organ.css" rel="stylesheet">
+    <?php }
+    ?>
+
   </head>
   <body class="nav-md">
     <div class="container body">
