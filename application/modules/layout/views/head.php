@@ -59,3 +59,5 @@
     #combo_truongphong > span {width: 100%!important}
 
     </style>
+
+    <link href="<?php echo admin_theme('');?>/fileinput.css" media="all" rel="stylesheet" type="text/css" />

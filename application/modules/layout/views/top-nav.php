@@ -4,6 +4,7 @@
 <?php //pre($list_request_by_me);?>
 <?php $list_request_by_me = $this->CI->get_my_request();?>
 <?php $list_order_for_me = $this->CI->get_my_order();?>
+<?php $my_avatar = $this->CI->get_my_avatar();?>
 <?php //pre($list_request_by_me);?>
 <?php //echo time_elapsed_string('2013-05-01 00:22:35'); ?>
 <div class="top_nav">
@@ -16,7 +17,12 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="">
           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <?php if ($my_avatar == null) {?>
             <img src="<?php echo admin_theme('');?>/production/images/img.jpg" alt="">
+            <?php }?>
+            <?php if($my_avatar!=null){?>
+            <img src="<?php echo base_url('public/upload/avatar/'.$my_avatar) ;?>" alt="avatar">
+            <?php }?>
             <?php echo $username; ?>
             <span class=" fa fa-angle-down"></span>
           </a>

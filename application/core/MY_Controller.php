@@ -52,6 +52,16 @@ Class MY_Controller extends CI_Controller {
 
 	}
 
+	function get_my_avatar() {
+
+		$my_id = $this->data_layout['id'];
+		$input['where'] = array('user_id'=>$my_id);
+		//$input_request['limit'] = array('10' ,'0');
+		$my_avatar = $this->home_model->get_list($input);
+		//$this->data_layout['list_request_by_me'] = $list_request_by_me;
+		return $my_avatar[0]->avatar;
+	}
+
 	function get_list_notification(){
 		return 100;
 	}
@@ -79,6 +89,7 @@ Class MY_Controller extends CI_Controller {
 		//$this->data_layout['list_request_by_me'] = $list_request_by_me;
 		return $list_request_by_me;
 	}
+
 
 	function get_my_order(){
 		$my_id = $this->data_layout['id'];

@@ -41,3 +41,5 @@
     <script src="<?php echo admin_theme('');?>/build/js/custom.min.js"></script>
 
     <!-- Flot -->
+
+    <script src="<?php echo admin_theme('');?>/fileinput.js" type="text/javascript"></script>

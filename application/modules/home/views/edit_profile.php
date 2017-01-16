@@ -2,7 +2,8 @@
 <div class="row">
 <div class="col-md-9">
 	<p style="color:red; font-weight:600"><?php echo validation_errors(); ?></p>
-	<form class="form-horizontal form-label-left input_mask"  method="post" action="">
+	<?php if ($message){$this->load->view('layout/message',$this->data_layout); }?>
+	<form class="form-horizontal form-label-left input_mask"  method="post" action="" enctype="multipart/form-data">
 
 	  <div class="form-group">
 	    <label class="control-label col-md-2 col-sm-2 col-xs-12">Tên đăng nhập <span class="required">*</span>
@@ -85,6 +86,20 @@
 	    <div class="col-md-8 col-sm-8 col-xs-12">
 	      <input type="text" class="form-control" id="address" name="address" value="<?php echo $info_employee->address ?>" placeholder="<?php echo $info_employee->address ?>">
 	    </div>
+	  </div>
+	  <div class="form-group">
+	  	<?php if($info_employee->avatar !=null) { ?>
+	  	<label class="control-label col-md-2 col-sm-2 col-xs-12">Hình đại diện </label>
+	  	<div class="col-md-8 col-sm-8 col-xs-12">
+	  		<img src="<?php echo base_url('public/upload/avatar/'.$info_employee->avatar) ?>">
+	  	</div>
+	  	<?php }?>
+	  </div>
+	  <div class="form-group">
+	  	<label class="control-label col-md-2 col-sm-2 col-xs-12"></label>
+	  	<div class="col-md-8 col-sm-8 col-xs-12">
+			<input name="image" id="file-0a" class="file" type="file" value="" multiple data-min-file-count="1">
+		</div>
 	  </div>
 	  <div class="ln_solid"></div>
 	  <div class="form-group">

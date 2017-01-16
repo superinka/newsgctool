@@ -8,6 +8,7 @@ Class Home extends MY_Controller {
 		$this->load->model('home/role_model');
 		$this->load->model('home/department_model');
 		$this->load->model('request/request_model');
+		$this->load->library('upload');
 
 		//$a = get_list_notification();
 
@@ -545,6 +546,8 @@ Class Home extends MY_Controller {
 				}
 
 
+				$this->form_validation->set_rules('image', 'Ảnh', 'callback_file_check');
+
 				if($this->form_validation->run()){
 					$username = $this->input->post('username');
 					$fullname = $this->input->post('fullname');
@@ -558,6 +561,21 @@ Class Home extends MY_Controller {
 					$sex = $this->input->post('sex');
 					$address = $this->input->post('address');
 
+				
+					//avatar
+
+					$this->load->library('upload_library');
+
+
+					$upload_path = './public/upload/avatar';
+					$data_upload = $this->upload_library->upload($upload_path, 'image');
+
+					//pre($data_upload);
+
+
+
+
+					
 
 					
 
@@ -594,7 +612,8 @@ Class Home extends MY_Controller {
 								'facebook' => $facebook,
 								'birthday' => $newformat_birthday,
 								'sex'      => $sex,
-								'address'  => $address
+								'address'  => $address,
+								'avatar'   => $data_upload['file_name']
 							);
 						//pre($data_employee);
 
@@ -635,5 +654,26 @@ Class Home extends MY_Controller {
 		//redirect(base_url('home/index'), 'refresh');
 
 	}
+	   public function file_check($str){
+        $allowed_mime_type_arr = array('image/gif','image/jpeg','image/pjpeg','image/png','image/x-png');
+        $mime = get_mime_by_extension($_FILES['image']['name']);
+        if(isset($_FILES['image']['name']) && $_FILES['image']['name']!=""){
+
+        	if($_FILES['image']['size'] > 200000 || $_FILES['image']['size'] == 0){
+                $this->form_validation->set_message('file_check', '<strong style="color:red">File quá lớn </strong>');
+                return false;        		
+        	}
+
+            if(in_array($mime, $allowed_mime_type_arr)){
+                return true;
+            }else{
+                $this->form_validation->set_message('file_check', '<strong style="color:red">Xin chọn đúng định dạng gif/jpg/png.</strong>');
+                return false;
+            }
+        }else{
+            $this->form_validation->set_message('file_check', 'Please choose a file to upload.');
+            return false;
+        }
+    }
 
 }

@@ -1,4 +1,5 @@
 <?php $list_my_room = $this->CI->get_my_room_id();?>
+<?php $my_avatar = $this->CI->get_my_avatar();?>
 <?php //pre($list_my_room);?>
 <!-- sidebar menu -->
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">

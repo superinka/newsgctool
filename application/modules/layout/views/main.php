@@ -24,11 +24,17 @@
               $my_name = $this->CI->get_my_fullname();
               //pre($my_name);
             ?>
-
+            <?php $my_avatar = $this->CI->get_my_avatar();?>
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
+<!--                 <img src="<?php echo admin_theme('');?>/production/images/img.jpg" alt="..." class="img-circle profile_img"> -->
+                <?php if ($my_avatar == null) {?>
                 <img src="<?php echo admin_theme('');?>/production/images/img.jpg" alt="..." class="img-circle profile_img">
+                <?php }?>
+                <?php if($my_avatar!=null){?>
+                <img src="<?php echo base_url('public/upload/avatar/'.$my_avatar) ;?>" alt="..." class=" img-circle profile_img img-responsive">
+                <?php }?>
               </div>
               <div class="profile_info">
                 <span>Xin chào !,</span>
@@ -109,6 +115,9 @@
 
       if ($this->uri->segment(2)=='edit') {
         $this->load->view('js-acc');
+      }
+      if ($this->uri->segment(3)=='edit_profile') {
+        $this->load->view('js-home');
       }
       
     ?>
