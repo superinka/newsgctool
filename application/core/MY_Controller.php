@@ -130,6 +130,33 @@ Class MY_Controller extends CI_Controller {
 		return $list_order_for_me;
 	}
 
+	function get_my_room_id(){
+
+		$my_id = $this->data_layout['id'];
+		$my_account_level = $this->data_layout['account_type'];
+
+		$my_room = array();
+
+		if($my_account_level == 1 || $my_account_level == 2 ){
+			for ($i=1; $i <= 15 ; $i++) { 
+				$my_room[] = $i;
+			}
+		}
+
+		if($my_account_level == 3 || $my_account_level ==4){
+			$input_depart = array();
+			$input_depart['where']['user_id'] = $my_id;
+			$list_depart = $this->role_model->get_list($input_depart);
+
+			foreach ($list_depart as $key => $value) {
+				$my_room[] = $value->department_id;
+			}
+		}
+
+		return $my_room;
+
+	}
+
 	function logout()
     {
 	    $this->session->unset_userdata('logged_in');

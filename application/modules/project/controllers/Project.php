@@ -114,7 +114,10 @@ Class Project extends MY_Controller {
 				$c = count($list_proportion_department);
 				foreach ($list_proportion_department as $key => $value) {
 					$department = $this->department_model->get_info($value->department_id);
-					$value->department = $department->name;
+					if($department->name !=null){
+						$value->department = $department->name;
+					}
+					
 
 				}
 				//pre($list_proportion_department);

@@ -41,14 +41,14 @@
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mô tả nhanh <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên báo cáo <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="description" name="description" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Note <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nội dung <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
 							<textarea id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
@@ -63,13 +63,13 @@
                           <input type="radio" class="flat" name="progress" id="status2" value="0" checked="" required/>
                         </div>
                       </div>
-                      <div class="form-group">
+<!--                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Phần trăm tiến độ <span class="required">*</span>
                         </label>
                         <div class="col-md-1 col-sm-1 col-xs-12">
                           <input type="number" min="<?php echo $task_info->completion ?>" max="100" id="pro" name="pro" required="required" value="<?php echo $task_info->completion ?>" class="form-control col-md-7 col-xs-12">
                         </div>
-                      </div>
+                      </div> -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Thời gian làm</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -95,6 +95,10 @@
                         <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control" name="task" readonly="readonly" placeholder="<?php echo $task_info->name ?>">
                         </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">Tiến độ</label>
+                        <div class="col-md-1 col-sm-1 col-xs-12">
+                          <input type="number" min="<?php echo $task_info->completion ?>" max="100" id="pro" name="pro" required="required" value="<?php echo $task_info->completion ?>" class="form-control col-md-7 col-xs-12">
+                        </div>                        
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">

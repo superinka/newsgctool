@@ -42,6 +42,10 @@
     <link href="<?php echo admin_theme('');?>/vendors/normalize-css/normalize.css" rel="stylesheet">
     <link href="<?php echo admin_theme('');?>/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
     <link href="<?php echo admin_theme('');?>/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="<?php echo admin_theme('');?>/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Dropzone.js -->
+    <link href="<?php echo admin_theme('');?>/vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
 
     <style type="text/css">
     /*.combo_truongphong {display: none;}*/

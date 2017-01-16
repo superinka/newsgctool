@@ -104,7 +104,7 @@
             <tr>
               <td style="padding-top: 2%;">#</td>
               <td style="padding-top: 2%;">
-                <a href="<?php echo base_url('project/view/'.$row->id) ?>"style="color:blue"><?php echo $row->project_name ?></a>
+                <a href="<?php echo base_url('project/mission/index/'.$row->id) ?>"style="color:blue"><?php echo $row->project_name ?></a>
                 <br />
                 <small>Ngày tạo:  <?php echo $row->create_date ?></small><br>
                 <small>Ngày bắt đầu:  <?php echo $row->start_date ?></small><br>

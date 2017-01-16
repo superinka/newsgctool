@@ -3,7 +3,7 @@
   <head>
     <?php 
     $this->load->view('head');
-    if ($this->uri->segment(2)=='organization') { ?>
+    if ($this->uri->segment(2)=='Organization' || $this->uri->segment(2)=='organization') { ?>
         <link href="<?php echo admin_theme('');?>/organ.css" rel="stylesheet">
     <?php }
     ?>

@@ -260,7 +260,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Desciption</th>
+              <th>Nội Dung Báo Cáo</th>
               <th>Nhân viên</th>
               <th>Dự án</th>
               <th>Nhiệm vụ</th>

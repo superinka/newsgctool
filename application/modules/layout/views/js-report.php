@@ -18,7 +18,10 @@
 
     <!-- Ion.RangeSlider -->
     <script src="<?php echo admin_theme('');?>/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
-
+    <!-- NProgress -->
+    <script src="<?php echo admin_theme('');?>/vendors/nprogress/nprogress.js"></script>
+    <!-- Dropzone.js -->
+    <script src="<?php echo admin_theme('');?>/vendors/dropzone/dist/min/dropzone.min.js"></script>
     <script>
       $(document).ready(function() {
         var handleDataTableButtons = function() {

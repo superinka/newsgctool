@@ -41,21 +41,21 @@
                     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mô tả nhanh <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên báo cáo <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="description" name="description" value="<?php echo set_value("description")?>" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Note <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Nội Dung <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
 							<textarea id="message" required="required" class="form-control" value="<?php echo set_value("description")?>" name="message" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.." data-parsley-validation-threshold="10"></textarea>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Tiến độ</label>
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Tình trạng</label>
                         <div class="col-md-6 col-sm-6 col-xs-12" style="padding-top: 8px;">
                           Hoàn thành:
                           <input type="radio" class="flat" name="progress" id="status1" value="100"  /> 
@@ -99,6 +99,9 @@
                         <div class="col-md-1 col-sm-1 col-xs-12">
                           <input type="number" id="out_pro" name="pro" min="100" max ="100" value="100" class="form-control col-md-7 col-xs-12">
                         </div>
+                      </div>
+                      <div class="form-group">
+                      <form action="#" class="dropzone"></form>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">

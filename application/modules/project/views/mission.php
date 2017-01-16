@@ -1,17 +1,22 @@
 <?php //pre($list_emp); ?>
 <?php //pre($list_mission); ?>
 <?php  //echo $project_id;?>
+<?php //pre($list_room_by_project);?>
 <?php 
 $total = 0;
-foreach ($list_room_by_project as $k=>$v) {
-	if (array_key_exists('mission',$v)) {
-		$b = round(($v['score']*$v['proportion']),2); 
-		$total = $b + $total;
+foreach ($list_mission_by_department as $k=>$v) {
+		$total = $v['point'] + $total;
 		
-	}
-
 }
+
+//echo $total;
 $data = array('progress'=>$total);
+
+$old_data = $this->project_model->get_info($project_id);
+$old_pro = $old_data->progress;
+if($old_pro != $total){
+	$this->project_model->update($project_id,$data);
+}
 //$this->project_model->update($project_id,$data);
 ?>
 <?php if ($message){$this->load->view('layout/message',$this->data_layout); }?>
@@ -35,7 +40,14 @@ $data = array('progress'=>$total);
           <span class="percent"></span>
           </span>
         </div>
-
+	      <?php  if ($account_type == 2 || $account_type == 3 || $account_type == 1) {?>
+<!-- 	      <p>
+	        <a href="<?php echo base_url('project/mission/update_progress/'.$project_id.'/' .$total) ?>">
+	          <i class="fa fa-repeat"></i> Cập nhật
+	        </a>
+	      </p> -->
+	      
+	      <?php } ?>
         <h3 class="name_title"><?php echo $info_project->project_name ?></h3>
         <p><?php echo $info_project->description ?></p>
 
@@ -244,15 +256,13 @@ $data = array('progress'=>$total);
 	    	<h2>Tiến độ phòng ban</h2>
 	    	<?php 
 	    	$total = 0;
-	    	foreach ($list_room_by_project as $k=>$v) {
-	    		$b = round(($v['score']*100),2); 
-	    		$total = $b + $total;
+	    	foreach ($list_mission_by_department as $k=>$v) {
 	  			?>
 	  			<div>
-		          <p><?php echo $v['name'] ?></a> - <?php echo $b ?> %</p>
+		          <p><?php echo $v['department_name'] ?></a> - <?php echo $v['score'] ?> %</p>
 		          <div class="">
 		            <div class="progress progress_sm" style="width: 80%;">
-		              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php  echo $b;  ?>"></div>
+		              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php  echo  $v['score']  ?>"></div>
 		            </div>
 		            <div class="ln_solid"></div>
 		          </div>

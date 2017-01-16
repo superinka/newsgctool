@@ -90,6 +90,8 @@ Class Mission extends MY_Controller {
 			//$users_id = $this->get_column('tb_role', 'user_id',$where=array('department_id'=>$department_id[0]->department_id));
 			$total_member = 0;
 
+			//pre($list_emp);
+
 			$check = true;
 			if ($list_emp!=null) {
 					foreach ($list_emp as $k => $v) {
@@ -102,10 +104,10 @@ Class Mission extends MY_Controller {
 
 					$list_emp['member'][] =  array($emp_name[0]->fullname,$emp_name[0]->user_id,$info_room->name);
 
-					$all_mission_by_id = $this->mission_user_model->get_columns('tb_mission_user',$where=array('user_id'=>$emp_name[0]->user_id));
+					$all_mission_by_id = $this->mission_user_model->get_columns('tb_mission_user',$where=array('user_id'=>$v->user_id));
 					//pre($all_mission_by_id);
 					foreach ($all_mission_by_id as $ke => $va) {
-						# code...
+
 						$mission_by_project = $this->mission_model->get_columns('tb_mission',$where=array('id'=>$va->mission_id, 'project_id'=>$project_id));
 
 						if($mission_by_project!=null) {
@@ -283,7 +285,10 @@ Class Mission extends MY_Controller {
 
 			}
 
+			$list_mission_all = $this->mission_model->get_columns('tb_mission',$where=array('project_id'=>$project_id,'status'=>'1'));
+			$this->data_layout['list_mission_all'] = $list_mission_all;
 
+			
 			$list_mission = $this->mission_model->get_columns('tb_mission',$where=array('project_id'=>$project_id,'status'=>'1'));
 
 			//pre($list_mission);
@@ -324,7 +329,68 @@ Class Mission extends MY_Controller {
 
 			$this->data_layout['list_mission'] = $list_mission;
 
+			// $input_mission = array();
+			// $input_mission['where']['project_id'] = $project_id;
+			// $list_mission_this_project = $this->mission_model->get_list($input_mission);
 
+			$input_depart = array();
+			$input_depart['where']['project_id'] = $project_id;
+			$list_department_this_project = $this->proportion_department_model->get_list($input_depart);
+			//pre($list_department_this_project);
+
+			foreach ($list_department_this_project as $key => $value) {
+
+				if($value->department_id!=null){
+					$list_department_id[] = $value->department_id;
+				}
+				
+			}
+
+			$list_department_id = array_unique( $list_department_id );
+			//pre($list_department_id);
+
+			$list_mission_by_department = array();
+
+			foreach ($list_department_id as $key => $value) {
+
+				$info_depart = $this->department_model->get_info($value);
+				$department_name = $info_depart->name;
+
+				$input_depart = array();
+				$input_depart['where']['project_id'] = $project_id;
+				$input_depart['where']['department_id'] = $value;
+
+				$list_department_this_project = $this->mission_model->get_list($input_depart);
+
+				$pro = $this->proportion_department_model->get_columns('tb_proportion_department',$where=array('project_id'=>$project_id, 'department_id'=>$value));
+
+				$score = 0;
+
+				if($list_department_this_project==null) {
+					$score = 0;
+				}
+
+				if($list_department_this_project!=null) {
+					$per = 1/(count($list_department_this_project));
+
+					for ($i=0; $i < count($list_department_this_project) ; $i++) { 
+						$score = round($score + $per * $list_department_this_project[$i]->progress,2);
+					}
+
+				}
+
+				$list_mission_by_department[$key] = array(
+					'department_id'=>$value, 
+					'department_name' => $department_name,
+					'score' => $score, 
+					'pro' => $pro[0]->proportion,
+					'point' => $score * $pro[0]->proportion / 100,
+					'list_mission'=>$list_department_this_project
+				);
+			}
+
+			//pre($list_mission_by_department);
+			$this->data_layout['list_mission_by_department'] = $list_mission_by_department;
 			//pre($list_emp);
 
 			//echo $total_room;
@@ -1101,10 +1167,15 @@ Class Mission extends MY_Controller {
 			if($value->lock == 1 && $value->status == 0) {
 				$list_task_unlock[] = $value;
 			}
-			else {
+			
+			if($value->lock == 0) {
 				$list_task_lock[] = $value;
 			}
 		}
+
+		//pre($list_task);
+		//pre($count_task_complete);
+		//pre($list_task_unlock);
 
 		if($count_all_task == 0) {
 			$per_task = 0;
@@ -1112,7 +1183,8 @@ Class Mission extends MY_Controller {
 		else {
 
 			if (count($list_task_unlock) ==  0){
-				$per_task = 0;
+				//$per_task = 0;
+				$per_task = round(100/($count_task_complete));
 			}
 
 			else {
@@ -1123,8 +1195,10 @@ Class Mission extends MY_Controller {
 			
 		}
 
+
 		$final_progress = $per_task * $count_task_complete;
 		$this->data_layout['final_progress'] = $final_progress;
+		//pre($per_task);
 
 		$data_progress_task = array('progress'=>$final_progress);
 		//$this->project_model->update($project_id,$data_progress_task);

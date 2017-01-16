@@ -1268,4 +1268,103 @@ Class My_Report extends MY_Controller {
 		$this->data_layout['temp'] = 'add_report_now';
 	    $this->load->view('layout/main', $this->data_layout);		
 	}
+
+	function my_room_report(){
+
+		$my_id = $this->data_layout['id'];
+		$my_account_level = $this->data_layout['account_type'];
+
+		$list_my_room = $this->CI->get_my_room_id();
+
+		//pre($list_my_room);
+
+		if(in_array('10', $list_my_room)==false) {
+			$this->session->set_flashdata('message','Không đủ quyền hạn');
+			redirect(base_url('my_report/index'));
+		}
+
+		else  {
+
+			$input_id = array();
+			$input_id['where']['department_id'] = 10;
+
+			$list_id = $this->role_model->get_list($input_id);
+			$ids = array();
+
+			foreach ($list_id as $key => $value) {
+				$ids[] = $value->user_id;
+			}
+
+			//pre($ids);
+
+			$all_report_by_room = null;
+
+			foreach ($ids as $key => $value) {
+				$input_my_report = array();
+				$input_my_report['where'] = array('create_by'=>$value);
+			 	$input_my_report['order'] = array('id','ASC');
+			 	$all_report_by_me = $this->my_report_model->get_list($input_my_report); 
+
+			 	//pre($all_report_by_me);
+			 	$task_name = $mission_name = $project_name = 'chưa rõ'; $department_name='chưa rõ';
+
+			 	foreach ($all_report_by_me as $key => $value) {
+			 		$task_id = $value->task_id;
+			 		$task_id = intval($task_id);
+			 		if($task_id == 0){
+				 		$value->task_name = 'Công việc phát sinh';
+				 		$value->mission_name = 'Công việc phát sinh';
+				 		$value->project_name = 'Công việc phát sinh';
+				 		$value->department_name = 'Tất cả phòng ban'; 
+			 		}
+			 		else {
+				 		$task_info = $this->task_model->get_info($task_id);
+				 		if($task_info) {
+				 			$task_name = $task_info->name;
+				 			$mission_id = $task_info->mission_id;
+				 			$mission_id = intval($mission_id);
+							$mission_info = $this->mission_model->get_info($mission_id);
+							if($mission_info) {
+								$mission_name = $mission_info->name;
+						 		$project_id = $mission_info->project_id;
+						 		$project_id = intval($project_id);
+						 		$department_id = $mission_info->department_id;
+						 		$department_id = intval($department_id);
+						 		$department_info = $this->department_model->get_info($department_id);
+						 		$department_name = $department_info->name;
+						 		$project_info = $this->project_model->get_info($project_id);
+						 		if($project_info){
+						 			$project_name = $project_info->project_name;
+						 		}
+						 							
+							}
+					 		
+				 		}
+
+					 	$value->task_name = $task_name;
+				 		$value->mission_name = $mission_name;
+				 		$value->project_name = $project_name;
+				 		$value->department_name = $department_name; 	 			
+			 		}
+
+			 		
+
+			 	}
+
+			 	$all_report_by_room[] = $all_report_by_me;
+			}
+
+			//pre($all_report_by_room);
+			$this->data_layout['all_report_by_room'] = $all_report_by_room;
+
+		 	
+
+		 	//pre($all_report_by_me);
+		 	$this->data_layout['all_report_by_me'] = $all_report_by_me;
+			}
+
+
+		$this->data_layout['temp'] = 'my_room_report';
+	    $this->load->view('layout/main', $this->data_layout);	
+	}
 }

@@ -29,12 +29,12 @@
         <?php if($account_type == 4 || $account_type == 3) {?>
         <li role="presentation" class="dropdown" style="padding-top: 5px;">
           <a href="javascript:;" class="dropdown-toggle info-number btn btn-app" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-bullhorn"></i>Request
+            <i class="fa fa-bullhorn"></i>Thông báo
             <span class="badge bg-green"><?php echo count($list_request_by_me) ?></span>
           </a>
           <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
           <?php if(count($list_request_by_me)==0){
-            echo '<p style="text-align:center"><strong>Không có request nào</strong></p>';
+            echo '<p style="text-align:center"><strong>Không có thông báo nào</strong></p>';
           } ?>
             <?php $i=0;?>
             <?php foreach ($list_request_by_me as $key => $value) { ?>
@@ -74,12 +74,12 @@
         <?php if($account_type == 3 || $account_type == 2 || $account_type == 1) {?>
         <li role="presentation" class="dropdown" style="padding-top: 5px;padding-right: 10px">
           <a href="javascript:;" class="dropdown-toggle info-number btn btn-app" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-inbox"></i>Order
+            <i class="fa fa-inbox"></i>Yêu cầu
             <span class="badge bg-orange"><?php echo count($list_order_for_me) ?></span>
           </a>
           <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
           <?php if(count($list_order_for_me)==0){
-            echo '<p style="text-align:center"><strong>Không có request nào</strong></p>';
+            echo '<p style="text-align:center"><strong>Không có thông báo nào</strong></p>';
           } ?>
 
           <?php if(count($list_order_for_me)>10){$max = 10;}?>

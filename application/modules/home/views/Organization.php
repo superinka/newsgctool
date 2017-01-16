@@ -16,9 +16,14 @@
 						<?php if(array_key_exists('list_child',$value)==true) { ?>
 							<?php foreach ($value->list_child as $x => $y) { ?>
 							<li>
-							<?php if (in_array($y->id, $list_)) {?>
-								<a style="background-color: #5cb75c;" href="#"><?php echo $y->name ?></a>
+								<?php if (in_array($y->id, $list_room_id)) {?>
+								<a style="background-color: #5cb75c;color:#fff" href="#"><?php echo $y->name; ?></a>
+								<?php }?>
+								<?php if (in_array($y->id, $list_room_id)==false) {?>
+								<a style="" href="#"><?php echo $y->name ?></a>
+								<?php }?>
 							</li>
+								
 							<?php }?>
 						<?php }?>
 					
