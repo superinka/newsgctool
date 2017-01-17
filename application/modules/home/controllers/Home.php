@@ -567,20 +567,63 @@ Class Home extends MY_Controller {
 					$this->load->library('upload_library');
 
 
-					$upload_path = './public/upload/avatar';
-					$data_upload = $this->upload_library->upload($upload_path, 'image');
-
-					//pre($data_upload);
-
-
-
-
-					
-
-					
+					$upload_path = './public/upload/avatar/';
+					$data_upload = array();
 
 					$time = strtotime($birthday);
 					$newformat_birthday = date('Y-m-d',$time);
+
+					if (empty($_FILES['image']['name'])) {
+						$data_upload['file_name'] = 'default_avatar_male.jpg';
+						$data_employee = array(
+								'fullname' => $fullname,
+								'email'    => $email,
+								'phone'    => $phone,
+								'skype'    => $skype,
+								'facebook' => $facebook,
+								'birthday' => $newformat_birthday,
+								'sex'      => $sex,
+								'address'  => $address,
+							);
+					}
+
+					else {
+
+						//pre($_FILES['image']);
+						$data_upload = $this->upload_library->upload($upload_path, 'image');
+						
+						$data_employee = array(
+								'fullname' => $fullname,
+								'email'    => $email,
+								'phone'    => $phone,
+								'skype'    => $skype,
+								'facebook' => $facebook,
+								'birthday' => $newformat_birthday,
+								'sex'      => $sex,
+								'address'  => $address,
+								'avatar'   => $data_upload['file_name']
+							);
+					}
+
+					//pre($upload_path);
+					//pre($data_upload);
+					//pre($data_employee);
+
+					// if($data_upload)
+
+					// if($data_upload == 'You did not select a file to upload.' || $data_upload ==null){
+					// 	$data_upload['file_name'] = 'default_avatar_male';
+					// }
+
+					
+
+					if(!$data_upload['file_name']){
+						$data_upload['file_name'] = 'default_avatar_male';
+					}
+										
+
+					//pre($data_upload);
+
 
 					$data_user = array(
 						'update_time'  => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
@@ -604,17 +647,15 @@ Class Home extends MY_Controller {
 
 						//echo $uid[0]->id;
 
-						$data_employee = array(
-								'fullname' => $fullname,
-								'email'    => $email,
-								'phone'    => $phone,
-								'skype'    => $skype,
-								'facebook' => $facebook,
-								'birthday' => $newformat_birthday,
-								'sex'      => $sex,
-								'address'  => $address,
-								'avatar'   => $data_upload['file_name']
-							);
+						if(!$data_upload['file_name']){
+							$ava = 'default_avatar_male';
+						}
+
+						if($data_upload['file_name']){
+							$ava = $data_upload['file_name'];
+						}
+
+
 						//pre($data_employee);
 
 						//pre($fn);
@@ -659,7 +700,7 @@ Class Home extends MY_Controller {
         $mime = get_mime_by_extension($_FILES['image']['name']);
         if(isset($_FILES['image']['name']) && $_FILES['image']['name']!=""){
 
-        	if($_FILES['image']['size'] > 200000 || $_FILES['image']['size'] == 0){
+        	if($_FILES['image']['size'] > 500000 || $_FILES['image']['size'] == 0){
                 $this->form_validation->set_message('file_check', '<strong style="color:red">File quá lớn </strong>');
                 return false;        		
         	}
@@ -670,9 +711,6 @@ Class Home extends MY_Controller {
                 $this->form_validation->set_message('file_check', '<strong style="color:red">Xin chọn đúng định dạng gif/jpg/png.</strong>');
                 return false;
             }
-        }else{
-            $this->form_validation->set_message('file_check', 'Please choose a file to upload.');
-            return false;
         }
     }
 

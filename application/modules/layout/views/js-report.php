@@ -524,3 +524,31 @@
       });
     </script>
     <!-- easy-pie-chart -->
+
+<script type="text/javascript">
+  
+  $(function() {
+    $('#upload_file').submit(function(e) {
+        e.preventDefault();
+        $.ajaxFileUpload({
+            url             :base_url + './my_report/upload/upload_file/', 
+            secureuri       :false,
+            fileElementId   :'userfile',
+            dataType: 'JSON',
+            success : function (data)
+            {
+               var obj = jQuery.parseJSON(data);                
+                if(obj['status'] == 'success')
+                {
+                    $('#files').html(obj['msg']);
+                 }
+                else
+                 {
+                    $('#files').html('Some failure message');
+                  }
+            }
+        });
+        return false;
+    });
+});
+</script>

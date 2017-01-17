@@ -58,8 +58,14 @@ Class MY_Controller extends CI_Controller {
 		$input['where'] = array('user_id'=>$my_id);
 		//$input_request['limit'] = array('10' ,'0');
 		$my_avatar = $this->home_model->get_list($input);
+
+		if($my_avatar!=null) {
+			return $my_avatar[0]->avatar;
+		}
 		//$this->data_layout['list_request_by_me'] = $list_request_by_me;
-		return $my_avatar[0]->avatar;
+		else {
+			return null;
+		}
 	}
 
 	function get_list_notification(){

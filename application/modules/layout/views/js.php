@@ -43,3 +43,6 @@
     <!-- Flot -->
 
     <script src="<?php echo admin_theme('');?>/fileinput.js" type="text/javascript"></script>
+
+    
+    <script src="<?php echo admin_theme('');?>/ajaxfileupload.js" type="text/javascript"></script>

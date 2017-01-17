@@ -13,7 +13,7 @@
 	<?php echo $today ?>
 	</p>
 	<?php }?>
-	<form class="form-horizontal form-label-left input_mask"  method="post" action="">
+	<form class="form-horizontal form-label-left input_mask"  method="post" action="" enctype="multipart/form-data">
 
 <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -101,12 +101,15 @@
                         </div>
                       </div>
                       <div class="form-group">
-                      <form action="#" class="dropzone"></form>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">File đính kèm</label>
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                          <input type="file" name="userfile" id="userfile" size="20" />
+                        </div>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button type="submit" class="btn btn-primary">Cancel</button>
+                          <button type="reset" class="btn btn-primary">Cancel</button>
                           <button type="submit" class="btn btn-success">Submit</button>
                         </div>
                       </div>

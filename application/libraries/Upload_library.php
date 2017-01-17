@@ -8,8 +8,12 @@ Class Upload_library {
 	}
 
 	function upload($upload_path ='', $file_name =''){
-		$config = $this->config($upload_path , $file_name);
+		$config = $this->config($upload_path);
 
+		
+		if (empty($_FILES[$file_name]['name'])) {
+
+		}
 		$newFileName = time().$_FILES[$file_name]['name'].rand(0,10000);
 		//pre($_FILES[$file_name]['size']);
         $config['file_name'] = md5($newFileName);
@@ -38,9 +42,9 @@ Class Upload_library {
          //thuc mục chứa file
          $config['upload_path']   = $upload_path;
          //Định dạng file được phép tải
-         $config['allowed_types'] = 'jpg|png|gif';
+         $config['allowed_types'] = 'jpg|png|gif|doc|docx|pdf|zip|rar';
          //Dung lượng tối đa
-         $config['max_size']      = '3000';
+         $config['max_size']      = '50000';
          //Chiều rộng tối đa
          $config['max_width']     = '2028';
          //Chiều cao tối đa

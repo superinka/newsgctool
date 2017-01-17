@@ -91,14 +91,24 @@
 	  	<?php if($info_employee->avatar !=null) { ?>
 	  	<label class="control-label col-md-2 col-sm-2 col-xs-12">Hình đại diện </label>
 	  	<div class="col-md-8 col-sm-8 col-xs-12">
-	  		<img src="<?php echo base_url('public/upload/avatar/'.$info_employee->avatar) ?>">
+	  		<img class="img-responsive my_avatar" src="<?php echo base_url('public/upload/avatar/'.$info_employee->avatar) ?>">
 	  	</div>
 	  	<?php }?>
 	  </div>
 	  <div class="form-group">
 	  	<label class="control-label col-md-2 col-sm-2 col-xs-12"></label>
 	  	<div class="col-md-8 col-sm-8 col-xs-12">
-			<input name="image" id="file-0a" class="file" type="file" value="" multiple data-min-file-count="1">
+			<!-- the avatar markup -->
+			<div id="kv-avatar-errors-1" class="center-block" style="width:800px;display:none"></div>
+			
+			    <div class="kv-avatar center-block" style="width:200px">
+			        <input id="avatar-1" name="image" type="file" class="file-loading">
+			    </div>
+			    <!-- include other inputs if needed and include a form submit (save) button -->
+			
+			<!-- your server code `avatar_upload.php` will receive `$_FILES['avatar']` on form submission -->
+			 
+			<!-- the fileinput plugin initialization -->
 		</div>
 	  </div>
 	  <div class="ln_solid"></div>

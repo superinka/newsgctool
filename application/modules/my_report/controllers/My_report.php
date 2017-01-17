@@ -15,6 +15,7 @@ Class My_Report extends MY_Controller {
 		$this->load->model('project/proportion_department_model');
 		$this->load->model('my_mission/my_mission_model');
 		$this->load->model('my_report_model');
+		$this->load->library('upload');
 
 	}
 	
@@ -297,6 +298,8 @@ Class My_Report extends MY_Controller {
 			$this->form_validation->set_rules('time_spend', 'Thời gian làm');
 			$this->form_validation->set_rules('pro', 'Phần trăm tiến độ', 'numeric|callback_check_percent_task',array('numeric' => '%s Phải là số','check_percent_task'=>'Phần trăm mới không được nhỏ hơn phần trăm cũ'));
 
+			$this->form_validation->set_rules('userfile', 'File Đính Kèm');
+
 			if($this->form_validation->run()){
 				$description = $this->input->post('description');
 				$message = $this->input->post('message');
@@ -305,6 +308,19 @@ Class My_Report extends MY_Controller {
 				$task = $this->input->post('task');
 
 				$new_completion = $this->input->post('pro');
+
+				//pre($this->input->post('report_file'));
+
+				$this->load->library('upload_library');
+
+				$upload_path = './public/upload/report';
+
+
+
+				
+				
+
+				//pre($data_upload);
 
 				if($new_completion < 0 ){
 					$new_completion =0;
@@ -354,22 +370,49 @@ Class My_Report extends MY_Controller {
 
 				//pre($data_task);
 
-				$data_report = array(
-					'description'   => $description,
-					'note'          => $message,
-					'status'        => '1',
-					'time_spend'    => $time_spend,
-					'task_id'       => $task,
-					'create_by'     => $my_id,
-					'create_date'   => date_create('now')->format('Y-m-d'),
-					'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
-					'create_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
-					'progress'      => $progress,
-					'review_by'     => $my_id,
-					'review_status' => $rvstt,
-					'code'          => $code
+				if (empty($_FILES['userfile']['name'])) { 
+					$data_report = array(
+						'description'   => $description,
+						'note'          => $message,
+						'status'        => '1',
+						'time_spend'    => $time_spend,
+						'task_id'       => $task,
+						'create_by'     => $my_id,
+						'create_date'   => date_create('now')->format('Y-m-d'),
+						'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
+						'create_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
+						'progress'      => $progress,
+						'review_by'     => $my_id,
+						'review_status' => $rvstt,
+						'code'          => $code
 
-				);
+					);
+				}
+
+				else {
+					$data_upload = $this->upload_library->upload($upload_path, 'userfile');
+					$data_report = array(
+						'description'   => $description,
+						'note'          => $message,
+						'status'        => '1',
+						'time_spend'    => $time_spend,
+						'task_id'       => $task,
+						'create_by'     => $my_id,
+						'create_date'   => date_create('now')->format('Y-m-d'),
+						'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
+						'create_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
+						'progress'      => $progress,
+						'review_by'     => $my_id,
+						'review_status' => $rvstt,
+						'code'          => $code,
+						'file_att'      => $data_upload['file_name']
+
+					);
+
+
+				}
+
+				//pre($data_report);
 
 				if($this->my_report_model->create($data_report)) {
 					$this->session->set_flashdata('message','Tạo dữ liệu thành công');
@@ -397,7 +440,13 @@ Class My_Report extends MY_Controller {
 		$task_id = $this->input->post('task');
 
 		$task_info = $this->task_model->get_info($task_id);
-		$old_completion = $task_info->completion;
+		if($task_info==null) {
+			$old_completion = 0;
+		}
+		if($task_info!=null) {
+			$old_completion = $task_info->completion;
+		}
+		
 
 		if($new_completion >=   $old_completion) {
 			return true;
@@ -1184,6 +1233,8 @@ Class My_Report extends MY_Controller {
 					$this->form_validation->set_rules('time_spend', 'Thời gian làm');
 					$this->form_validation->set_rules('pro', 'Phần trăm tiến độ', 'numeric|callback_check_percent_task_only',array('numeric' => '%s Phải là số','check_percent_task_only'=>'Phần trăm mới không được nhỏ hơn phần trăm cũ'));
 
+					$this->form_validation->set_rules('userfile', 'File Đính Kèm');
+
 					if($this->form_validation->run()){
 						$description = $this->input->post('description');
 						$message = $this->input->post('message');
@@ -1191,6 +1242,11 @@ Class My_Report extends MY_Controller {
 						$time_spend = $this->input->post('time_spend');
 
 						$new_completion = $this->input->post('pro');
+
+						$this->load->library('upload_library');
+
+						$upload_path = './public/upload/report';
+
 
 						if($new_completion < 0 ){
 							$new_completion =0;
@@ -1202,7 +1258,7 @@ Class My_Report extends MY_Controller {
 
 
 
-						$mission_id = $this->task_model->get_info($task,'mission_id');
+						$mission_id = $this->task_model->get_info($task_id,'mission_id');
 
 						//pre($mission_id);
 
@@ -1212,7 +1268,7 @@ Class My_Report extends MY_Controller {
 
 						$project_id = $project_id->project_id;
 
-						$code = $project_id. $mission_id .rand(0,9999). md5($task.generateRandomString(8));
+						$code = $project_id. $mission_id .rand(0,9999). md5($task_id.generateRandomString(8));
 						$code = strtolower($code);
 
 						$account_type = $this->data_layout['account_type'] ;
@@ -1227,6 +1283,20 @@ Class My_Report extends MY_Controller {
 
 						$data_task = array('completion'=>$new_completion);
 
+						$file_att = null;
+
+						if (empty($_FILES['userfile']['name'])) { 
+							$file_att = null;
+						}
+
+						else {
+							$data_upload = $this->upload_library->upload($upload_path, 'userfile');
+							$file_att = $data_upload['file_name'];
+
+						}
+
+						//pre($_FILES['userfile']);
+
 						$data_report = array(
 							'description'   => $description,
 							'note'          => $message,
@@ -1240,9 +1310,12 @@ Class My_Report extends MY_Controller {
 							'progress'      => $progress,
 							'review_by'     => $my_id,
 							'review_status' => $rvstt,
-							'code'          => $code
+							'code'          => $code,
+							'file_att'      => $file_att
 
 						);
+
+						//pre($data_report);
 
 						if($this->my_report_model->create($data_report)) {
 							$this->session->set_flashdata('message','Tạo dữ liệu thành công');
@@ -1367,4 +1440,24 @@ Class My_Report extends MY_Controller {
 		$this->data_layout['temp'] = 'my_room_report';
 	    $this->load->view('layout/main', $this->data_layout);	
 	}
+
+
+	public function file_check($str){
+        $allowed_mime_type_arr = array('image/gif','image/jpeg','image/pjpeg','image/png','image/x-png','userfile/pdf', 'userfile/docs', 'userfile/doc', 'userfile/zip', 'userfile/rar');
+        $mime = get_mime_by_extension($_FILES['userfile']['name']);
+        if(isset($_FILES['userfile']['name']) && $_FILES['userfile']['name']!=""){
+
+        	if($_FILES['userfile']['size'] > 500000 || $_FILES['userfile']['size'] == 0){
+                $this->form_validation->set_message('file_check', '<strong style="color:red">File quá lớn </strong>');
+                return false;        		
+        	}
+
+            if(in_array($mime, $allowed_mime_type_arr)){
+                return true;
+            }else{
+                $this->form_validation->set_message('file_check', '<strong style="color:red">Xin chọn đúng định dạng gif/jpg/png/doc/docs/zip/rar.</strong>');
+                return false;
+            }
+        }
+    }
 }

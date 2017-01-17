@@ -161,6 +161,9 @@
 							          		<p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $y->name?></p>
 							          		<p><i class="fa fa-cube" aria-hidden="true"></i> <strong style="color:blue"><?php echo $value['name']; ?></strong></p>
 							          		<p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $v->project_name?></p>
+							          		<?php if($n->file_att!=null) {?>
+							          		<p><i class="fa fa-file-text" aria-hidden="true"></i> <a href="<?php echo base_url('public/upload/report/'.$n->file_att) ?>"><span style="color:green">File Đính kèm</span></a></p>
+							          		<?php }?>
 							          	</small>
 							          	
 							          	</td>
@@ -265,6 +268,11 @@
 			          		<p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $value->task_name?></p>
 			          		<p><i class="fa fa-cube" aria-hidden="true"></i> <strong style="color:blue"><?php echo $value->department_name; ?></strong></p>
 			          		<p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $value->project_name?></p>
+			          		<p>
+			          			<?php if($value->file_att!=null) {?>
+								<i class="fa fa-file-text" aria-hidden="true"></i> <a href="<?php echo base_url('public/upload/report/'.$value->file_att) ?>"><span style="color:green">File Đính kèm</span></a>
+			          			<?php }?>
+			          		</p>
 			          	</small>
 			        </td>
 		          	<td>

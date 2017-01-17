@@ -57,7 +57,7 @@
     ul.select2-selection__rendered li input {width: 100%!important;}
     ul.dex li {float: left;padding-right: 15px;padding-top: 15px;}
     #combo_truongphong > span {width: 100%!important}
-
+    .my_avatar {max-height: 300px; border-radius: none; border:5px solid #fff;}
     </style>
 
     <link href="<?php echo admin_theme('');?>/fileinput.css" media="all" rel="stylesheet" type="text/css" />
