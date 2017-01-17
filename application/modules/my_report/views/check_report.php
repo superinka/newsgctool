@@ -1,5 +1,10 @@
 <div class="row">
 <div class="col-md-12 col-sm-12">
+<?php $final = $this->CI->get_report_by_room($type = 1); ?>
+<?php $final_non_leader = $this->CI->get_report_by_room_non_leader(); ?>
+<?php $final_me = $this->CI->list_report_by_me($type =0); ?>
+<?php pre($final_me);?>
+<?php //pre($final_non_leader);?>
 <?php //pre($list_room_manager);?>
 <!-- <div class="row">
 <?php //pre($list_room_manager);?>
@@ -219,7 +224,7 @@
 
 <?php if ($message){$this->load->view('layout/message',$this->data_layout); }?>
 <div class="row">
-<h3>Báo cáo cần duyệt <span class="badge badge-success"><?php echo $count_uncheck; ?></span></h3>
+<h3>Báo cáo cần duyệt <span class="badge badge-success"><?php echo count($final_non_leader); ?></span></h3>
 <?php if ($list_room_manager==null) {?>
 <strong>Không có dữ liệu</strong>
 <?php }?>
@@ -260,15 +265,10 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Nội Dung Báo Cáo</th>
-              <th>Nhân viên</th>
-              <th>Dự án</th>
-              <th>Nhiệm vụ</th>
-              <th>Thời gian tạo</th>
-              <th>Số giờ làm</th>
+              <th style="width: 30%">Nội Dung Báo Cáo</th>
+              <th>Thông tin</th>
+              <th>Thời gian</th>
               <th>Tình trạng</th>
-              <th>Duyệt bởi</th>
-              <th>Tình trạng duyệt</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -296,21 +296,39 @@
                         $x = $newformat_create_time;
                       }
                       ?>
+                      <?php if($ac == 4) {?>
                     <tr>
                       <th scope="row"></th>
-                      <td><?php echo $d->description ?></td>
-                      <td><?php echo $v->mission_for ?></td>
-                      <td><?php echo $project_name ?></td>
-                      <td><?php echo $b->name?></td>
-                      <td><?php echo $x ?></td>
-                      <td><?php echo $d->time_spend ?></td>
-                      <td><?php echo check_progress_report($d->progress)?></td>
                       <td>
-                      <?php if($ac==4) { ?>
-                        <?php echo $pm[0]->fullname ?>
-                      <?php }?>
+                      <p><?php echo $d->description ?></p>
+                      <small><i class="fa fa-angle-double-right"></i> <?php echo $d->note?></small>
                       </td>
-                      <td><?php echo check_status_report($d->review_status); ?></td>
+                      <td>
+                      <small>
+                        <p><i class="fa fa-user"></i> <?php echo $v->mission_for ?></p>
+                        <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $project_name ?></p> 
+                        <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $b->name?></p>
+                      </small>                        
+                      </td>
+
+                      <td>
+                      <small>
+                        <p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
+                        <p>Thời gian làm : <?php echo $d->time_spend ?> giờ</p>
+                      </small>
+                      </td>
+                      <td>
+                          <small>
+                          <p><i class="fa fa-rss"></i> <?php echo check_progress_report($d->progress)?></p>
+                          <?php if($ac==4) { ?>
+                            <p><i class="fa fa-user-md"></i> <strong style="color:blue"><?php echo $pm[0]->fullname ?></strong></p>
+                          <?php }?>
+
+                          <p><i class="fa fa-arrow-circle-right"></i> <?php echo check_status_report($d->review_status); ?></p>
+                          </small>                      
+                      
+                        
+                      </td>
                       <td>
                       <?php if($ac==4) { ?>
                         <?php if($d->review_status==0) { ?>
@@ -322,6 +340,7 @@
                       <?php }?>
                       </td>
                     </tr>
+                    <?php }?>
                    
                
                 <?php } ?>
@@ -376,15 +395,10 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Desciption</th>
-              <th>Nhân viên</th>
-              <th>Dự án</th>
-              <th>Nhiệm vụ</th>
-              <th>Thời gian tạo</th>
-              <th>Số giờ làm</th>
+              <th style="width: 30%">Nội Dung</th>
+              <th>Thông tin</th>
+              <th>Thời gian</th>
               <th>Tình trạng</th>
-              <th>Duyệt bởi</th>
-              <th>Tình trạng duyệt</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -412,21 +426,39 @@
                       }
 
                       ?>
+                    <?php if($ac == 4) {?>
                     <tr>
-                      <th scope="row"></th>
-                      <td><?php echo $v->description ?></td>
-                      <td><?php echo $mission_for  ?></td>
-                      <td>Công việc phát sinh</td>
-                      <td>Công việc phát sinh</td>
-                      <td><?php echo $x ?></td>
-                      <td><?php echo $v->time_spend ?></td>
-                      <td><?php echo check_progress_report($v->progress)?></td>
+                      <th scope="row"><?php echo $v->id ?></th>
                       <td>
-                      <?php if($ac==4) { ?>
-                        <?php echo $pm[0]->fullname ?>
-                      <?php }?>
+                      <p><?php echo $v->description ?></p>
+                      <small><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></small>
                       </td>
-                      <td><?php echo check_status_report($d->review_status); ?></td>
+                      <td>
+                      <small>
+                        <p><i class="fa fa-user"></i> <?php echo $mission_for ?></p>
+                        <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo 'Phát sinh'; ?></p> 
+                        <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo 'Phát sinh'; ?></p>
+                      </small>                        
+                      </td>
+
+                      <td>
+                      <small>
+                        <p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
+                        <p>Thời gian làm : <?php echo $v->time_spend ?> giờ</p>
+                      </small>
+                      </td>
+                      <td>
+                          <small>
+                          <p><i class="fa fa-rss"></i> <?php echo check_progress_report($v->progress)?></p>
+                          <?php if($ac==4) { ?>
+                            <p><i class="fa fa-user-md"></i> <strong style="color:blue"><?php echo $pm[0]->fullname ?></strong></p>
+                          <?php }?>
+
+                          <p><i class="fa fa-arrow-circle-right"></i> <?php echo check_status_report($v->review_status); ?></p>
+                          </small>                      
+                      
+                        
+                      </td>
                       <td>
                       <?php if($ac==4) { ?>
                         <?php if($v->review_status==0) { ?>
@@ -438,6 +470,7 @@
                       <?php }?>
                       </td>
                     </tr>
+                    <?php }?>
                    
                
 
@@ -458,7 +491,7 @@
 </div>
 
 <div class="row">
-<h3>Báo cáo đã duyệt  <span class="badge badge-success"><?php echo $count_checked; ?></span></h3>
+<h3>Báo cáo đã duyệt  <span class="badge badge-success"><?php echo count($final); ?></span></h3>
 <?php if ($list_report_checked_today==null) {?>
 <strong>Không có dữ liệu</strong>
 <?php }?>
@@ -499,15 +532,10 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Desciption</th>
-              <th>Nhân viên</th>
-              <th>Dự án</th>
-              <th>Nhiệm vụ</th>
-              <th>Thời gian tạo</th>
-              <th>Số giờ làm</th>
+              <th style="width: 30%">Nội Dung</th>
+              <th>Thông tin</th>
+              <th>Thời gian</th>
               <th>Tình trạng</th>
-              <th>Duyệt bởi</th>
-              <th>Tình trạng duyệt</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -528,21 +556,39 @@
                       $ac = $this->acc_model->get_info_rule($where = array('id'=>$d->create_by));
                       $ac = $ac->account_type;
                       ?>
+                    <?php //if($ac == 4) {?>
                     <tr>
-                      <th scope="row"></th>
-                      <td><?php echo $d->description ?></td>
-                      <td><?php echo $v->mission_for ?></td>
-                      <td><?php echo $project_name ?></td>
-                      <td><?php echo $b->name?></td>
-                      <td><?php echo $newformat_create_time ?></td>
-                      <td><?php echo $d->time_spend ?></td>
-                      <td><?php echo check_progress_report($d->progress)?></td>
+                      <th scope="row"><?php echo $d->id?></th>
                       <td>
-                      <?php if($ac==4) { ?>
-                        <?php echo $pm[0]->fullname ?>
-                      <?php }?>    
+                      <p><?php echo $d->description ?></p>
+                      <small><i class="fa fa-angle-double-right"></i> <?php echo $d->note?></small>
                       </td>
-                      <td><?php echo check_status_report($d->review_status); ?></td>
+                      <td>
+                      <small>
+                        <p><i class="fa fa-user"></i> <?php echo $v->mission_for ?></p>
+                        <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $project_name ?></p> 
+                        <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $b->name?></p>
+                      </small>                        
+                      </td>
+
+                      <td>
+                      <small>
+                        <p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
+                        <p>Thời gian làm : <?php echo $d->time_spend ?> giờ</p>
+                      </small>
+                      </td>
+                      <td>
+                          <small>
+                          <p><i class="fa fa-rss"></i> <?php echo check_progress_report($d->progress)?></p>
+                          <?php if($ac==4) { ?>
+                            <p><i class="fa fa-user-md"></i> <strong style="color:blue"><?php echo $pm[0]->fullname ?></strong></p>
+                          <?php }?>
+
+                          <p><i class="fa fa-arrow-circle-right"></i> <?php echo check_status_report($d->review_status); ?></p>
+                          </small>                      
+                      
+                        
+                      </td>
                       <td>
                       <?php if($ac==4) { ?>
                         <?php if($d->review_status==0) { ?>
@@ -554,6 +600,7 @@
                         <?php }?>
                       </td>
                     </tr>
+                    <?php //}?>
                    
                
                 <?php } ?>
@@ -574,6 +621,7 @@
 <?php }?>
 
 <?php if ($value['department_name'] =='Công việc phát sinh') {?>
+<?php //pre($value['report']); ?>
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -608,15 +656,10 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Desciption</th>
-              <th>Nhân viên</th>
-              <th>Dự án</th>
-              <th>Nhiệm vụ</th>
-              <th>Thời gian tạo</th>
-              <th>Số giờ làm</th>
+              <th style="width: 30%">Nội Dung</th>
+              <th>Thông tin</th>
+              <th>Thời gian</th>
               <th>Tình trạng</th>
-              <th>Duyệt bởi</th>
-              <th>Tình trạng duyệt</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -645,20 +688,37 @@
 
                       ?>
                     <tr>
-                      <th scope="row"></th>
-                      <td><?php echo $v->description ?></td>
-                      <td><?php echo $mission_for  ?></td>
-                      <td>Công việc phát sinh</td>
-                      <td>Công việc phát sinh</td>
-                      <td><?php echo $x ?></td>
-                      <td><?php echo $v->time_spend ?></td>
-                      <td><?php echo check_progress_report($v->progress)?></td>
+                      <th scope="row"><?php echo $v->id ?></th>
                       <td>
-                      <?php if($ac==4) { ?>
-                        <?php echo $pm[0]->fullname ?>
-                      <?php }?>
+                      <p><?php echo $v->description ?></p>
+                      <small><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></small>
                       </td>
-                      <td><?php echo check_status_report($d->review_status); ?></td>
+                      <td>
+                      <small>
+                        <p><i class="fa fa-user"></i> <?php echo $mission_for ?></p>
+                        <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo 'Phát sinh'; ?></p> 
+                        <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo 'Phát sinh';?></p>
+                      </small>                        
+                      </td>
+
+                      <td>
+                      <small>
+                        <p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
+                        <p>Thời gian làm : <?php echo $v->time_spend ?> giờ</p>
+                      </small>
+                      </td>
+                      <td>
+                          <small>
+                          <p><i class="fa fa-rss"></i> <?php echo check_progress_report($v->progress)?></p>
+                          <?php if($ac==4) { ?>
+                            <p><i class="fa fa-user-md"></i> <strong style="color:blue"><?php echo $pm[0]->fullname ?></strong></p>
+                          <?php }?>
+
+                          <p><i class="fa fa-arrow-circle-right"></i> <?php echo check_status_report($v->review_status); ?></p>
+                          </small>                      
+                      
+                        
+                      </td>
                       <td>
                       <?php if($ac==4) { ?>
                         <?php if($v->review_status==0) { ?>

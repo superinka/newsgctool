@@ -1,4 +1,5 @@
 <?php //pre($list_report_today); ?>
+<?php //pre($list_report_uncheck_today);?>
 <div class="row">
 <?php if ($message){$this->load->view('layout/message',$this->data_layout); }?>
 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -135,22 +136,31 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Mô tả</th>
+                  <th>Nội Dung</th>
                   <th>Nhân viên</th>
-                  <th>Dự Án</th>
                   <th>Nhiệm vụ</th>
-                  <th>Công việc</th>
                 </tr>
               </thead>
               <tbody>
               <?php foreach ($list_report_uncheck_today as $key => $value) { ?>
+              <?php 
+              $name = $this->home_model->get_info_rule($where = array('user_id'=>$value->create_by));
+
+              ?>
                 <tr>
                   <th scope="row"></th>
                   <td><?php echo $value->description ?></td>
-                  <td><?php echo $value->reporter ?></td>
-                  <td><?php echo $value->reporter ?></td>
-                  <td><?php echo $value->mission_name ?></td>
-                  <td><?php echo $value->reporter ?></td>
+                  <td><?php echo $name->fullname; ?></td>
+
+                  <td>
+                  <?php if(array_key_exists('mission_name', $value)) {?>
+                  <?php echo $value->mission_name ?>
+                  <?php }?>
+                   <?php if(array_key_exists('mission_name', $value)==false) {?>
+                  <?php echo 'Nhiệm vụ phát sinh'; ?>
+                  <?php }?>                        
+                  </td>
+
                 </tr>
               <?php } ?>
               </tbody>
@@ -190,22 +200,29 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Mô tả</th>
+                  <th>Nội Dung</th>
                   <th>Nhân viên</th>
-                  <th>Dự Án</th>
                   <th>Nhiệm vụ</th>
-                  <th>Công việc</th>
                 </tr>
               </thead>
               <tbody>
               <?php foreach ($list_report_checked_today as $key => $value) { ?>
+              <?php 
+              $name = $this->home_model->get_info_rule($where = array('user_id'=>$value->create_by));
+
+              ?>
                 <tr>
                   <th scope="row"></th>
                   <td><?php echo $value->description ?></td>
-                  <td><?php echo $value->reporter ?></td>
-                  <td><?php echo $value->reporter ?></td>
-                  <td><?php echo $value->mission_name ?></td>
-                  <td><?php echo $value->reporter ?></td>
+                  <td><?php echo $name->fullname ?></td>
+                  <td>
+                  <?php if(array_key_exists('mission_name', $value)) {?>
+                  <?php echo $value->mission_name ?>
+                  <?php }?>
+                   <?php if(array_key_exists('mission_name', $value)==false) {?>
+                  <?php echo 'Nhiệm vụ phát sinh'; ?>
+                  <?php }?>                   
+                  </td>
                 </tr>
               <?php } ?>
               </tbody>

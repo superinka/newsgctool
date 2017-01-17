@@ -53,7 +53,9 @@
       </li>
       <li><a><i class="fa fa-product-hunt" aria-hidden="true"></i> Dự án<span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
+          <?php if ($account_type < 4) {?>
           <li><a href="<?php echo base_url('project/index') ?>">Tổng quan</a></li>
+          <?php }?>
           <li><a href="<?php echo base_url('project/my_project') ?>">Dự án của tôi</a></li>
         </ul>
       </li>

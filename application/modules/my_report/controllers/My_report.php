@@ -490,6 +490,7 @@ Class My_Report extends MY_Controller {
 		}
 		else {
 
+
 			$input = array();
 		    $input['where']['review_status'] = 0;
 		    $input['where']['create_date'] = $today;
@@ -585,6 +586,10 @@ Class My_Report extends MY_Controller {
 						$list_room_manager[$key]['list_miss'] = $list_miss;
 						}
 
+						//pre($list_room_manager);
+
+						//pre($count_uncheck);
+
 						$input_bonus = array();
 					    $input_bonus['where']['review_status'] = 0;
 					    $input_bonus['where']['task_id'] = 0;
@@ -605,55 +610,6 @@ Class My_Report extends MY_Controller {
 						//
 
 						$this->data_layout['count_uncheck'] = $count_uncheck;
-
-						// $list_pro = $this->proportion_department_model->get_columns('tb_proportion_department',$where = array('department_id'=>$department_id));
-						// if($list_pro!=null) {
-						// 	foreach ($list_pro as $k => $v) {
-						// 		$project_id = $v->project_id;
-						// 		$project_name = $this->project_model->get_info($project_id,'project_name');
-						// 		$project_name = $project_name->project_name;
-						// 		$v->project_name = $project_name;
-						// 		$list_room_manager[$key]['project'][] = $v;
-
-
-						// 		$list_miss = $this->mission_model->get_columns('tb_mission',$where = array('project_id'=>$project_id, 'status'=>'1', 'department_id'=>$department_id));
-						// 		//$v->mission = $list_miss;
-						// 		//$list_room_manager[$key]['mission'][] = $v;
-						// 		//pre($list_miss);
-						// 		if($list_miss!=null) {
-						// 			for ($i=0;  $i < count($list_miss)  ; $i++)  { 
-						// 				$mission_id = $list_miss[$i]->id;
-						// 				$uid = $this->mission_user_model->get_columns('tb_mission_user',$where=array('mission_id'=>$mission_id));
-						// 				//pre($uid);
-						// 				$uid = $uid[0]->user_id;
-
-						// 				if($this->role_model->check_exists($where=array('user_id'=>$uid, 'department_id'=>$department_id))==true){
-						// 					$mission_for_id = $uid;
-						// 					$mission_for_name = $this->home_model->get_column('tb_employee','fullname',$where=array('user_id'=>$mission_for_id));
-						// 					$list_miss[$i]->mission_for = $mission_for_name[0]->fullname;
-						// 					$list_task = $this->task_model->get_columns('tb_task',$where=array('mission_id'=>$mission_id, 'status'=>'0'));
-											
-						// 					foreach ($list_task as $x => $z) {
-						// 						$list_report = $this->my_report_model->get_columns('tb_daily_report',$where=array(
-						// 								'task_id'=>$z->id, 
-						// 								'review_status'=>'0', 
-						// 								'create_date'=>$today
-						// 							));
-
-						// 						if($list_report!=null) {
-						// 							$z->list_report = $list_report;
-						// 						}
-												
-						// 					}
-						// 					//$list_report = 
-						// 					$list_miss[$i]->task = $list_task;
-						// 					$v->list_miss[] = $list_miss[$i];
-						// 				}
-						// 			}
-						// 		}
-
-						// 	}
-						// }
 					}
 
 					//pre($list_room_manager);
@@ -726,61 +682,10 @@ Class My_Report extends MY_Controller {
 
 						$count_checked_bonus = count($list_report_bonus_checked);
 
-						$count_uncheck = $count_uncheck + count($list_report_bonus_checked);
+						$count_checked = $count_checked + count($count_checked_bonus);
 						
 						$this->data_layout['count_checked'] = $count_checked;
-						//pre($list_miss);
-						
 
-						//$list_pro = $this->proportion_department_model->get_columns('tb_proportion_department',$where = array('department_id'=>$department_id));
-						// if($list_pro!=null) {
-						// 	foreach ($list_pro as $k => $v) {
-						// 		$project_id = $v->project_id;
-						// 		$project_name = $this->project_model->get_info($project_id,'project_name');
-						// 		$project_name = $project_name->project_name;
-						// 		$v->project_name = $project_name;
-						// 		$list_report_checked_today[$key]['project'][] = $v;
-
-						// 		//pre($list_miss);
-
-						// 		$list_miss = $this->mission_model->get_columns('tb_mission',$where = array('project_id'=>$project_id, 'status'=>'1'));
-						// 		//$v->mission = $list_miss;
-						// 		//$list_room_manager[$key]['mission'][] = $v;
-						// 		//pre($list_miss);
-						// 		if($list_miss!=null) {
-						// 			for ($i=0;  $i < count($list_miss)  ; $i++)  { 
-						// 				$mission_id = $list_miss[$i]->id;
-						// 				$uid = $this->mission_user_model->get_columns('tb_mission_user',$where=array('mission_id'=>$mission_id));
-						// 				//pre($uid);
-						// 				$uid = $uid[0]->user_id;
-
-						// 				if($this->role_model->check_exists($where=array('user_id'=>$uid, 'department_id'=>$department_id))==true){
-						// 					$mission_for_id = $uid;
-						// 					$mission_for_name = $this->home_model->get_column('tb_employee','fullname',$where=array('user_id'=>$mission_for_id));
-						// 					$list_miss[$i]->mission_for = $mission_for_name[0]->fullname;
-						// 					$list_task = $this->task_model->get_columns('tb_task',$where=array('mission_id'=>$mission_id, 'status'=>'0'));
-											
-						// 					foreach ($list_task as $x => $z) {
-						// 						$list_report = $this->my_report_model->get_columns('tb_daily_report',$where=array(
-						// 								'task_id'=>$z->id, 
-						// 								'review_status'=>'1', 
-						// 								'create_date'=>$today
-						// 							));
-
-						// 						if($list_report!=null) {
-						// 							$z->list_report = $list_report;
-						// 						}
-												
-						// 					}
-						// 					//$list_report = 
-						// 					$list_miss[$i]->task = $list_task;
-						// 					$v->list_miss[] = $list_miss[$i];
-						// 				}
-						// 			}
-						// 		}
-
-						// 	}
-						// }
 					}
 				}
 			//pre($list_room_manager);
