@@ -347,13 +347,7 @@ Class MY_Controller extends CI_Controller {
 			$list_depart = $this->role_model->get_list($input_depart);
 
 			foreach ($list_depart as $key => $value) {
-
-				$info_depart = $this->department_model->get_info($value->department_id);
-
-				$my_room[] = array(
-					'department_id'=>$value->department_id,
-					'department_name' => $info_depart->name
-				);
+				$my_room[] = $value->department_id;
 			}
 		}
 
@@ -364,9 +358,8 @@ Class MY_Controller extends CI_Controller {
 
 		foreach ($my_room as $key => $value) {
 			$input_mission = array();
-			$input_mission['where']['department_id'] = $value['department_id'];
+			$input_mission['where']['department_id'] = $value;
 			$list_mission = $this->mission_model->get_list($input_mission);
-			//pre($list_mission);
 			if($list_mission!=null){
 				
 
@@ -374,10 +367,8 @@ Class MY_Controller extends CI_Controller {
 					$mission_id = $v->id;
 
 					$input_task = array();
-					$input_task['where']['mission_id'] = 29;
+					$input_task['where']['mission_id'] = $mission_id;
 					$list_task = $this->task_model->get_list($input_task);
-
-					// pre($list_task);
 
 					if($list_task!=null){
 						foreach ($list_task as $ka => $va) {
@@ -387,8 +378,6 @@ Class MY_Controller extends CI_Controller {
 							$list_report = $this->my_report_model->get_list($input_report);
 
 							if($list_report!=null){
-
-							//$my_room[$key]['list_report'][] = $list_report;
 
 								foreach ($list_report as $x => $y) {
 									$create_id = $y->create_by;
@@ -417,6 +406,12 @@ Class MY_Controller extends CI_Controller {
 											$mission_name = $info_mission->name;
 											$y->mission_name = $mission_name;
 
+											$department_id = $info_mission->department_id;
+
+											$department_info = $this->department_model->get_info($department_id);
+											$department_name = $department_info->name;
+											$y->department_name = $department_name;
+
 											$project_id = $info_mission->project_id;
 											$info_project = $this->project_model->get_info_rule($where = array('id'=>$project_id));
 
@@ -433,16 +428,11 @@ Class MY_Controller extends CI_Controller {
 
 									$y->task_name = $task_name;
 
-
-
-
-									//$final[] = $y;
+									$final[] = $y;
 
 								}
-								//$va[$ka] = $y;
+
 							}
-
-
 						}
 					}
 
@@ -451,19 +441,295 @@ Class MY_Controller extends CI_Controller {
 			
 		}
 
-		$input_bonus = array();
-		$input_bonus['where']['task_id'] = 0;
-		$input_bonus['where']['review_status'] = $type;
-		$list_report_bonus = $this->my_report_model->get_list($input_bonus);
-		if($list_report_bonus!=null){
-			foreach ($list_report_bonus as $x => $y) {
-				$final[] = $y;
+		$list_room = array();
+
+
+
+		//pre($final);
+
+		$l = array();
+
+		foreach ($final as $key => $value) {
+			if(in_array($value->department_name, $list_room)==false){
+				$list_room[] = $value->department_name;
+
+				$department_id = $this->department_model->get_info_rule($where = array('name'=>$value->department_name));
+				$department_id = $department_id->id;
+
+				$l[] = array('department_id'=>$department_id, 'department_name'=>$value->department_name, 'list_report' => array());
+			}
+		}
+
+		//pre($list_room);
+
+		//pre($l);
+
+
+
+		foreach ($l as $key => $value) {
+			// foreach ($final as $k => $v) {
+			// 	if($value['department_name'] == $v->department_name){
+			// 		$value['list_report'][] = $v;
+			// 		//pre($v);
+			// 	}
+			// }
+
+			for ($i=0; $i < count($final) ; $i++) {
+				if($final[$i]->department_name == $value['department_name']) {
+					$l[$key]['list_report'][$i] = $final[$i];
+
+
+					//pre($final[$i]);
+				}
+				
 			}
 
-			$my_room['bonus'] = $list_report_bonus;
+			$department_id = $value['department_id'];
+			$input_user = array();
+			$input_user['where']['department_id'] = $department_id;
+			$list_user_id = $this->role_model->get_list($input_user);
+
+			foreach ($list_user_id as $x => $y) {
+				$list_u[] = $y->user_id;
+
+				$input_r = array();
+				$input_r['where']['create_by']  = $y->user_id;
+				$input_r['where']['task_id'] = 0;
+				$input_r['where']['review_status'] = $type;
+				$list_report_bonus = $this->my_report_model->get_list($input_r);
+
+				if($list_report_bonus!=null) {
+					$l[$key]['list_report_bonus'][$x] = $list_report_bonus;
+				}
+			}
+
+
+			
 		}
-		return $final;
+
+		//pre($final);
+
+		//pre($l);
+
+
+		return $l;
+
 	}	
+
+	function list_report_by_room_id($type =0, $room_id =''){
+
+		$my_id = $this->data_layout['id'];
+		$my_account_level = $this->data_layout['account_type'];
+
+
+		switch ($room_id) {
+			case '2':
+				$my_room = array('6','7','8','9');
+				break;
+			case '3':
+				$my_room = array('10');
+				break;
+			case '4':
+				$my_room = array('15');
+				break;		
+			case '5':
+				$my_room = array('13','14');
+				break;	
+			case '6':
+				$my_room = array('6');
+				break;	
+			case '7':
+				$my_room = array('7');
+				break;
+			case '8':
+				$my_room = array('8');
+				break;
+			case '9':
+				$my_room = array('9');
+				break;
+			case '10':
+				$my_room = array('10');
+				break;
+			case '15':
+				$my_room = array('15');
+				break;
+			case '13':
+				$my_room = array('13');
+				break;
+			case '14':
+				$my_room = array('14');
+				break;				
+			default:
+				break;
+		}
+
+		//pre($my_room);
+
+
+		$final = array();
+
+		foreach ($my_room as $key => $value) {
+			$input_mission = array();
+			$input_mission['where']['department_id'] = $value;
+			$list_mission = $this->mission_model->get_list($input_mission);
+			if($list_mission!=null){
+				
+
+				foreach ($list_mission as $k => $v) {
+					$mission_id = $v->id;
+
+					$input_task = array();
+					$input_task['where']['mission_id'] = $mission_id;
+					$list_task = $this->task_model->get_list($input_task);
+
+					if($list_task!=null){
+						foreach ($list_task as $ka => $va) {
+							$input_report = array();
+							$input_report['where']['task_id'] = $va->id;
+							$input_report['where']['review_status'] = $type;
+							$list_report = $this->my_report_model->get_list($input_report);
+
+							if($list_report!=null){
+
+								foreach ($list_report as $x => $y) {
+									$create_id = $y->create_by;
+									$info_user = $this->home_model->get_info_rule($where = array('user_id'=>$create_id));
+									if($info_user!=null){
+										$create_name = $info_user->fullname;
+										$y->create_name = $create_name;
+									}
+
+
+									$task_id = $y->task_id;
+
+									$info_task = $this->task_model->get_info_rule($where = array('id'=>$task_id));
+
+									if($info_task == null){
+										$task_name = 'Không có thông tin';
+									}
+
+									if($info_task != null){
+										$task_name = $info_task->name;
+										$mission_id = $info_task->mission_id;
+										$info_mission = $this->mission_model->get_info_rule($where = array('id'=>$mission_id));
+
+										if($info_mission == null){
+											$mission_name = 'Không có thông tin';
+										}
+
+										if($info_mission != null){
+											$mission_name = $info_mission->name;
+											$y->mission_name = $mission_name;
+
+											$department_id = $info_mission->department_id;
+
+											$department_info = $this->department_model->get_info($department_id);
+											$department_name = $department_info->name;
+											$y->department_name = $department_name;
+
+											$project_id = $info_mission->project_id;
+											$info_project = $this->project_model->get_info_rule($where = array('id'=>$project_id));
+
+											if($info_project == null){
+												$project_name = 'Không có thông tin';
+											}
+											if($info_project != null){
+												$project_name = $info_project->project_name;
+												$y->project_name = $project_name;
+											}
+
+										}
+									}
+
+									$y->task_name = $task_name;
+
+									$final[] = $y;
+
+								}
+
+							}
+						}
+					}
+
+				}							
+			}
+			
+		}
+
+		$list_room = array();
+
+
+
+		//pre($final);
+
+		$l = array();
+
+		foreach ($final as $key => $value) {
+			if(in_array($value->department_name, $list_room)==false){
+				$list_room[] = $value->department_name;
+
+				$department_id = $this->department_model->get_info_rule($where = array('name'=>$value->department_name));
+				$department_id = $department_id->id;
+
+				$l[] = array('department_id'=>$department_id, 'department_name'=>$value->department_name, 'list_report' => array());
+			}
+		}
+
+		//pre($list_room);
+
+		//pre($l);
+
+
+
+		foreach ($l as $key => $value) {
+			// foreach ($final as $k => $v) {
+			// 	if($value['department_name'] == $v->department_name){
+			// 		$value['list_report'][] = $v;
+			// 		//pre($v);
+			// 	}
+			// }
+
+			for ($i=0; $i < count($final) ; $i++) {
+				if($final[$i]->department_name == $value['department_name']) {
+					$l[$key]['list_report'][$i] = $final[$i];
+
+
+					//pre($final[$i]);
+				}
+				
+			}
+
+			$department_id = $value['department_id'];
+			$input_user = array();
+			$input_user['where']['department_id'] = $department_id;
+			$list_user_id = $this->role_model->get_list($input_user);
+
+			foreach ($list_user_id as $x => $y) {
+				$list_u[] = $y->user_id;
+
+				$input_r = array();
+				$input_r['where']['create_by']  = $y->user_id;
+				$input_r['where']['task_id'] = 0;
+				$input_r['where']['review_status'] = $type;
+				$list_report_bonus = $this->my_report_model->get_list($input_r);
+
+				if($list_report_bonus!=null) {
+					$l[$key]['list_report_bonus'][$x] = $list_report_bonus;
+				}
+			}
+
+
+			
+		}
+
+		//pre($final);
+
+		//pre($l);
+
+
+		return $l;
+
+	}
 
 	function logout()
     {
