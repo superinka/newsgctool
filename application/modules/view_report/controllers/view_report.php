@@ -274,6 +274,7 @@ Class View_Report extends MY_Controller {
 
 	function get_report(){
 
+		//pre('aaaa');
 		$message = $this->session->flashdata('message');
 	    $this->data_layout['message'] = $message;
 
@@ -281,61 +282,24 @@ Class View_Report extends MY_Controller {
 	    $this->data_layout['my_id'] = $my_id;
 
 	    $today = date("Y-m-d"); 
-	    $this->data_layout['today'] = $today;
+	    $this->data_layout['today'] = $today;		
 
-	    $my_room = $this->CI->get_my_room_id();
+		if (isset($_POST['type'])) {
+			//pre($_POST['type']);
 
-	    //pre($my_room);
+			$room_id = $_POST['type'];
 
-	    $room_id = $this->uri->segment(3);
+			//pre($room_id);
+			$report_uncheck = $this->CI->list_report_by_room_id(0, $room_id);
 
-	    if($room_id ==null){
-	    	$this->session->set_flashdata('message','Không hợp lệ');
-			redirect(base_url('my_report/index'));
-	    }
-
-	    else {
-
-	    	if(in_array($room_id, $my_room)==false){
-	    		$this->session->set_flashdata('message','Không hợp lệ');
-				redirect(base_url('my_report/index'));
-	    	}
-	    	else {
-	    		$report_uncheck = $this->CI->list_report_by_room_id(0, $room_id);
-
-	    		//pre($report_uncheck);
-	    		$this->data_layout['report_uncheck'] = $report_uncheck;
-
-				switch ($room_id) {
-					case '2':
-						$my_room = array(
-							'6'=>'Phòng Lập Trình',
-							'7'=>'Phòng Hệ Thống',
-							'8'=>'Phòng Web',
-							'9'=>'Phòng Đồ Họa'
-						);
-						break;
-					case '3':
-						$my_room = array('10'=>'Phòng Vận Hành');
-						break;
-					case '4':
-						$my_room = array('15'=>'Phòng Kinh Doanh');
-						break;		
-					case '5':
-						$my_room = array('13'=>'Phòng Kế Toán','14'=>'Phòng Hành Chính và Nhân Sự');
-						break;				
-					default:
-						break;
-				}
-
-				$this->data_layout['my_room'] = $my_room;		
-
-	    	}
-
+			//pre($report_uncheck);
+			$this->data_layout['report_uncheck'] = $report_uncheck;
+			
+			$this->data_layout['temp'] = 'get_report';
+			$this->load->view('get_report', $this->data_layout);
 
 		}
-		$this->data_layout['temp'] = 'get_report';
-		$this->load->view('layout/main', $this->data_layout);
+
 	}
 
 }

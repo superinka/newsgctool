@@ -1,6 +1,9 @@
+<?php //pre($this->uri->segment(3)); ?>
+<?php $r = ($this->uri->segment(3)); ?>
+
 <div class="row">
 <select id="getProducts">
-	<option value="all" selected="selected">Show All Products</option>
+	<option value="<?php echo $r; ?>" selected="selected">Show All Products</option>
 	<?php foreach ($my_room as $key => $value) { ?>
 	
 	<option value="<?php echo $key ?>" ><?php echo $value ?></option>
@@ -21,15 +24,19 @@ $(document).ready(function()
 {  
  // function to get all records from table
  function getAll(){
+
+
   
   $.ajax
   ({
    url: "<?php echo base_url(); ?>" + "view_report/get_report/",
-   dataType: 'json',
-   data: "2",
+   type:'POST',
+   dataType: 'html',
+   data: "type=2",
    cache: false,
    success: function(r)
    {
+    //alert('ok');
     $("#display").html(r);
    }
   });   
@@ -44,12 +51,15 @@ $(document).ready(function()
   var id = $(this).find(":selected").val();
 
   var dataString = id;
+
+  console.log(id);
     
   $.ajax
   ({
    url:  "<?php echo base_url(); ?>" + "view_report/get_report/",
-   dataType: 'json',
-   data: dataString,
+   type:'POST',
+   dataType: 'html',
+   data: "type="+ id,
    cache: false,
    success: function(r)
    {
