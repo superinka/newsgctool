@@ -328,6 +328,24 @@ Class MY_Controller extends CI_Controller {
 		return $final;
 	}
 
+	function list_bonus_by_me($type = 0, $department_id =''){
+		$input_bonus = array();
+		$input_bonus['where']['task_id'] = 0;
+		$input_bonus['where']['review_status'] = $type;
+		$list_report_bonus = $this->my_report_model->get_list($input_bonus);
+		if($list_report_bonus!=null){
+			foreach ($list_report_bonus as $x => $y) {
+				$user_id = $y->create_by;
+
+				if ($this->role_model->check_exists($where=array('user_id'=>$user_id, 'department_id'=>$department_id))) {
+					$list[] = $y;
+				}
+			}
+		}
+
+		return $list;		
+	}
+
 	function list_report_by_me($type =0){
 
 		$my_id = $this->data_layout['id'];
@@ -400,6 +418,7 @@ Class MY_Controller extends CI_Controller {
 
 										if($info_mission == null){
 											$mission_name = 'Không có thông tin';
+											$y->mission_name = $mission_name;
 										}
 
 										if($info_mission != null){
@@ -417,6 +436,7 @@ Class MY_Controller extends CI_Controller {
 
 											if($info_project == null){
 												$project_name = 'Không có thông tin';
+												$y->project_name = $project_name;
 											}
 											if($info_project != null){
 												$project_name = $info_project->project_name;

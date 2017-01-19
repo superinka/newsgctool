@@ -292,8 +292,11 @@ Class View_Report extends MY_Controller {
 			//pre($room_id);
 			$report_uncheck = $this->CI->list_report_by_room_id(0, $room_id);
 
+			$report_checked = $this->CI->list_report_by_room_id(1, $room_id);
+
 			//pre($report_uncheck);
 			$this->data_layout['report_uncheck'] = $report_uncheck;
+			$this->data_layout['report_checked'] = $report_checked;
 			
 			$this->data_layout['temp'] = 'get_report';
 			$this->load->view('get_report', $this->data_layout);

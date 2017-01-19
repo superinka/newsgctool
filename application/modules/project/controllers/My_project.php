@@ -32,6 +32,8 @@ Class My_Project extends MY_Controller {
 	    $today = date("Y-m-d"); 
 	    $this->data_layout['today'] = $today;
 
+	    $ar = array();
+
 	    if ($this->data_layout['account_type'] < 3 ) {
 	    	$this->session->set_flashdata('message','Cấp của bạn không vào mục này');
 	    	redirect(base_url('project/index'));	

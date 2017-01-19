@@ -130,12 +130,29 @@ Class Add extends MY_Controller {
 						$y = explode('/', $x);
 						$project_users[$i] = $y[0];
 						$project_leader_rooms[$i] =$y[1];
+
+						$new_list[$i]['user_id'] = $y[0];
+						$new_list[$i]['department_id'] = $y[1];
 					}
 
+					//pre($new_list);
 					//pre($project_users);
 					//pre($project_leader_rooms);
 
-					$project_users = array_unique($project_users);
+					//$project_users = array_unique($project_users);
+					foreach ($project_users as $x => $y) {
+
+						$department = $this->role_model->get_column('tb_role', 'department_id',$where=array('user_id'=>$y));
+
+						foreach ($department as $m => $n) {
+							$depart_id[] = $n->department_id;
+						}
+
+																
+					}
+					$depart_new = array_unique($project_leader_rooms);	
+
+					//pre($depart_new);				
 
 					$holidays = array();
 
@@ -152,12 +169,13 @@ Class Add extends MY_Controller {
 						}
 
 						else if ($project_users!=null){
-							for ($i=0; $i < count($project_users) ; $i++) { 
+							foreach ($new_list as $x => $y) {
 								# code...
 
 								$data_project_user = array(
 									'project_id'     => $pid[0]->id,
-									'user_id'     => $project_users[$i],
+									'user_id'     => $y['user_id'],
+									'department_id' => $y['department_id'],
 									'update_time'  => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s')
 								);
 
@@ -165,7 +183,7 @@ Class Add extends MY_Controller {
 
 									$this->session->set_flashdata('message','Tạo dữ liệu thành công');
 									//redirect(base_url('project/index'));
-									$department_id = $this->role_model->get_column('tb_role','department_id',$where=array('user_id'=>$project_users[$i]));
+									$department_id = $this->role_model->get_column('tb_role','department_id',$where=array('user_id'=>$y['user_id']));
 
 									$project =  $this->project_model->get_column('tb_project','id',$where=array('short_name'=>$short_name));
 
@@ -186,7 +204,7 @@ Class Add extends MY_Controller {
 											'project_id'    => $project_id,
 											'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
 										);
-										$this->proportion_department_model->create($data);
+										//$this->proportion_department_model->create($data);
 									}
 
 								}
@@ -197,6 +215,16 @@ Class Add extends MY_Controller {
 
 								}
 							}
+
+							foreach ($depart_new as $x => $y) {
+								$data = array(
+									'department_id' => $y,
+									'proportion'    => '0',
+									'project_id'    => $project_id,
+									'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
+								);
+								$this->proportion_department_model->create($data);
+							}							
 
 							redirect(base_url('project/index'));
 						}

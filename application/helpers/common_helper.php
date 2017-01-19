@@ -172,7 +172,7 @@
 				return '#26B99A';
 				break;
 			case 'Phòng Vận Hành':
-				return '#1ABB9C';
+				return '#74bb1a';
 				break;
 
 			default:

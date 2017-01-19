@@ -29,29 +29,21 @@
           <li><a href="<?php echo base_url('my_report/check_report') ?>">Duyệt báo cáo</a></li>
           <?php } ?>
           <?php if ($account_type < 3) { ?>
-          <li class="sub_menu"><a href="<?php echo base_url('view_report/index') ?>">Báo cáo hôm nay</a></li>
+          <li><a href="<?php echo base_url('view_report/index') ?>">Báo cáo hôm nay</a></li>
           <li><a>Báo cáo bộ phận<span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="<?php echo base_url('view_report/view_report_room/2') ?>">Nghiên cứu & Phát Triển</a></li>
-              <li><a href="#level2_1">Vận Hành & Khai Thác</a></li>
-              <li><a href="#level2_1">Kinh Doanh</a></li>
-              <li><a href="#level2_1">Kế Toán & HCNS</a></li>
+              <li class="sub_menu"><a href="<?php echo base_url('view_report/view_report_room/2') ?>">Nghiên cứu & Phát Triển</a></li>
+              <?php if (in_array('10', $list_my_room)) { ?>
+              <li><a href="<?php echo base_url('view_report/view_report_room/3') ?>">Vận Hành & Khai Thác</a></li>
+              <?php } ?>
+              <li><a href="<?php echo base_url('view_report/view_report_room/4') ?>">Kinh Doanh</a></li>
+              <li><a href="<?php echo base_url('view_report/view_report_room/5') ?>">Kế Toán & HCNS</a></li>
             </ul>
           </li>         
           <?php }?>
-          <?php if (in_array('10', $list_my_room)) { ?>
+<!--           <?php if (in_array('10', $list_my_room)) { ?>
           <li><a href="<?php echo base_url('my_report/my_room_report') ?>">Báo cáo phòng</a></li>
-          <?php } ?>
-          <?php if ($account_type < 3) { ?>
-          <li><a>Xem báo cáo<span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-<!--               <li>
-                <a href="<?php echo base_url('my_report/check_report_leader') ?>">Duyệt báo cáo trưởng phòng</a>
-              </li> -->
-              <li><a href="#level2_1">Toàn bộ báo cáo</a></li>
-            </ul>
-          </li>
-          <?php } ?>
+          <?php } ?> -->
         </ul>
       </li>
       <li><a><i class="fa fa-tasks" aria-hidden="true"></i> Nhiệm vụ<span class="fa fa-chevron-down"></span></a>

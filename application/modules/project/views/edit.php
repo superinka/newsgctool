@@ -1,6 +1,6 @@
 <h1>Sửa dự án <b><?php echo $info_project->project_name ?></b></h1>
-
-<?php //pre($list_department_employee);  ?>
+<?php pre($list_department_employee);  ?>
+<?php pre($list_emp);  ?>
 <div class="row">
 	<div class="col-md-9">
 		<p style="color:red; font-weight:600"><?php echo validation_errors(); ?></p>
@@ -81,10 +81,10 @@
 		          <optgroup label="<?php echo $r->department_name; ?>">
 		            <?php foreach ($r->emp as $x) { ?>
 			            <?php if ($list_emp !=null) { ?>
-			            <option value="<?php echo $x->user_id ?>" <?php if((in_array($x->fullname, $a_emp)) == true) echo "selected"  ?> ><?php echo $x->fullname?></option>
+			            <option value="<?php echo $x->user_id.'/'.$r->department_id ?>" <?php if((in_array($x->fullname, $a_emp)) == true) echo "selected"  ?> ><?php echo $x->fullname?></option>
 			            <?php }?>
 			        	<?php if ($list_emp ==null) { ?>
-			        	<option value="<?php echo $x->user_id; ?>" ><?php echo $x->fullname; ?></option>
+			        	<option value="<?php echo $x->user_id.'/'.$r->department_id ?>" ><?php echo $x->fullname; ?></option>
 			        	<?php }?>
 		            <?php } ?>
 		          </optgroup>

@@ -174,7 +174,7 @@ Class Project extends MY_Controller {
 
 		
 		$this->data_layout['list_proportion_department'] = $list_proportion_department;
-		$this->data_layout['temp'] = 'project/proportion';
+		$this->data_layout['temp'] = 'proportion';
 	    $this->load->view('layout/main', $this->data_layout);
 
 	}
@@ -331,7 +331,24 @@ Class Project extends MY_Controller {
 							'progress'      => $progress
 						);
 
-						$project_users = $this->input->post('project_users');
+						$project_users_and_room = $this->input->post('project_users');
+
+						pre($project_users_and_room);
+
+						$project_users = $project_leader_rooms = array();
+
+						for ($i=0; $i < count($project_users_and_room); $i++) { 
+							$x = $project_users_and_room[$i];
+							$y = explode('/', $x);
+							$project_users[$i] = $y[0];
+							$project_leader_rooms[$i] =$y[1];
+						}
+
+						$depart_new = array_unique($project_leader_rooms);	
+
+						pre($depart_new);
+
+						//pre($project_users);
 
 						//$uid = $this->acc_model->get_column('tb_user', 'id',$where=array('username'=>$username));
 
@@ -357,12 +374,24 @@ Class Project extends MY_Controller {
 									$arr_depart = array();
 
 									//pre($project_users);
+									foreach ($project_users as $x => $y) {
 
+										$department = $this->role_model->get_column('tb_role', 'department_id',$where=array('user_id'=>$y));
 
-									for ($i=0; $i < count($project_users) ; $i++) { 
+										foreach ($department as $m => $n) {
+											$depart_id[] = $n->department_id;
+										}
+
+																				
+									}
+									$depart_new = array_unique($depart_id);
+
+									//pre($depart_new);
+
+									foreach ($depart_new as $x => $y) {
 										$data_project_user = array(
 											'project_id'     => $project_id,
-											'user_id'     => $project_users[$i],
+											'user_id'     => $y,
 											'update_time'  => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s')
 										);
 
@@ -370,26 +399,6 @@ Class Project extends MY_Controller {
 
 											$this->session->set_flashdata('message','Sửa dữ liệu thành công');
 											//redirect(base_url('project/index'));
-											$department_id = $this->role_model->get_column('tb_role','department_id',$where=array('user_id'=>$project_users[$i]));
-
-											//pre($department_id);
-
-											$d_id = $department_id[0]->department_id;
-
-
-											$dat =  $this->proportion_department_model->get_column('tb_proportion_department','id',$where=array('project_id'=>$project_id,'department_id'=>$d_id));
-
-											
-
-											if ($dat ==null) {
-												$data = array(
-													'department_id' => $department_id[0]->department_id,
-													'proportion'    => '0',
-													'project_id'    => $project_id,
-													'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
-												);
-												$this->proportion_department_model->create($data);
-											}
 
 
 										}
@@ -401,6 +410,20 @@ Class Project extends MY_Controller {
 
 										}
 									}
+
+									$this->proportion_department_model->del_rule($where = array('project_id'=>$project_id ));
+
+									//$depart_new = array_unique($depart_id);
+
+									for ($i=0; $i < count($depart_new) ; $i++) { 
+										$data = array(
+											'department_id' => $depart_new[$i],
+											'proportion'    => '0',
+											'project_id'    => $project_id,
+											'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
+										);
+										$this->proportion_department_model->create($data);
+									}									
 									redirect(base_url('project/index'));
 								}
 								else if ($list_emp!=null){
@@ -414,27 +437,45 @@ Class Project extends MY_Controller {
 										$this->project_user_model->del_rule($where = array('user_id' => $value , 'project_id'=>$project_id ));
 
 										}
-										for ($i=0; $i < count($project_users) ; $i++) { 
+
+										//pre($project_users);
+										foreach ($project_users as $x => $y) {
+
+											$department = $this->role_model->get_column('tb_role', 'department_id',$where=array('user_id'=>$y));
+
+											foreach ($department as $m => $n) {
+												$depart_id[] = $n->department_id;
+											}
+
+																					
+										}
+										$depart_new = array_unique($depart_id);
+
+										//pre($depart_new);
+
+										foreach ($project_users as $x => $y) {
 											$data_project_user = array(
 												'project_id'     => $project_id,
-												'user_id'     => $project_users[$i],
+												'user_id'     => $y,
 												'update_time'  => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s')
 											);
 
 											$this->project_user_model->create($data_project_user);
 
-											$department = $this->role_model->get_column('tb_role', 'department_id',$where=array('user_id'=>$project_users[$i]));
+											//$department = $this->role_model->get_column('tb_role', 'department_id',$where=array('user_id'=>$y));
 
-											$depart_id[] = $department[0]->department_id;										
+											//$depart_id[] = $department[0]->department_id;
+
+											//pre($depart_id);										
 										}
 
 										$this->proportion_department_model->del_rule($where = array('project_id'=>$project_id ));
 
-										$depart_new = array_unique($depart_id);
+										//$depart_new = array_unique($depart_id);
 
-										for ($i=0; $i < count($depart_new) ; $i++) { 
+										foreach ($depart_new as $x => $y) {
 											$data = array(
-												'department_id' => $depart_new[$i],
+												'department_id' => $y,
 												'proportion'    => '0',
 												'project_id'    => $project_id,
 												'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),

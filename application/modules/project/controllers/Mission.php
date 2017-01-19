@@ -338,6 +338,7 @@ Class Mission extends MY_Controller {
 			$list_department_this_project = $this->proportion_department_model->get_list($input_depart);
 			//pre($list_department_this_project);
 
+			$list_department_id = array();
 			foreach ($list_department_this_project as $key => $value) {
 
 				if($value->department_id!=null){
@@ -346,7 +347,10 @@ Class Mission extends MY_Controller {
 				
 			}
 
-			$list_department_id = array_unique( $list_department_id );
+			if($list_department_id!=null){
+				$list_department_id = array_unique( $list_department_id );
+			}
+
 			//pre($list_department_id);
 
 			$list_mission_by_department = array();
@@ -548,7 +552,7 @@ Class Mission extends MY_Controller {
 
 
 		$this->data_layout['list_emp'] = $list_emp;
-		$this->data_layout['temp'] = 'project/add_pro';
+		$this->data_layout['temp'] = 'project/proportion';
 	    $this->load->view('layout/main', $this->data_layout);
 
 	}

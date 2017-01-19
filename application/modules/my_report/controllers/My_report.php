@@ -123,46 +123,50 @@ Class My_Report extends MY_Controller {
 	    				$mission_id = $v->id;
 	    				$project_id = $v->project_id;
 	    				$project = $this->project_model->get_info($project_id);
-	    				$project_name = $project->project_name;
-	    				$v->project_name = $project_name;
 
-	    				if($v->end_date >= $today) {
-		    				$list_task = $this->mission_model->get_columns('tb_task',$where=array('mission_id'=>$mission_id, 'status'=>0));
-		    				foreach ($list_task as $x => $y) {
-		    					if($y->end_date < $today){
-		    						// /pre($list_task[$x]);
-		    						unset($list_task[$x]);
-		    					}
+	    				if($project!=null){
+		    				$project_name = $project->project_name;
+		    				$v->project_name = $project_name;
 
-		    					if($y->start_date > $today){
-		    						unset($list_task[$x]);
-		    					}
-		    				}
-		    				$list_task = array_values($list_task);
+		    				if($v->end_date >= $today) {
+			    				$list_task = $this->mission_model->get_columns('tb_task',$where=array('mission_id'=>$mission_id, 'status'=>0));
+			    				foreach ($list_task as $x => $y) {
+			    					if($y->end_date < $today){
+			    						// /pre($list_task[$x]);
+			    						unset($list_task[$x]);
+			    					}
 
-		    				foreach ($list_task as $x => $y) {
+			    					if($y->start_date > $today){
+			    						unset($list_task[$x]);
+			    					}
+			    				}
+			    				$list_task = array_values($list_task);
 
-		    					$list_reported_today =  $this->my_report_model->get_columns('tb_daily_report',$where=array('task_id'=>$y->id, 'create_date'=>$today,'create_by'=>$my_id, 'review_status'=>1));
+			    				foreach ($list_task as $x => $y) {
 
-		    					if($list_reported_today!=null){
-		    						$list_task[$x]->list_reported_today = $list_reported_today;
-		    					}
+			    					$list_reported_today =  $this->my_report_model->get_columns('tb_daily_report',$where=array('task_id'=>$y->id, 'create_date'=>$today,'create_by'=>$my_id, 'review_status'=>1));
 
-		    					$list_un_report_today = $this->my_report_model->get_columns('tb_daily_report',$where=array('task_id'=>$y->id, 'create_date'=>$today,'create_by'=>$my_id, 'review_status'=>0));
+			    					if($list_reported_today!=null){
+			    						$list_task[$x]->list_reported_today = $list_reported_today;
+			    					}
 
-		    					if($list_un_report_today!=null){
-		    						$list_task[$x]->list_un_report_today = $list_un_report_today;
-		    					}
+			    					$list_un_report_today = $this->my_report_model->get_columns('tb_daily_report',$where=array('task_id'=>$y->id, 'create_date'=>$today,'create_by'=>$my_id, 'review_status'=>0));
 
-		    					$list_report_today = $this->my_report_model->get_columns('tb_daily_report',$where=array('task_id'=>$y->id, 'create_date'=>$today,'create_by'=>$my_id));
+			    					if($list_un_report_today!=null){
+			    						$list_task[$x]->list_un_report_today = $list_un_report_today;
+			    					}
 
-		    					if($list_report_today!=null){
-		    						$list_task[$x]->list_report_today = $list_report_today;
-		    					}
-		    					
-		    				}
-		    				$v->list_task = $list_task;	    					
+			    					$list_report_today = $this->my_report_model->get_columns('tb_daily_report',$where=array('task_id'=>$y->id, 'create_date'=>$today,'create_by'=>$my_id));
+
+			    					if($list_report_today!=null){
+			    						$list_task[$x]->list_report_today = $list_report_today;
+			    					}
+			    					
+			    				}
+			    				$v->list_task = $list_task;	    					
+		    				}	    					
 	    				}
+
 
 	    			}
 

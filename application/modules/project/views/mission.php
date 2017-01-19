@@ -64,7 +64,7 @@ if($old_pro != $total){
     <div class="row">
     <div class="x_panel fixed_height_690">
 	    <div class="x_title">
-	      <h2>Thành viên dự án : <?php echo $total_member; ?></h2>
+	      <h2>Thành viên dự án : <?php echo count($list_emp['member']); ?></h2>
 	      <ul class="nav navbar-right panel_toolbox">
 	        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	        </li>
@@ -85,7 +85,7 @@ if($old_pro != $total){
 	    <?php if($list_emp==null) {echo 'Không có dữ liệu';} ?>
 	    <?php if($list_emp!=null){ ?>
 	    <ul class="list-unstyled top_profiles scroll-view" style="overflow: auto;max-height: 300px">
-	    <?php if(array_key_exists('leader',$list_emp)) {?>
+<!-- 	    <?php if(array_key_exists('leader',$list_emp)) {?>
 		    <?php foreach ($list_emp['leader'] as $r) {
 		    	?>
 			      <li class="media event">
@@ -101,7 +101,7 @@ if($old_pro != $total){
 		    	<?php
 
 		    } ?>
-	    <?php }?>
+	    <?php }?> -->
 	   	<?php foreach ($list_emp['member'] as $r) {
 	    	?>
 		      <li class="media event">
@@ -109,9 +109,9 @@ if($old_pro != $total){
 		          <i class="fa fa-user aero"></i>
 		        </a>
 		        <div class="media-body">
-		          <a class="title" href="#"><?php echo $r[0]; ?></a>
-		          <p><strong>Nhân viên</strong></p>
-		          <small><?php echo $r[1]; ?></small>
+		          <a class="title" href="#"></a>
+		          <p style="    padding-top: 15px;"><strong><?php echo $r[0]; ?></strong></p>
+		          <small><?php //echo $r[1]; ?></small>
 		          </p>
 		        </div>
 		      </li>
@@ -170,12 +170,15 @@ if($old_pro != $total){
 	          </td>
 	          <td>
 	            <table class="tile_info">
-	              <?php foreach ($list_emp['room-member'] as $k=>$v) { ?>
+	              <?php foreach ($list_mission_by_department as $k=>$v) { ?>
+	              <?php $list_room_name[] = $v['department_name'] ?>
+	              <?php $list_room_color[] = color_room($v['department_name']) ?>
+	              <?php $list_room_pro[] = $v['pro'] ?>
 	              <tr>
 	                <td>
-	                  <p><i class="fa fa-square" style="color: <?php echo color_room($v); ?>"></i><?php echo $v ?> </p>
+	                  <p><i class="fa fa-square" style="color: <?php echo color_room($v['department_name']); ?>"></i><?php echo $v['department_name'] ?> </p>
 	                </td>
-	                <td><?php echo $list_emp['proportion-room'][$k]  ?></td>
+	                <td><?php echo $v['pro']  ?></td>
 	              </tr>
 	              <?php } ?>
 	              <?php //pre($labels) ?>
@@ -192,18 +195,18 @@ if($old_pro != $total){
         };
 
         var backgroundColor = []; var hoverBackgroundColor =[];
-        backgroundColor = <?php echo json_encode($list_emp['room-color']); ?>;
-        hoverBackgroundColor = <?php echo json_encode($list_emp['room-color']); ?>;
-        var jArray= <?php echo json_encode($list_emp['room-member']); ?>;
+        backgroundColor = <?php echo json_encode($list_room_color); ?>;
+        hoverBackgroundColor = <?php echo json_encode($list_room_color); ?>;
+        var jArray= <?php echo json_encode($list_room_name); ?>;
         var b =0;
-        console.log(color);
 
         var c = 'doughnut';
         var labels=[];
-        var labels2= [];
-        console.log(jArray);
-        var dt = <?php echo json_encode($list_emp['proportion-room']); ?>;
+
+        var dt = <?php echo json_encode($list_room_pro); ?>;
+
         console.log(dt);
+
         var data =[];
         var color = [];
         for(var i=0;i<(dt.length);i++){
@@ -221,12 +224,11 @@ if($old_pro != $total){
 	    	labels.push('khác');
 	    }
 	    var data2 = []; 
-	    console.log(b);
-	    console.log(other);
+
+
 		console.log(jArray);
 		console.log(data);
 		console.log(labels);
-		console.log(labels2);
         new Chart(document.getElementById("canvas1"), {
           type: c,
           tooltipFillColor: "rgba(51, 51, 51, 0.55)",
@@ -246,7 +248,7 @@ if($old_pro != $total){
 	      	<?php } ?>
 	        <?php if($account_type<3) {?>  
 	      	<p class="" style="color:red"><?php if ($check==true) {echo'Dự liệu tạm thời, cần tạo mới ngay';} ?></p>
-	      	<a href="<?php echo base_url('project/mission/add_pro/'.$project_id) ?>">
+	      	<a href="<?php echo base_url('project/proportion_department/'.$project_id) ?>">
 	      		<button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD</button>
 	      	</a>
 	      	<?php }?>

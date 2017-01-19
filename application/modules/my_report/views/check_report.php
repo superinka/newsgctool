@@ -552,6 +552,13 @@
 
                       $ac = $this->acc_model->get_info_rule($where = array('id'=>$v->create_by));
                       $ac = $ac->account_type;
+                      $newformat_create_time2 = date('Y-m-d', $create_time);
+                      if($newformat_create_time2 == $today){
+                        $x = 'Hôm nay';
+                      }
+                      else {
+                        $x = $newformat_create_time;
+                      }
                       ?>
                     <?php //if($ac == 4) {?>
                     <tr>
