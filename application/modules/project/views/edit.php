@@ -1,6 +1,6 @@
 <h1>Sửa dự án <b><?php echo $info_project->project_name ?></b></h1>
-<?php pre($list_department_employee);  ?>
-<?php pre($list_emp);  ?>
+<?php //pre($list_department_employee);  ?>
+<?php //pre($list_emp);  ?>
 <div class="row">
 	<div class="col-md-9">
 		<p style="color:red; font-weight:600"><?php echo validation_errors(); ?></p>
@@ -60,10 +60,14 @@
 	      </div>
 	      <?php 
 	  	  //pre($list_emp);
+	  	  $c= array();
 	  	  if ($list_emp !=null) {
 	      	for ($i=0; $i < count($list_emp) ; $i++) { 
 	      		# code...
 	      		$a_emp[$i] = $list_emp[$i]->emp_name;
+	      		$b_emp[$i] = $list_emp[$i]->department_id;
+	      		$c[] =  $list_emp[$i]->user_id.'/'.$list_emp[$i]->department_id;
+
 	      	}
 	      }
 
@@ -79,14 +83,17 @@
 		          ?>
 		          <?php //echo count($r->child_room) ?>
 		          <optgroup label="<?php echo $r->department_name; ?>">
+		            <?php if(array_key_exists('emp', $r)){ ?>
 		            <?php foreach ($r->emp as $x) { ?>
 			            <?php if ($list_emp !=null) { ?>
-			            <option value="<?php echo $x->user_id.'/'.$r->department_id ?>" <?php if((in_array($x->fullname, $a_emp)) == true) echo "selected"  ?> ><?php echo $x->fullname?></option>
+			            <?php $value = $x->user_id.'/'.$r->department_id; ?>
+			            <option value="<?php echo $value ?>" <?php if(in_array($value, $c)) { echo "selected";}   ?> ><?php echo $x->fullname?></option>
 			            <?php }?>
 			        	<?php if ($list_emp ==null) { ?>
 			        	<option value="<?php echo $x->user_id.'/'.$r->department_id ?>" ><?php echo $x->fullname; ?></option>
 			        	<?php }?>
 		            <?php } ?>
+		            <?php }?>
 		          </optgroup>
 
 		          <?php

@@ -52,10 +52,13 @@ Class Project extends MY_Controller {
 			//echo $project_id;
 			$list_emp = $this->project_user_model->get_columns('tb_project_user',$where=array('project_id'=>$project_id));
 
+			//pre($list_emp);
+
 			if ($list_emp!=null) {
 					foreach ($list_emp as $k => $v) {
 
 					$emp_name = $this->home_model->get_column('tb_employee', 'fullname',$where=array('user_id'=>$v->user_id));
+					//pre($emp_name);
 					//pre($room_name[0]->name);
 					$v->emp_name = $emp_name[0]->fullname;
 					//$this->data_layout['room_name'] = $room_name;
@@ -282,6 +285,23 @@ Class Project extends MY_Controller {
 
 					}
 
+				foreach ($list_department_employee as $key => $value) {
+					if(array_key_exists('emp', $value)){
+						foreach ($value->emp as $k => $v) {
+
+							for ($i=0; $i < count($list_emp) ; $i++) { 
+								if($v->user_id == $list_emp[$i]->user_id && $value->department_id == $list_emp[$i]->department_id){
+									$value->emp[$k]->check = 'check';
+									//$value->emp[$k]->check = 'check';
+								}
+							}
+						}						
+					}
+
+				}
+
+				//pre($list_department_employee);
+
 				//pre($old_data);
 				$this->data_layout['list_emp'] = $list_emp;
 
@@ -333,7 +353,7 @@ Class Project extends MY_Controller {
 
 						$project_users_and_room = $this->input->post('project_users');
 
-						pre($project_users_and_room);
+						//pre($project_users_and_room);
 
 						$project_users = $project_leader_rooms = array();
 
@@ -346,13 +366,13 @@ Class Project extends MY_Controller {
 
 						$depart_new = array_unique($project_leader_rooms);	
 
-						pre($depart_new);
+						//pre($depart_new);
 
 						//pre($project_users);
 
 						//$uid = $this->acc_model->get_column('tb_user', 'id',$where=array('username'=>$username));
 
-						$project_users = array_unique($project_users);
+						//$project_users = array_unique($project_users);
 						//pre($old_data);
 						//pre($project_users);
 						if($this->project_model->update($project_id, $data_project)) {
@@ -384,14 +404,15 @@ Class Project extends MY_Controller {
 
 																				
 									}
-									$depart_new = array_unique($depart_id);
+									//$depart_new = array_unique($depart_id);
 
 									//pre($depart_new);
 
-									foreach ($depart_new as $x => $y) {
+									foreach ($project_users as $x => $y) {
 										$data_project_user = array(
 											'project_id'     => $project_id,
 											'user_id'     => $y,
+											'department_id' =>$project_leader_rooms[$x],
 											'update_time'  => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s')
 										);
 
@@ -415,9 +436,9 @@ Class Project extends MY_Controller {
 
 									//$depart_new = array_unique($depart_id);
 
-									for ($i=0; $i < count($depart_new) ; $i++) { 
+									foreach ($depart_new as $x => $y) {
 										$data = array(
-											'department_id' => $depart_new[$i],
+											'department_id' => $y,
 											'proportion'    => '0',
 											'project_id'    => $project_id,
 											'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
@@ -449,12 +470,13 @@ Class Project extends MY_Controller {
 
 																					
 										}
-										$depart_new = array_unique($depart_id);
+										//$depart_new = array_unique($depart_id);
 
 										//pre($depart_new);
 
 										foreach ($project_users as $x => $y) {
 											$data_project_user = array(
+												'department_id' => $project_leader_rooms[$x],
 												'project_id'     => $project_id,
 												'user_id'     => $y,
 												'update_time'  => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s')

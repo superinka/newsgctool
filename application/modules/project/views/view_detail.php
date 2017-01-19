@@ -97,7 +97,12 @@
                   <div>
                     <p style="color:<?php echo $cl ?>">
                     <i class="fa fa-angle-double-right"></i> 
-                    <strong><a style="color:<?php echo $cl ?>" title ="bởi <?php echo $value->create_by_name ?>" href="#"><?php echo $value->name ?> <?php echo ''.$lo.'' ?></a></strong></p>
+                    <?php $link=null;?>
+                    <?php if($account_type==3){$link = base_url('project/mission/edit_task/'.$project_id.'/'.$mission_view_id.'/'.$value->id);} ?>
+                    <strong>
+                      <a style="color:<?php echo $cl ?>" title ="bởi <?php echo $value->create_by_name ?>" href="<?php echo $link ?>"><?php echo $value->name ?> <?php echo ''.$lo.'' ?></a>
+                    </strong>
+                    </p>
 
                   </div>
                 </div>

@@ -1565,6 +1565,120 @@ Class Mission extends MY_Controller {
 
 	}
 
+	function edit_task() {
+
+		$my_id = $this->data_layout['id'];
+
+		$account_type = $this->data_layout['account_type'];
+
+		$message = $this->session->flashdata('message');
+	    $this->data_layout['message'] = $message;
+		
+	    $project_id =  $this->uri->segment(4);
+	    $mission_id =  $this->uri->segment(5);
+
+		//lay id du an can sua
+		$task_id = $this->uri->segment(6);
+		//pre($task_id);
+		$task_id = intval($task_id);
+		$this->data_layout['task_id'] = $task_id;
+
+		if($this->data_layout['account_type']!=3){
+			$this->session->set_flashdata('message','Không đủ quyền hạn');
+			redirect(base_url('project/mission/view_detail/'.$project_id.'/'.$mission_id));	
+		}
+
+		else {
+			$info_task = $this->task_model->get_info($task_id);
+			$this->data_layout['info_task'] = $info_task;
+		//	pre($info_task);
+			if(!$info_task){
+				$this->session->set_flashdata('message','Không tồn tại');
+				redirect(base_url('project/mission/view_detail/'.$project_id.'/'.$mission_id));					
+			}
+			else {
+				if($info_task->create_by!=$my_id){
+					$this->session->set_flashdata('message','Không đủ quyền hạn');
+					redirect(base_url('project/mission/view_detail/'.$project_id.'/'.$mission_id));							
+				}
+				else {
+
+					$info_project = $this->project_model->get_info($project_id);
+					$this->data_layout['info_project'] = $info_project;
+
+					$info_mission = $this->mission_model->get_info($mission_id);
+					$this->data_layout['info_mission'] = $info_mission;
+
+					if($this->input->post()){
+
+						$this->form_validation->set_rules('task_name', 'Tên công việc', 'trim');
+						$this->form_validation->set_rules('description', 'description', 'trim');
+						
+						$this->form_validation->set_rules('start_date', 'Ngày bắt đầu');
+						$this->form_validation->set_rules('end_date', 'Ngày kết thúc');
+						$this->form_validation->set_rules('status', 'Tiến độ');
+
+						if($this->form_validation->run()){ 
+
+							$task_name = $this->input->post('task_name');
+							$description = $this->input->post('description');
+							$start_date = $this->input->post('start_date');
+							$end_date = $this->input->post('end_date');
+
+							$status = $this->input->post('status');
+
+							$start_date = strtotime($start_date);
+							$newformat_start_date = date('Y-m-d',$start_date);
+							$end_date = strtotime($end_date);
+							$newformat_end_date = date('Y-m-d',$end_date);
+
+							//pre($code);
+
+							$user_id_info = explode('/', $user_id_info);
+							$new_user_id = $user_id_info[0];
+							$department_id = $user_id_info[1];
+
+							$ifo = $this->acc_model->get_info($new_user_id);
+							$acc_level = $ifo->account_type;
+
+							$code = $info_task->code;
+
+							$data_task = array(
+								'name'          => $task_name,
+								'description'   => $description,
+								'start_date'    => $newformat_start_date,
+								'end_date'      => $newformat_end_date,
+								'create_by'     => $my_id,
+								'create_date'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d'),
+								'status'        => $status,
+								'mission_id'    => $mission_id,
+								'project_id'    => $project_id,
+								'code'          => $code
+							);
+
+							//pre($data_mission);
+							if($this->task_model->update($task_id,$data_task)) {
+								$this->session->set_flashdata('message','Sửa dữ liệu thành công');
+							}
+							else {
+
+								$this->session->set_flashdata('message','Sửa dữ liệu không thành công');
+							}								
+
+
+							redirect(base_url('project/mission/view_detail/'.$project_id.'/'.$mission_id));
+						}
+
+					}
+
+				}
+			}
+		}
+
+		$this->data_layout['temp'] = 'edit_task';
+	    $this->load->view('layout/main', $this->data_layout);
+	}
+
 	function update_progress() {
 
 		$project_id = $this->uri->segment(4);
