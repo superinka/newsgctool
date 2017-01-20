@@ -1,4 +1,5 @@
 <?php //pre($report_uncheck); ?>
+<?php //pre($report_checked); ?>
 <div class="col-md-12 col-sm-12 col-xs-12">
 <div class="x_panel">
   <div class="x_title">
@@ -194,13 +195,13 @@
 			        </tbody>
 			      </table>
 			    <?php }?>
-			    <?php if(array_key_exists('list_report_bonus',$value)==true) { ?>
+			    <?php if(array_key_exists('list_report_bonus',$value)==true && count($value['list_report_bonus']) > 0) { ?>
 			      <p>Phát sinh </p>
 			      <table class="table">
 			        <thead>
 			          <tr>
 			            <th>#</th>
-			            <th>Nội Dung Báo Cáo</th>
+			            <th style="width: 60%">Nội Dung Báo Cáo</th>
 			            <th>Thông Tin</th>
 			          </tr>
 			        </thead>
@@ -305,7 +306,7 @@
 			    </div>
 			    <div class="x_content">
 			    <?php if(array_key_exists('list_report',$value)==true) { ?>
-			      <table id="datatable-checkbox<?php echo $i?>" class="table table-striped table-bordered bulk_action">
+			      <table id="datatable-checkbox_<?php echo $i?>" class="table table-striped table-bordered bulk_action">
 			        <thead>
 			          <tr>
 			            <th>#</th>
@@ -316,6 +317,7 @@
 			        <tbody>
 			        <?php foreach ($value['list_report'] as $k => $v) { ?>
 			        <?php 
+			        //pre($v);
 			          $create_time = strtotime($v->create_time);
 			          $newformat_create_time = date('Y-m-d H:i:s',$create_time);
 			          $pm = ($this->my_report_model->get_fullname_employee($v->review_by));
@@ -332,7 +334,7 @@
 				          ?>
 				          <tr>
 				            <th scope="row"><?php echo $v->id ?></th>
-				            <td>
+				            <td style="width: 60%">
 				            	<p><?php echo $v->description ?></p>
 				            	<small>
 				            	<p><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></p>
@@ -342,7 +344,8 @@
 				            <td>                      
 				              <small>
 								<p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
-				                <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $v->project_name ?></p> 
+				                <p>
+				                <i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $v->project_name ?></p> 
 				                <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $v->mission_name?></p>
 				              </small>  
 				            </td>
@@ -352,7 +355,7 @@
 			        </tbody>
 			      </table>
 			    <?php }?>
-			    <?php if(array_key_exists('list_report_bonus',$value)==true) { ?>
+			    <?php if(array_key_exists('list_report_bonus',$value)==true && count($value['list_report_bonus']) > 0) { ?>
 			      <p>Phát sinh </p>
 			      <table class="table">
 			        <thead>
@@ -386,7 +389,7 @@
 			              ?>
 			          <tr>
 			            <th scope="row"><?php echo $v->id ?></th>
-			            <td>
+			            <td style="width: 60%">
 			            	<p><?php echo $v->description ?></p>
 			            	<small>
 			            	<p><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></p>

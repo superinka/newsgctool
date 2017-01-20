@@ -1,5 +1,7 @@
 <?php //pre($list_room_by_me) ?>
 <?php //pre($all_report_by_me) ?>
+<?php //pre($today_report) ?>
+
 <?php if ($message){$this->load->view('layout/message',$this->data_layout); }?>
 <div class="row">
 
@@ -131,78 +133,63 @@
 			            </tr>
 	                  </thead>
 	                  <tbody>
-	                  <?php foreach ($list_room_by_me['department'] as $key => $value) { ?>
-		                  <?php if(array_key_exists('list_miss',$value)==true) {?>
-		                  	<?php  foreach ($value['list_miss'] as $k => $v) { //pre($v)?>
-		                  		<?php if(array_key_exists('list_task',$v)==true) { ?>
-		                      		<?php  foreach ($v->list_task as $x => $y) { ?>
-		                      		<?php 
+	                  <?php foreach ($today_report as $key => $value) { ?>
+						<?php 
+                  		$create_time = strtotime($value->create_time);
+  						$newformat_create_time = date('Y-m-d H:i:s',$create_time);
+  						$pm = ($this->my_report_model->get_fullname_employee($value->review_by));
+  						$me = ($this->my_report_model->get_fullname_employee($value->create_by));
+                  		?>
+				          <tr>
+				          	<td><?php echo $value->id ?></td>
+				          	<td  style="width: 30%">
+				          	<p><?php echo $value->description ?></p>
+				          	<small><i class="fa fa-angle-double-right"></i> <?php echo $value->note?></small>
+				          		
+				          	</td>
+				          	<td>
+				          	<small>
+				          		<p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $value->task_name?></p>
+				          		<p><i class="fa fa-cube" aria-hidden="true"></i> <strong style="color:blue"><?php echo $value->department_name; ?></strong></p>
+				          		<p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $value->project_name?></p>
+				          		<?php if($value->file_att!=null) {?>
+				          		<p><i class="fa fa-file-text" aria-hidden="true"></i> <a href="<?php echo base_url('public/upload/report/'.$value->file_att) ?>"><span style="color:green">File Đính kèm</span></a></p>
+				          		<?php }?>
+				          		<p>Bởi : <?php echo $me[0]->fullname ?></p>
+				          	</small>
+				          	
+				          	</td>
 
-		                      		if(array_key_exists('list_un_report_today',$y)==false && array_key_exists('list_reported_today',$y)==false) {$st ='<strong>Chưa báo cáo</strong><a href="'.(base_url('my_report/add_report')).'">'.' <strong style="color:red"><i class="fa fa-warning"></i> Báo cáo ngay</strong> </a>';}
-		                      		if(array_key_exists('list_un_report_today',$y)==true || array_key_exists('list_reported_today',$y)==true) {$st ='<strong>Có báo cáo</strong>';}
-		                      		if (array_key_exists('list_report_today',$y)==true ) {
+				          	<td>
+				          	<small>
+					          	<p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $newformat_create_time ?></p>
+					          	<p>Thời gian làm : <?php echo $value->time_spend ?> giờ</p>
+				          	</small>
+				          	</td>
+				          	
+				          	<td>
+				          	<small>
+				          	<p><i class="fa fa-rss"></i> <?php echo check_progress_report($value->progress)?></p>
+				          	<p><i class="fa fa-user-md"></i> <strong style="color:blue"><?php echo $pm[0]->fullname ?></strong></p>
+				          	<p><i class="fa fa-arrow-circle-right"></i> <?php echo check_status_report($value->review_status); ?></p>
+				          	</small>
+				          	</td>
+		                    <td>
+		                    <?php if($account_type == 4){?>
+		                    <?php if($value->review_status==0){ ?>
+		                    	<a href="<?php echo base_url('my_report/edit/'.$value->id) ?>"><i class="fa fa-lock" aria-hidden="true"></i></a>
 
-		                      		?>
-		                      		<?php  foreach ($y->list_report_today as $m => $n) { //pre($n)?>
-		                      		<?php 
-		                      		$create_time = strtotime($n->create_time);
-	          						$newformat_create_time = date('Y-m-d H:i:s',$create_time);
-	          						$pm = ($this->my_report_model->get_fullname_employee($n->review_by));
-		                      		?>
-							          <tr>
-							          	<td></td>
-							          	<td  style="width: 30%">
-							          	<p><?php echo $n->description ?></p>
-							          	<small><i class="fa fa-angle-double-right"></i> <?php echo $n->note?></small>
-							          		
-							          	</td>
-							          	<td>
-							          	<small>
-							          		<p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $y->name?></p>
-							          		<p><i class="fa fa-cube" aria-hidden="true"></i> <strong style="color:blue"><?php echo $value['name']; ?></strong></p>
-							          		<p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $v->project_name?></p>
-							          		<?php if($n->file_att!=null) {?>
-							          		<p><i class="fa fa-file-text" aria-hidden="true"></i> <a href="<?php echo base_url('public/upload/report/'.$n->file_att) ?>"><span style="color:green">File Đính kèm</span></a></p>
-							          		<?php }?>
-							          	</small>
-							          	
-							          	</td>
-
-							          	<td>
-							          	<small>
-								          	<p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $newformat_create_time ?></p>
-								          	<p>Thời gian làm : <?php echo $n->time_spend ?> giờ</p>
-							          	</small>
-							          	</td>
-							          	
-							          	<td>
-							          	<small>
-							          	<p><i class="fa fa-rss"></i> <?php echo check_progress_report($n->progress)?></p>
-							          	<p><i class="fa fa-user-md"></i> <strong style="color:blue"><?php echo $pm[0]->fullname ?></strong></p>
-							          	<p><i class="fa fa-arrow-circle-right"></i> <?php echo check_status_report($n->review_status); ?></p>
-							          	</small>
-							          	</td>
-					                    <td>
-					                    <?php if($account_type == 4){?>
-					                    <?php if($n->review_status==0){ ?>
-					                    	<a href="<?php echo base_url('my_report/edit/'.$n->id) ?>"><i class="fa fa-lock" aria-hidden="true"></i></a>
-
-					                    <?php }?>
-					                    <?php }?>
-					                    <?php if($account_type == 3){?>
-					 
-					                    	<a href="<?php echo base_url('my_report/edit/'.$n->id) ?>"><i class="fa fa-lock" aria-hidden="true"></i></a>
-
-					              
-					                    <?php }?>					                    	
-					                    </td>
-							          </tr>
-							          <?php }?>
-						          	<?php }?>
-			                        <?php } ?>
-		                        <?php }?>
 		                    <?php }?>
-		                  <?php }?>
+		                    <?php }?>
+		                    <?php if($account_type == 3){?>
+		 
+		                    	<a href="<?php echo base_url('my_report/edit/'.$value->id) ?>"><i class="fa fa-lock" aria-hidden="true"></i></a>
+
+		              
+		                    <?php }?>					                    	
+		                    </td>
+				          </tr>
+
 	                  <?php }?>
 	                  </tbody>
 	                </table>

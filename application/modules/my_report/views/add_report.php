@@ -3,6 +3,10 @@
 <?php
 //pre($list_report_today);
 //pre($list_task_active);
+//pre($my_room);
+
+$a = $my_room[0];
+
 
 ?>
 	<?php if ($list_report_today==null) { ?>
@@ -84,16 +88,23 @@
                           </select>
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <label  class="control-label col-md-3 col-sm-3 col-xs-12">Phòng ban</label>
+                        <div class="col-md-3 col-xs-12">
+                          <select id ="getProducts" name="my_department" class="form-control">
+                          <?php foreach ($my_room as $key => $value) { ?>
+                            <option value="<?php echo $value ?>"><?php echo $my_department[$key]; ?></option>
+                          <?php } ?>
+                            
+                          </select>
+
+                        </div>                      
+                      </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Chọn công việc báo cáo</label>
-                        <div class="col-md-3 col-sm-3 col-xs-12">
-                          <select class="select3_single form-control" id="list_task" required="required" name="task" tabindex="-1">
-                          <option value="0" completion="100"><strong>Công việc phát sinh</strong></option>
-                          <?php foreach ($list_task_active as $key => $value) { ?>
-                            
-                          	<option completion ="<?php echo $value->completion ?>" value="<?php echo $value->id ?>"><?php echo $value->name?></option>
-                          <?php } ?>
-                          </select>
+                        <div id="list_task" class="col-md-3 col-sm-3 col-xs-12">
+
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">Tiến độ</label>
                         <div class="col-md-1 col-sm-1 col-xs-12">
@@ -120,7 +131,61 @@
               </div>
 	</form>
 </div>
+<div class="display" id ="display">
+</div>
+<script src="<?php echo admin_theme('');?>/vendors/jquery/dist/jquery.min.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function()
+{  
+ // function to get all records from table
+ function getAll(){
+
+
+  
+  $.ajax
+  ({
+   url: "<?php echo base_url(); ?>" + "my_report/get_task/",
+   type:'POST',
+   dataType: 'html',
+   data: "type=" + "<?php echo $a ?>",
+   cache: false,
+   success: function(r)
+   {
+    //alert('ok');
+    $("#list_task").html(r);
+   }
+  });   
+ }
+ 
+ // function to get all records from table
+  getAll();
+ 
+ // code to get all records from table via select box
+ $("#getProducts").change(function()
+ {    
+  var id = $(this).find(":selected").val();
+
+  var dataString = id;
+
+  console.log(id);
+    
+  $.ajax
+  ({
+   url:  "<?php echo base_url(); ?>" + "my_report/get_task/",
+   type:'POST',
+   dataType: 'html',
+   data: "type="+ id,
+   cache: false,
+   success: function(r)
+   {
+    $("#list_task").html(r);
+   } 
+  });
+ })
+ // code to get all records from table via select box
+});
+</script>
 <script type="text/javascript">
  var select = document.getElementById('list_task');
  var input = document.getElementById('out_pro');

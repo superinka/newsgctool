@@ -91,6 +91,13 @@
                         </div>
                       </div>
                       <div class="form-group">
+                        <label  class="control-label col-md-3 col-sm-3 col-xs-12">Phòng ban</label>
+                        <div class="col-md-3 col-xs-12">
+                        <input type="text" class="form-control" name="task" readonly="readonly" placeholder="<?php echo $department_name ?>">
+
+                        </div>                      
+                      </div>                     
+                      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Chọn công việc báo cáo</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control" name="task" readonly="readonly" placeholder="<?php echo $task_info->name ?>">

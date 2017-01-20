@@ -2,6 +2,16 @@
 <?php //pre($list_mission); ?>
 <?php  //echo $project_id;?>
 <?php //pre($list_room_by_project);?>
+<?php //pre($list_emp['member']);?>
+<?php 
+	
+	$li = array();
+	foreach ($list_emp['member'] as $key => $value) {
+		if(in_array($value[1], $li) == false){
+			$li[] = $value[1];
+		}
+	}
+?>
 <?php 
 $total = 0;
 foreach ($list_mission_by_department as $k=>$v) {
@@ -64,7 +74,7 @@ if($old_pro != $total){
     <div class="row">
     <div class="x_panel fixed_height_690">
 	    <div class="x_title">
-	      <h2>Thành viên dự án : <?php echo count($list_emp['member']); ?></h2>
+	      <h2>Thành viên dự án : <?php echo count($li); ?></h2>
 	      <ul class="nav navbar-right panel_toolbox">
 	        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 	        </li>
@@ -102,8 +112,10 @@ if($old_pro != $total){
 
 		    } ?>
 	    <?php }?> -->
-	   	<?php foreach ($list_emp['member'] as $r) {
-	    	?>
+	    <?php $l = array(); ?>
+	   	<?php foreach ($list_emp['member'] as $r) { ?>
+	    	 <?php if(in_array($r[1], $l)==false){  ?>
+                  <?php $l[] = $r[1] ?>
 		      <li class="media event">
 		        <a class="pull-left border-aero profile_thumb">
 		          <i class="fa fa-user aero"></i>
@@ -115,6 +127,7 @@ if($old_pro != $total){
 		          </p>
 		        </div>
 		      </li>
+	    	<?php }?>
 	    	<?php
 
 	    } ?>

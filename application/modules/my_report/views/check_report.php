@@ -4,6 +4,7 @@
 <?php $final_non_leader = $this->CI->get_report_by_room_non_leader(); ?>
 <?php $final_me_uncheck = $this->CI->list_report_by_me($type =0); ?>
 <?php $final_me_checked = $this->CI->list_report_by_me($type =1); ?>
+
 <?php //pre($final_me_uncheck);?>
 <?php //pre($final_me_checked);?>
 <?php //pre($final_non_leader);?>
@@ -360,7 +361,7 @@
 </div>
 <?php }?>
 
-<?php if (array_key_exists('list_report_bonus',$value)==true) {?>
+<?php if(array_key_exists('list_report_bonus',$value)==true && count($value['list_report_bonus']) > 0) { ?>
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -621,7 +622,7 @@
 </div>
 <?php }?>
 
-<?php if (array_key_exists('list_report_bonus',$value)==true) {?>
+<?php if(array_key_exists('list_report_bonus',$value)==true && count($value['list_report_bonus']) > 0) { ?>
 <?php //pre($value['report']); ?>
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">

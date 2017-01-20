@@ -40,6 +40,11 @@ Class My_Report extends MY_Controller {
 			redirect(base_url('view_report/index'));	    	
 	    }
 
+	    $my_room = $this->CI->get_my_room_id();
+
+	    $today_report = array();
+	    //pre($my_room);
+
 	    if($this->data_layout['account_type']==4){
 	    	$department = $this->role_model->get_column('tb_role', 'department_id', $where=array('user_id'=>$my_id));
 	    	foreach ($department as $key => $value) {
@@ -105,6 +110,134 @@ Class My_Report extends MY_Controller {
 	    			$list_room_by_me['department'][$key]['list_miss'] = $list_miss;
 	    		}
 	    		}
+
+	    	
+
+    		foreach ($my_room as $key => $value) {
+    			$today_report_uncheck = $this->CI->list_report_today(0, $value);
+
+    			if($today_report_uncheck!=null){
+    				foreach ($today_report_uncheck as $k => $v) {
+
+    					$task_id = $v->task_id;
+    					$department_name = ($this->department_model->get_info($v->department_id));
+    					$department_name = $department_name->name;
+    					if($task_id==0){
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					if($task_id!=0){
+
+    						$task_info = $this->task_model->get_info($task_id);
+    						if(!$task_info){
+    							$task_name = 'Không xác định';
+    							$mission_name = 'Không xác định';
+    							$project_name = 'Không xác định';
+    						}
+    						else {
+    							$task_name = $task_info->name;
+    							$mission_id = $task_info->mission_id;
+	 							$mission_info = $this->mission_model->get_info($mission_id);
+	    						if(!$mission_info){
+	    							$task_name = 'Không xác định';
+	    							$mission_name = 'Không xác định';
+	    							$project_name = 'Không xác định';
+	    						}
+	    						else {
+	    							$mission_name = $mission_info->name;
+	    							$project_id = $mission_info->project_id;
+	    							$project_info = $this->project_model->get_info($project_id);
+	    							if(!$project_info){
+		    							$task_name = 'Không xác định';
+		    							$mission_name = 'Không xác định';
+		    							$project_name = 'Không xác định';
+	    							}
+	    							else{
+	    								$project_name = $project_info->project_name;
+	    							}
+	    						}   							
+    						}
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					$v->project_name = $project_name;
+    					$v->task_name = $task_name;
+    					$v->mission_name = $mission_name;
+    					$v->department_name = $department_name;
+
+    					$today_report[] = $v;
+    				}
+    				
+    			}
+
+    			$today_report_checked = $this->CI->list_report_today(1, $value);
+
+    			if($today_report_checked!=null){
+    				foreach ($today_report_checked as $k => $v) {
+						$task_id = $v->task_id;
+    					$department_name = ($this->department_model->get_info($v->department_id));
+    					$department_name = $department_name->name;
+    					if($task_id==0){
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					if($task_id!=0){
+
+    						$task_info = $this->task_model->get_info($task_id);
+    						if(!$task_info){
+    							$task_name = 'Không xác định';
+    							$mission_name = 'Không xác định';
+    							$project_name = 'Không xác định';
+    						}
+    						else {
+    							$task_name = $task_info->name;
+    							$mission_id = $task_info->mission_id;
+	 							$mission_info = $this->mission_model->get_info($mission_id);
+	    						if(!$mission_info){
+	    							$task_name = 'Không xác định';
+	    							$mission_name = 'Không xác định';
+	    							$project_name = 'Không xác định';
+	    						}
+	    						else {
+	    							$mission_name = $mission_info->name;
+	    							$project_id = $mission_info->project_id;
+	    							$project_info = $this->project_model->get_info($project_id);
+	    							if(!$project_info){
+		    							$task_name = 'Không xác định';
+		    							$mission_name = 'Không xác định';
+		    							$project_name = 'Không xác định';
+	    							}
+	    							else{
+	    								$project_name = $project_info->project_name;
+	    							}
+	    						}   							
+    						}
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					$v->project_name = $project_name;
+    					$v->task_name = $task_name;
+    					$v->mission_name = $mission_name;
+    					$v->department_name = $department_name;
+
+    					$today_report[] = $v;
+    					//$today_report[] = $v;
+    				}
+    				
+    			} 			
+
+    			
+
+    			
+    		}
 
 
 	    } 
@@ -174,6 +307,136 @@ Class My_Report extends MY_Controller {
 	    		}
 	    	}
 
+    		
+
+    		foreach ($my_room as $key => $value) {
+    			$today_report_uncheck = $this->CI->list_report_today(0, $value);
+
+    			if($today_report_uncheck!=null){
+    				foreach ($today_report_uncheck as $k => $v) {
+
+    					$task_id = $v->task_id;
+    					$department_name = ($this->department_model->get_info($v->department_id));
+    					$department_name = $department_name->name;
+    					if($task_id==0){
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					if($task_id!=0){
+
+    						$task_info = $this->task_model->get_info($task_id);
+    						if(!$task_info){
+    							$task_name = 'Không xác định';
+    							$mission_name = 'Không xác định';
+    							$project_name = 'Không xác định';
+    						}
+    						else {
+    							$task_name = $task_info->name;
+    							$mission_id = $task_info->mission_id;
+	 							$mission_info = $this->mission_model->get_info($mission_id);
+	    						if(!$mission_info){
+	    							$task_name = 'Không xác định';
+	    							$mission_name = 'Không xác định';
+	    							$project_name = 'Không xác định';
+	    						}
+	    						else {
+	    							$mission_name = $mission_info->name;
+	    							$project_id = $mission_info->project_id;
+	    							$project_info = $this->project_model->get_info($project_id);
+	    							if(!$project_info){
+		    							$task_name = 'Không xác định';
+		    							$mission_name = 'Không xác định';
+		    							$project_name = 'Không xác định';
+	    							}
+	    							else{
+	    								$project_name = $project_info->project_name;
+	    							}
+	    						}   							
+    						}
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					$v->project_name = $project_name;
+    					$v->task_name = $task_name;
+    					$v->mission_name = $mission_name;
+    					$v->department_name = $department_name;
+
+    					$today_report[] = $v;
+    				}
+    				
+    			}
+
+    			$today_report_checked = $this->CI->list_report_today(1, $value);
+
+    			if($today_report_checked!=null){
+    				foreach ($today_report_checked as $k => $v) {
+						$task_id = $v->task_id;
+    					$department_name = ($this->department_model->get_info($v->department_id));
+    					$department_name = $department_name->name;
+    					if($task_id==0){
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					if($task_id!=0){
+
+    						$task_info = $this->task_model->get_info($task_id);
+    						if(!$task_info){
+    							$task_name = 'Không xác định';
+    							$mission_name = 'Không xác định';
+    							$project_name = 'Không xác định';
+    						}
+    						else {
+    							$task_name = $task_info->name;
+    							$mission_id = $task_info->mission_id;
+	 							$mission_info = $this->mission_model->get_info($mission_id);
+	    						if(!$mission_info){
+	    							$task_name = 'Không xác định';
+	    							$mission_name = 'Không xác định';
+	    							$project_name = 'Không xác định';
+	    						}
+	    						else {
+	    							$mission_name = $mission_info->name;
+	    							$project_id = $mission_info->project_id;
+	    							$project_info = $this->project_model->get_info($project_id);
+	    							if(!$project_info){
+		    							$task_name = 'Không xác định';
+		    							$mission_name = 'Không xác định';
+		    							$project_name = 'Không xác định';
+	    							}
+	    							else{
+	    								$project_name = $project_info->project_name;
+	    							}
+	    						}   							
+    						}
+    						$project_name = 'Phát sinh';
+    						$task_name = 'Phát sinh';
+    						$mission_name = 'Phát sinh';
+
+    					}
+    					$v->project_name = $project_name;
+    					$v->task_name = $task_name;
+    					$v->mission_name = $mission_name;
+    					$v->department_name = $department_name;
+
+    					$today_report[] = $v;
+    					//$today_report[] = $v;
+    				}
+    				
+    			} 			
+
+    			
+
+    			
+    		}
+
+    		//pre($today_report);
+
 	 	}
 
 	 	$all_report_by_me = null;
@@ -228,13 +491,15 @@ Class My_Report extends MY_Controller {
 
 	 	}
 
+	 	//pre($my_room);
+
 	 	//pre($all_report_by_me);
 	 	$this->data_layout['all_report_by_me'] = $all_report_by_me;
 
 	 	//pre($list_room_by_me);
 	 	$this->data_layout['list_room_by_me'] = $list_room_by_me;
 
-
+		$this->data_layout['today_report'] = $today_report;
 
 		$this->data_layout['temp'] = 'index';
 	    $this->load->view('layout/main', $this->data_layout);
@@ -251,7 +516,16 @@ Class My_Report extends MY_Controller {
 	    $today = date("Y-m-d"); 
 	    $this->data_layout['today'] = $today;
 
-	    //echo $today; 
+
+		$my_room = $this->CI->get_my_room_id();
+		//pre($my_room);
+
+		foreach ($my_room as $key => $value) {
+			$department = $this->department_model->get_info($value);
+			$my_department[] = $department->name;
+		}
+		$this->data_layout['my_department'] = $my_department;
+		$this->data_layout['my_room'] = $my_room;
 
 	    $input = array();
 	    $input['where']['create_by'] = $my_id;
@@ -310,6 +584,8 @@ Class My_Report extends MY_Controller {
 				$progress = $this->input->post('progress');
 				$time_spend = $this->input->post('time_spend');
 				$task = $this->input->post('task');
+
+				$my_department = $this->input->post('my_department');
 
 				$new_completion = $this->input->post('pro');
 
@@ -388,7 +664,8 @@ Class My_Report extends MY_Controller {
 						'progress'      => $progress,
 						'review_by'     => $my_id,
 						'review_status' => $rvstt,
-						'code'          => $code
+						'code'          => $code,
+						'department_id' => $my_department
 
 					);
 				}
@@ -409,7 +686,8 @@ Class My_Report extends MY_Controller {
 						'review_by'     => $my_id,
 						'review_status' => $rvstt,
 						'code'          => $code,
-						'file_att'      => $data_upload['file_name']
+						'file_att'      => $data_upload['file_name'],
+						'department_id' => $my_department
 
 					);
 
@@ -437,6 +715,37 @@ Class My_Report extends MY_Controller {
 
 		$this->data_layout['temp'] = 'add_report';
 	    $this->load->view('layout/main', $this->data_layout);
+	}
+
+	function get_task(){
+		//pre('aaaa');
+		$message = $this->session->flashdata('message');
+	    $this->data_layout['message'] = $message;
+
+	    $my_id = $this->data_layout['id'];
+	    $this->data_layout['my_id'] = $my_id;
+
+	    $today = date("Y-m-d"); 
+	    $this->data_layout['today'] = $today;		
+
+		if (isset($_POST['type'])) {
+			//pre($_POST['type']);
+
+			$room_id = $_POST['type'];
+
+			//pre($room_id);
+			$list_task_active = $this->CI->get_my_task_active_by_room_id($room_id);
+
+			//$list_task_active = $this->CI->list_report_by_room_id(1, $room_id);
+
+			//pre($report_uncheck);
+			$this->data_layout['list_task_active'] = $list_task_active;
+			//$this->data_layout['report_checked'] = $report_checked;
+			
+			$this->data_layout['temp'] = 'get_task';
+			$this->load->view('get_task', $this->data_layout);
+
+		}
 	}
 
 	function check_percent_task(){
@@ -700,6 +1009,8 @@ Class My_Report extends MY_Controller {
 			}
 			
 		}
+
+
 
 		$this->data_layout['temp'] = 'check_report';
 	    $this->load->view('layout/main', $this->data_layout);
@@ -1134,6 +1445,17 @@ Class My_Report extends MY_Controller {
 	    	}
 
 	    	else {
+
+
+	    		$mission_id = $task_info->mission_id;
+	    		$mission_info = $this->mission_model->get_info($mission_id);
+	    		$department_id = $mission_info->department_id;
+	    		$info_depart = $this->department_model->get_info($department_id);
+	    		$department_name = $info_depart->name;
+
+	    		$this->data_layout['department_id'] = $department_id;
+	    		$this->data_layout['department_name'] = $department_name;
+
 	 			if($this->input->post()){
 					$this->form_validation->set_rules('description', 'description', 'trim');
 					$this->form_validation->set_rules('message', 'Mô tả', 'trim');
@@ -1220,7 +1542,8 @@ Class My_Report extends MY_Controller {
 							'review_by'     => $my_id,
 							'review_status' => $rvstt,
 							'code'          => $code,
-							'file_att'      => $file_att
+							'file_att'      => $file_att,
+							'department_id' => $department_id
 
 						);
 

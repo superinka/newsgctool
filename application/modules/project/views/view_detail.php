@@ -171,6 +171,11 @@
                   <li><a title="Báo cáo ngay cho công việc này" href="<?php echo base_url('my_report/add_report_now/'.$value->id) ?>" style="color:red"><i class="fa fa-fighter-jet"></i></a></li>
                   <?php }?>
                 <?php }?>
+                <?php if ($account_type==3) {?>
+                <?php   if($percent_day != 100 && $percent_day >= 0 ) { ?>
+                <li><a title="Báo cáo ngay cho công việc này" href="<?php echo base_url('my_report/add_report_now/'.$value->id) ?>" style="color:red"><i class="fa fa-fighter-jet"></i></a></li> 
+                <?php }?>               
+                <?php }?>
                 </ul>
                 
                 </div>

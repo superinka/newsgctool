@@ -1,3 +1,4 @@
+<?php //pre($list_project); ?>
 <!-- top tiles -->
 <div class="row tile_count">
 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -97,6 +98,13 @@
 
     				$status_bg;
 
+            // $l = array();
+            // foreach ($row->emp as $r) {
+            //   if(in_array($r->user_id, $l)==false){
+            //     $l[]->emp_name;
+            //   }
+            // }
+
 				if ($c==1) {$status_bg = 'info';}
 				else if ($c==2) {$status_bg = 'success';}
 				else if ($c==3) {$status_bg = 'danger';}          			
@@ -112,12 +120,16 @@
               </td>
               <td style="padding-top: 4%;">
                 <ul class="list-inline">
+                <?php $l = array(); ?>
                 <?php foreach ($row->emp as $r) { ?>
+                  <?php if(in_array($r->user_id, $l)==false){  ?>
+                  <?php $l[] = $r->user_id ?>
                   <li>
                   <a href="" title="<?php echo $r->emp_name ?>">
                     <img src="<?php echo admin_theme('');?>/production/images/default-avatar.jpg" class="avatar" alt="Avatar">
                   </a>
                   </li>
+                  <?php }?>
                 <?php } ?>
 
                 </ul>
