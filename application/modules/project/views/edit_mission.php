@@ -1,3 +1,17 @@
+<ol class="breadcrumb" style="border-bottom: 2px solid #E6E9ED;">
+  <li class="breadcrumb-item">
+    <i class="fa fa-home"></i>
+    <a href="<?php echo base_url('project/index') ?>">Tổng quan</a>
+		
+  </li>
+	 <li class="breadcrumb-item">
+	 <a href="<?php echo base_url('project/mission/index/'.$project_id) ?>">Dự án</a>
+	 </li>
+	 <li class="breadcrumb-item active">
+	 Sửa nhiệm vụ
+	 </li>
+</ol>
+
 <h1>Sửa nhiệm vụ <b><?php echo $info_mission->name ?></b></h1>
 <div class="row">
 	<div class="col-md-9">

@@ -29,6 +29,17 @@ if($old_pro != $total){
 }
 //$this->project_model->update($project_id,$data);
 ?>
+<ol class="breadcrumb" style="border-bottom: 2px solid #E6E9ED;">
+  <li class="breadcrumb-item">
+    <i class="fa fa-home"></i>
+    <a href="<?php echo base_url('project/index') ?>">Tổng quan</a>
+		
+  </li>
+	 <li class="breadcrumb-item active">
+	 <a href="<?php echo base_url('project/mission/index/'.$info_project->id) ?>">Dự án</a>
+	 </li>
+</ol>
+
 <?php if ($message){$this->load->view('layout/message',$this->data_layout); }?>
 <div class="row">
   <div class="col-md-3 col-xs-12 widget widget_tally_box">

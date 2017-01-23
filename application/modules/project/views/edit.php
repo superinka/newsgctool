@@ -1,3 +1,15 @@
+<div class="row">
+
+<ol class="breadcrumb" style="border-bottom: 2px solid #E6E9ED;">
+  <li class="breadcrumb-item">
+    <i class="fa fa-home"></i>
+    <a href="<?php echo base_url('project/index') ?>">Dự án</a>
+		
+  </li>
+	 <li class="breadcrumb-item active">
+	 <a href="<?php echo base_url('project/edit/'.$info_project->id) ?>">Dự án</a>
+	 </li>
+</ol>
 <h1>Sửa dự án <b><?php echo $info_project->project_name ?></b></h1>
 <?php //pre($list_department_employee);  ?>
 <?php //pre($list_emp);  ?>
@@ -114,4 +126,6 @@
 
 		</form>
 	</div>
+</div>
+
 </div>

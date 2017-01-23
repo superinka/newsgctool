@@ -1235,6 +1235,7 @@ Class Mission extends MY_Controller {
 	    $now_user_id = $this->data_layout['id'];
 	    $account_type = $this->data_layout['account_type'];
 	    $project_id = $this->uri->segment(4);
+		$this->data_layout['project_id'] = $project_id;
 
 	    if ($account_type > 3) {
 			$this->session->set_flashdata('message','Bạn không đủ quyền hạn');

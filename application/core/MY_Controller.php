@@ -880,6 +880,25 @@ Class MY_Controller extends CI_Controller {
 
 	}
 
+	function breadcrumb(){
+
+		$first_element = $this->uri_segment(1);
+
+		switch ($first_element) {
+			case 'project':
+				# code...
+				$list[0]  = 'Dự Án';
+				break;
+			case 'project':
+				# code...
+				$list[0]  = 'Dự Án';
+				break;			
+			default:
+				# code...
+				break;
+		}
+	}
+
 	function logout()
     {
 	    $this->session->unset_userdata('logged_in');

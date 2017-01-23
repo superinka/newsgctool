@@ -6,6 +6,22 @@
 <style type="text/css">
   ul.task-request li a i {padding-right: 15px;}
 </style>
+<ol class="breadcrumb" style="border-bottom: 2px solid #E6E9ED;">
+  <li class="breadcrumb-item">
+    <i class="fa fa-home"></i>
+    <a href="<?php echo base_url('project/index') ?>">Tổng quan</a>
+		
+  </li>
+	 <li class="breadcrumb-item">
+	 <a href="<?php echo base_url('project/mission/index/'.$info_project->id) ?>">Dự án</a>
+	 </li>
+   <li class="breadcrumb-item">
+	 <a href="<?php echo base_url('project/mission/index/'.$info_project->id.'/'.$mission_view_id) ?>">Nhiệm vụ</a>
+	 </li>
+   <li class="breadcrumb-item active">
+	 Công việc
+	 </li>
+</ol>
 <div class="row">
   <div class="col-md-12 col-xs-12 widget widget_tally_box">
     <div class="row">
@@ -92,7 +108,7 @@
                 if($value->lock == 1) {$cl = '#5cb85c';$lo = '<i class="fa fa-unlock" aria-hidden="true"></i>';} else {$cl = '#d9534f';$lo ='<i class="fa fa-lock" aria-hidden="true"></i>';}
                 ?>
                 <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-7">
                 <div class="row">
                   <div>
                     <p style="color:<?php echo $cl ?>">
@@ -158,7 +174,7 @@
                   </div>
                 </div>
                 </div>
-               <div class="col-md-4">
+               <div class="col-md-2">
                 <div class="row">
                   <div>
                     <p style="color:<?php echo $cl ?>">
@@ -189,7 +205,7 @@
                   </div>
                 </div>
                 </div>
-              <div class="col-md-4" style="padding-top: 45px;">
+              <div class="col-md-3" style="padding-top: 45px;">
               <div class="row">
                 <div class="col-md-6">
                   <span class="label label-<?php echo $c; ?> pull-right"><?php  echo $t?></span>

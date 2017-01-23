@@ -1,5 +1,13 @@
 <?php //pre($list_project); ?>
 <!-- top tiles -->
+
+<ol class="breadcrumb" style="border-bottom: 2px solid #E6E9ED;">
+  <li class="breadcrumb-item active">
+    <i class="fa fa-home"></i>
+    <a href="<?php echo base_url('project/index') ?>">Tổng quan</a>
+  </li>
+</ol>
+
 <div class="row tile_count">
 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
   <span class="count_top"><i class="fa fa-user"></i> Tổng số dự án</span>
