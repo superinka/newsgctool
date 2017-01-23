@@ -1584,7 +1584,7 @@ Class Mission extends MY_Controller {
 		$task_id = intval($task_id);
 		$this->data_layout['task_id'] = $task_id;
 
-		if($this->data_layout['account_type']!=3){
+		if($this->data_layout['account_type']==5){
 			$this->session->set_flashdata('message','Không đủ quyền hạn');
 			redirect(base_url('project/mission/view_detail/'.$project_id.'/'.$mission_id));	
 		}
@@ -1644,18 +1644,29 @@ Class Mission extends MY_Controller {
 
 							$code = $info_task->code;
 
-							$data_task = array(
-								'name'          => $task_name,
-								'description'   => $description,
-								'start_date'    => $newformat_start_date,
-								'end_date'      => $newformat_end_date,
-								'create_by'     => $my_id,
-								'create_date'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d'),
-								'status'        => $status,
-								'mission_id'    => $mission_id,
-								'project_id'    => $project_id,
-								'code'          => $code
-							);
+							if($account_type <=3){
+								$data_task = array(
+									'name'          => $task_name,
+									'description'   => $description,
+									'start_date'    => $newformat_start_date,
+									'end_date'      => $newformat_end_date,
+									'create_by'     => $my_id,
+									'create_date'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d'),
+									'status'        => $status,
+									'mission_id'    => $mission_id,
+									'project_id'    => $project_id,
+									'code'          => $code
+								);
+							}
+
+							if($account_type==4){
+									$data_task = array(
+									'name'          => $task_name,
+									'description'   => $description,
+								);							
+							}
+
+
 
 							//pre($data_mission);
 							if($this->task_model->update($task_id,$data_task)) {

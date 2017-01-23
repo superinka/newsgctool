@@ -49,6 +49,9 @@
                       		<?php if(array_key_exists('list_task',$v)==true) { ?>
 	                      		<?php  foreach ($v->list_task as $x => $y) { ?>
 	                      		<?php 
+														//pre($y);
+														if($y->create_by == $my_id){ ?>
+														<?php 
 	                      		$start_date = strtotime($y->start_date);
 	                      		$newformat_start_date = date('m-d-Y',$start_date);
                  				$end_date = strtotime($y->end_date);
@@ -84,6 +87,8 @@
 		                          </td>
 		                          <td style="padding-top: 0px;"><?php echo $st  ?></td>
 		                        </tr>
+														<?php } ?>
+
 		                        <?php } ?>
 	                        <?php }?>
                         <?php }?>

@@ -136,9 +136,21 @@
                 <?php foreach ($row->emp as $r) { ?>
                   <?php if(in_array($r->user_id, $l)==false){  ?>
                   <?php $l[] = $r->user_id ?>
+                  <?php 
+                  $uid = $r->user_id;
+                  $info_user = $create_name = $this->home_model->get_info_rule($where = array('user_id'=>$uid));
+                  $ava_link = $info_user->avatar;
+
+                  if($ava_link == null) {
+                    $link = admin_theme('').'/production/images/default-avatar.jpg';
+                  }
+                  else {
+                    $link = base_url('public/upload/avatar/'.$ava_link);
+                  }
+                  ?>
                   <li>
                   <a href="" title="<?php echo $r->emp_name ?>">
-                    <img src="<?php echo admin_theme('');?>/production/images/default-avatar.jpg" class="avatar" alt="Avatar">
+                    <img src="<?php echo $link ?>" class="avatar" alt="Avatar">
                   </a>
                   </li>
                   <?php }?>

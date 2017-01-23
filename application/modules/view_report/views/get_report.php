@@ -216,7 +216,7 @@
 										  <p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
 			                <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo 'Phát Sinh';?></p> 
 			                <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo 'Phát Sinh';?></p>
-											<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $v->create_name ?></p>
+											<p><i class="fa fa-angle-double-right"></i> bởi : <?php //echo $v->create_name ?></p>
 			              </small>  
 			            </td>
 			          </tr>

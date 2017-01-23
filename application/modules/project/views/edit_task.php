@@ -22,6 +22,7 @@
 	  		$end_date = strtotime($info_task->end_date);
 	  		$newformat_end_date = date('m-d-Y',$end_date);
 		  ?>
+			<?php if($account_type < 4) {?>
 		  <div class="form-group">
 		    <label class="control-label col-md-2 col-sm-2 col-xs-12">Ngày bắt đầu <span class="required">*</span>
 		    </label>
@@ -51,6 +52,7 @@
 	      <label class="control-label col-md-2 col-sm-2 col-xs-12">Code</label>
 	      <input type="text" class="form-control" readonly="readonly" placeholder="<?php echo $code_task ?>" value="<?php echo $info_task->code ?>" name="code_task">
 	      </div>
+			<?php }?>
 		  <div class="ln_solid"></div>
 		  <div class="form-group">
 		    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">

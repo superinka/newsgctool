@@ -114,7 +114,7 @@
                     <p style="color:<?php echo $cl ?>">
                     <i class="fa fa-angle-double-right"></i> 
                     <?php $link=null;?>
-                    <?php if($account_type==3){$link = base_url('project/mission/edit_task/'.$project_id.'/'.$mission_view_id.'/'.$value->id);} ?>
+                    <?php if($account_type>=3){$link = base_url('project/mission/edit_task/'.$project_id.'/'.$mission_view_id.'/'.$value->id);} ?>
                     <strong>
                       <a style="color:<?php echo $cl ?>" title ="bởi <?php echo $value->create_by_name ?>" href="<?php echo $link ?>"><?php echo $value->name ?> <?php echo ''.$lo.'' ?></a>
                     </strong>
@@ -137,6 +137,8 @@
                   $pass_day = ($today_date - $date1) / (60 * 60 * 24);
                   $pass_day = $pass_day + 1 ;
 
+                  //pre($pass_day);
+
                   $percent_day = percent_day($pass_day, $total_day);
 
                   $color = 'green';
@@ -151,18 +153,15 @@
                 <div class="row">
                   <div class="col-md-11">
                     <small>
-                    <?php echo 'Tổng :' .$total_day.' Ngày -';
-                    if($percent_day == 100 ) {
+                    <?php echo 'Tổng :' .$total_day.' Ngày - ';
+                    if($percent_day > 100 ) {
                       echo "Quá hạn";
                     }
                     else if($percent_day < 0 ){
                       echo "Chưa bắt đầu";
                     }
                     else {
-                      echo 'đã qua ';
-                      printf( "%.2f",  $percent_day ); 
-                      echo  '%';
-                      echo '('.$pass_day.' ngày)';
+                      echo $value->start_date .' --> ' .$value->end_date;
                     }
                     
 
@@ -214,14 +213,14 @@
                 <ul style="list-style: none; display: inline-flex; padding-left: 0px;" class="task_request">
                 <?php if ($account_type==4) {?>
                   <li style="padding-right: 5px;"><a title="Xin sửa thời gian" href="<?php echo base_url('request/request_time_task/'.'c101-'.$value->code) ?>"><i class="fa fa-clock-o" aria-hidden="true"></i></a></li>
-                  <li style="padding-right: 5px;"><a title="Xin sửa tên" href="#"><i class="fa fa-info-circle" aria-hidden="true"></i></a></li>
+                  <!--<li style="padding-right: 5px;"><a title="Xin sửa tên" href="#"><i class="fa fa-info-circle" aria-hidden="true"></i></a></li>-->
                   <li style="padding-right: 5px;"><a title="Xin sửa tiến độ" href="<?php echo base_url('request/request_progress_task/'.'c201-'.$value->code) ?>"><i class="fa fa-battery-full" aria-hidden="true"></i></a></li>
-                  <?php   if($percent_day != 100 && $percent_day >= 0 ) { ?>
+                  <?php   if($percent_day <= 100 && $percent_day >= 0 && $date2>=$today_date) { ?>
                   <li><a title="Báo cáo ngay cho công việc này" href="<?php echo base_url('my_report/add_report_now/'.$value->id) ?>" style="color:red"><i class="fa fa-fighter-jet"></i></a></li>
                   <?php }?>
                 <?php }?>
                 <?php if ($account_type==3) {?>
-                <?php   if($percent_day != 100 && $percent_day >= 0 ) { ?>
+                <?php   if($percent_day <= 100 && $percent_day >= 0 && $date2>=$today_date) { ?>
                 <li><a title="Báo cáo ngay cho công việc này" href="<?php echo base_url('my_report/add_report_now/'.$value->id) ?>" style="color:red"><i class="fa fa-fighter-jet"></i></a></li> 
                 <?php }?>               
                 <?php }?>
