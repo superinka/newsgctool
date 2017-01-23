@@ -92,7 +92,7 @@
                 if($value->lock == 1) {$cl = '#5cb85c';$lo = '<i class="fa fa-unlock" aria-hidden="true"></i>';} else {$cl = '#d9534f';$lo ='<i class="fa fa-lock" aria-hidden="true"></i>';}
                 ?>
                 <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-4">
                 <div class="row">
                   <div>
                     <p style="color:<?php echo $cl ?>">
@@ -133,25 +133,58 @@
                   }
                 ?>
                 <div class="row">
-                  <small>
-                  <?php echo 'Tổng :' .$total_day.' Ngày -';
-                  if($percent_day == 100 ) {
-                    echo "Quá hạn";
-                  }
-                  else if($percent_day < 0 ){
-                    echo "Chưa bắt đầu";
-                  }
-                  else {
-                    echo 'đã qua ';
-                    printf( "%.2f",  $percent_day ); 
-                    echo  '%';
-                    echo '('.$pass_day.' ngày)';
-                  }
-                  
+                  <div class="col-md-11">
+                    <small>
+                    <?php echo 'Tổng :' .$total_day.' Ngày -';
+                    if($percent_day == 100 ) {
+                      echo "Quá hạn";
+                    }
+                    else if($percent_day < 0 ){
+                      echo "Chưa bắt đầu";
+                    }
+                    else {
+                      echo 'đã qua ';
+                      printf( "%.2f",  $percent_day ); 
+                      echo  '%';
+                      echo '('.$pass_day.' ngày)';
+                    }
+                    
 
-                  ?></small>
-                  <div class="progress progress_sm">
-                    <div class="progress-bar bg-<?php echo $color;?>" role="progressbar" data-transitiongoal="<?php echo $percent_day ?>">
+                    ?></small>
+                    <div class="progress progress_sm">
+                      <div class="progress-bar bg-<?php echo $color;?>" role="progressbar" data-transitiongoal="<?php echo $percent_day ?>">
+                      </div>
+                    </div>            
+                  </div>
+                </div>
+                </div>
+               <div class="col-md-4">
+                <div class="row">
+                  <div>
+                    <p style="color:<?php echo $cl ?>">
+                      Tiến độ
+                    </p>
+
+                  </div>
+                </div>
+                <?php 
+                  $color2 = 'green';
+                  if($value->completion<70) {
+                    $color = 'red';
+                  }
+
+                  if ($value->completion<25){
+                    $color = 'red';
+                  }
+                ?>
+                <div class="row">
+                  <div class="col-md-11">
+                    <small>
+                      <?php echo $value->completion ?>%
+                    </small>
+                    <div class="progress progress_sm" style="width:100%">
+                      <div class="progress-bar bg-<?php echo $color2;?>" role="progressbar" data-transitiongoal="<?php echo $value->completion ?>">
+                      </div>
                     </div>
                   </div>
                 </div>
