@@ -174,7 +174,12 @@
 			case 'Phòng Vận Hành':
 				return '#74bb1a';
 				break;
-
+			case 'Phòng Kế Toán':
+				return '#ad2287';
+				break;
+			case 'Phòng Hành Chính và Nhân Sự':
+				return '#bd601b';
+				break;
 			default:
 				# code...
 				return "#BDC3C7";
@@ -261,6 +266,10 @@
     	return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 	}
 
+	function cmp($a, $b)
+	{
+		return strcmp($a["account_type"], $b["account_type"]);
+	}
 
 
 ?>

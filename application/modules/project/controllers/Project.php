@@ -87,18 +87,32 @@ Class Project extends MY_Controller {
 
 	function proportion_department() {
 
-		if ($this->data_layout['account_type']>2) {
+		$my_id = $this->data_layout['id'];
+		$project_id = $this->uri->segment(3);
+		$project_id = intval($project_id);
+		$this->data_layout['project_id'] = $project_id;
+
+		if ($this->data_layout['account_type']>3) {
 			$this->session->set_flashdata('message','Bạn không đủ quyền hạn');
 			redirect(base_url('project/index'));
 		}
+		
 
 		else {
-			
-			//lay id du an can sua
-			$project_id = $this->uri->segment(3);
-			$project_id = intval($project_id);
-			$this->data_layout['project_id'] = $project_id;
+			if ($this->data_layout['account_type']==3 ) {
 
+				$info_project = $this->project_model->get_info($project_id);
+
+				//pre($info_project->create_by);
+				//pre($my_id);
+
+				if($my_id != $info_project->create_by){
+				$this->session->set_flashdata('message','Bạn không tạo dự án này nên không thể sửa');
+				redirect(base_url('project/index'));
+				}
+
+			}			
+			
 			$input = array();
 			$input['where']['project_id'] = $project_id;
 

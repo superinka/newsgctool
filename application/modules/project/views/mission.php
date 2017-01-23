@@ -62,10 +62,14 @@ if($old_pro != $total){
         <p><?php echo $info_project->description ?></p>
 
         <div class="divider"></div>
-
+				<?php 
+        $create_name = $this->home_model->get_fullname_employee($info_project->create_by);
+        $create_name = $create_name[0]->fullname; 				
+				?>
         <p>Ngày tạo : <?php echo $info_project->create_date  ?></p>
         <p>Ngày bắt đầu : <?php echo $info_project->start_date  ?></p>
         <p>Ngày kết thúc : <?php echo $info_project->end_date  ?></p>
+				<p>Người tạo : <?php echo $create_name  ?></p>
 
       </div>
     </div>

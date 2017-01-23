@@ -57,11 +57,11 @@
             <tr>
               <th style="width: 1%">#</th>
               <th style="width: 20%">Tên dự án</th>
-              <th>Thành viên</th>
+              <th style="width: 20%">Thành viên</th>
               <th>Thời gian</th>
               <th>Status</th>
               <th>Tiến độ</th>
-              <th style="width: 20%">#Edit</th>
+              <th style="width: 10%">#Edit</th>
             </tr>
           </thead>
           <tbody>
@@ -107,7 +107,10 @@
 
 				if ($c==1) {$status_bg = 'info';}
 				else if ($c==2) {$status_bg = 'success';}
-				else if ($c==3) {$status_bg = 'danger';}          			
+				else if ($c==3) {$status_bg = 'danger';}
+
+        $create_name = $this->home_model->get_fullname_employee($row->create_by);
+        $create_name = $create_name[0]->fullname;          			
           	?>
             <tr>
               <td style="padding-top: 2%;">#</td>
@@ -116,9 +119,10 @@
                 <br />
                 <small>Ngày tạo:  <?php echo $row->create_date ?></small><br>
                 <small>Ngày bắt đầu:  <?php echo $row->start_date ?></small><br>
-                <small>Ngày kết thúc:  <?php echo $row->end_date ?></small>
+                <small>Ngày kết thúc:  <?php echo $row->end_date ?></small><br>
+                <small>Người tạo:  <?php echo $create_name ?></small>
               </td>
-              <td style="padding-top: 4%;">
+              <td style="padding-top: 4%; width:20%">
                 <ul class="list-inline">
                 <?php $l = array(); ?>
                 <?php foreach ($row->emp as $r) { ?>
@@ -148,15 +152,15 @@
 	              	<span class="percent"></span>
 	              </span>	
               </td>
-              <td>
+              <td style="padding-top: 2%;width:10%">
 
                 <?php if($account_type < 4) { ?>
-                <a href="<?php echo base_url('project/edit/'.$row->id) ?>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                <a href="<?php echo base_url('project/edit/'.$row->id) ?>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a></br>
                 <?php }?>
                 <?php if($account_type < 3) {?>
                 <a onclick="return confirm('Are you sure you want to delete this item?');" href="<?php echo base_url('project/delete/'.$row->id)?>" class="btn btn-danger btn-xs">
                 	<i class="fa fa-trash-o"></i> Delete 
-                </a>
+                </a></br>
                 <?php }?>
                 <a href="<?php echo base_url('project/mission/index/'.$row->id) ?>" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Xem</a>
               </td>

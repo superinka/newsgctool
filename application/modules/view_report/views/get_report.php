@@ -5,19 +5,6 @@
   <div class="x_title">
     <h2><i class="fa fa-bars"></i> <small></small></h2>
     <ul class="nav navbar-right panel_toolbox">
-      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-      </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Settings 1</a>
-          </li>
-          <li><a href="#">Settings 2</a>
-          </li>
-        </ul>
-      </li>
-      <li><a class="close-link"><i class="fa fa-close"></i></a>
-      </li>
     </ul>
     <div class="clearfix"></div>
   </div>
@@ -130,19 +117,7 @@
 			    <div class="x_title">
 			      <h2><?php echo $value['department_name'] ?> <small>Báo cáo chưa duyệt</small></h2>
 			      <ul class="nav navbar-right panel_toolbox">
-			        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-			        </li>
-			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#">Settings 1</a>
-			            </li>
-			            <li><a href="#">Settings 2</a>
-			            </li>
-			          </ul>
-			        </li>
-			        <li><a class="close-link"><i class="fa fa-close"></i></a>
-			        </li>
+
 			      </ul>
 			      <div class="clearfix"></div>
 			    </div>
@@ -151,7 +126,7 @@
 			      <table id="datatable-checkbox<?php echo $i?>" class="table table-striped table-bordered bulk_action">
 			        <thead>
 			          <tr>
-			            <th>#</th>
+			            <!--<th>#</th>-->
 			            <th style="width: 60%">Nội Dung Báo cáo</th>
 			            <th>Thông tin</th>
 			          </tr>
@@ -174,12 +149,12 @@
 				          }
 				          ?>
 				          <tr>
-				            <th scope="row"><?php echo $v->id ?></th>
+				            <!--<th scope="row"><?php echo $v->id ?></th>-->
 				            <td>
 				            	<p><?php echo $v->description ?></p>
 				            	<small>
 				            	<p><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></p>
-				            	<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $v->create_name ?></p>
+				            	
 				            	</small>
 				            </td>
 				            <td>                      
@@ -200,7 +175,7 @@
 			      <table class="table">
 			        <thead>
 			          <tr>
-			            <th>#</th>
+			            <!--<th>#</th>-->
 			            <th style="width: 60%">Nội Dung Báo Cáo</th>
 			            <th>Thông Tin</th>
 			          </tr>
@@ -228,19 +203,20 @@
 
 			              ?>
 			          <tr>
-			            <th scope="row"><?php echo $v->id ?></th>
+			            <!--<th scope="row"><?php echo $v->id ?></th>-->
 			            <td>
 			            	<p><?php echo $v->description ?></p>
 			            	<small>
 			            	<p><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></p>
-			            	<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $mission_for ?></p>
+
 			            	</small>
 			            </td>
 			            <td>                      
 			              <small>
-							<p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
+										  <p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
 			                <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo 'Phát Sinh';?></p> 
 			                <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo 'Phát Sinh';?></p>
+											<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $v->create_name ?></p>
 			              </small>  
 			            </td>
 			          </tr>
@@ -288,19 +264,6 @@
 			    <div class="x_title">
 			      <h2><?php echo $value['department_name'] ?> <small>Báo cáo đã duyệt</small></h2>
 			      <ul class="nav navbar-right panel_toolbox">
-			        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-			        </li>
-			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#">Settings 1</a>
-			            </li>
-			            <li><a href="#">Settings 2</a>
-			            </li>
-			          </ul>
-			        </li>
-			        <li><a class="close-link"><i class="fa fa-close"></i></a>
-			        </li>
 			      </ul>
 			      <div class="clearfix"></div>
 			    </div>
@@ -309,7 +272,7 @@
 			      <table id="datatable-checkbox_<?php echo $i?>" class="table table-striped table-bordered bulk_action">
 			        <thead>
 			          <tr>
-			            <th>#</th>
+			            <!--<th>#</th>-->
 			            <th style="width: 60%">Nội Dung Báo cáo</th>
 			            <th>Thông tin</th>
 			          </tr>
@@ -333,12 +296,12 @@
 				          }
 				          ?>
 				          <tr>
-				            <th scope="row"><?php echo $v->id ?></th>
+				            <!--<th scope="row"><?php echo $v->id ?></th>-->
 				            <td style="width: 60%">
 				            	<p><?php echo $v->description ?></p>
 				            	<small>
 				            	<p><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></p>
-				            	<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $v->create_name ?></p>
+				            	
 				            	</small>
 				            </td>
 				            <td>                      
@@ -347,6 +310,7 @@
 				                <p>
 				                <i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo $v->project_name ?></p> 
 				                <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $v->mission_name?></p>
+												<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $v->create_name ?></p>
 				              </small>  
 				            </td>
 				          </tr>
@@ -360,7 +324,7 @@
 			      <table class="table">
 			        <thead>
 			          <tr>
-			            <th>#</th>
+			            <!--<th>#</th>-->
 			            <th style="width: 60%">Nội Dung Báo cáo</th>
 			            <th>Thông tin</th>
 			          </tr>
@@ -388,19 +352,20 @@
 
 			              ?>
 			          <tr>
-			            <th scope="row"><?php echo $v->id ?></th>
+			            <!--<th scope="row"><?php echo $v->id ?></th>-->
 			            <td style="width: 60%">
 			            	<p><?php echo $v->description ?></p>
 			            	<small>
 			            	<p><i class="fa fa-angle-double-right"></i> <?php echo $v->note?></p>
-			            	<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $mission_for ?></p>
+			            	
 			            	</small>
 			            </td>
 			            <td>                      
 			              <small>
-							<p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
+											<p><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $x ?></p>
 			                <p><i class="fa fa-product-hunt" aria-hidden="true"></i> <?php echo 'Phát sinh'; ?></p> 
 			                <p><i class="fa fa-tasks" aria-hidden="true"></i> <?php echo 'Phát sinh';?></p>
+											<p><i class="fa fa-angle-double-right"></i> bởi : <?php echo $mission_for ?></p>
 			              </small>  
 			            </td>
 			          </tr>

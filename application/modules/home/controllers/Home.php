@@ -41,6 +41,7 @@ Class Home extends MY_Controller {
 		//$account_type = $session_data['account_type'];
 
 		$input = array();
+		//$input['order'] = array('id','DESC'))
 		$list_employee = $this->home_model->get_list($input);
 		$this->data_layout['list_employee'] = $list_employee;
 		//pre($list_employee);
@@ -66,6 +67,8 @@ Class Home extends MY_Controller {
 			}
 
 		}
+
+		uasort($list_employee, 'cmp');
 
 		//pre($list_employee);
 		$this->data_layout['list_employee'] = $list_employee;
