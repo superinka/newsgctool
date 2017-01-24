@@ -898,6 +898,84 @@ Class MY_Controller extends CI_Controller {
 				break;
 		}
 	}
+	function list_member_by_room($room_id=''){
+
+		$today = date("Y-m-d"); 
+
+
+		switch ($room_id) {
+			case '2':
+				$my_room = array('6','7','8','9');
+				break;
+			case '3':
+				$my_room = array('10');
+				break;
+			case '4':
+				$my_room = array('15');
+				break;		
+			case '5':
+				$my_room = array('13','14');
+				break;	
+			case '6':
+				$my_room = array('6');
+				break;	
+			case '7':
+				$my_room = array('7');
+				break;
+			case '8':
+				$my_room = array('8');
+				break;
+			case '9':
+				$my_room = array('9');
+				break;
+			case '10':
+				$my_room = array('10');
+				break;
+			case '15':
+				$my_room = array('15');
+				break;
+			case '13':
+				$my_room = array('13');
+				break;
+			case '14':
+				$my_room = array('14');
+				break;				
+			default:
+				break;
+		}
+
+		foreach ($my_room as $key => $value) {
+
+			$input = array();
+			$input['where']['department_id'] = $value;
+			$list_member = $this->role_model->get_list($input);
+
+			if(!$list_member){
+				$list_m = null;
+			}
+			else {
+				foreach ($list_member as $k => $v) {
+					
+
+					$input_report = array();
+					$input_report['where']['create_date'] = $today;
+					$input_report['where']['create_by'] = $v->user_id;
+					$l = $this->my_report_model->get_list($input_report);
+					if($l){
+						$v->check = '1';
+					}
+					else {
+						$v->check = '0';
+					}
+
+					$list_m[] = $v;
+				}				
+			}
+
+		}
+
+		return $list_m;
+	}
 
 	function logout()
     {

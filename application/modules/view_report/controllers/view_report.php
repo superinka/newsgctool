@@ -304,5 +304,70 @@ Class View_Report extends MY_Controller {
 		}
 
 	}
+	
+	function report_statics(){
+		$message = $this->session->flashdata('message');
+	    $this->data_layout['message'] = $message;
+
+	    $my_id = $this->data_layout['id'];
+	    $this->data_layout['my_id'] = $my_id;
+
+	    $today = date("Y-m-d"); 
+	    $this->data_layout['today'] = $today;	
+
+
+	    $input_report = array();
+	    $input_report['where']['create_date']  = $today;
+	    $list_report_today = $this->view_report_model->get_list($input_report);
+	    $this->data_layout['list_report_today'] = $list_report_today;
+
+
+		$input_report = array();
+	    $input_report['where']['create_date']  = $today;
+	    $input_report['where']['review_status']  = 1;
+	    $list_report_today_uncheck = $this->view_report_model->get_list($input_report);
+	    $this->data_layout['list_report_today_uncheck'] = $list_report_today_uncheck;
+
+		$input_report = array();
+	    $input_report['where']['create_date']  = $today;
+	    $input_report['where']['review_status']  = 0;
+	    $list_report_today_checked = $this->view_report_model->get_list($input_report);
+	    $this->data_layout['list_report_today_checked'] = $list_report_today_checked;
+
+	    $input_emp = array();
+	    $list_emp = $this->home_model->get_list($input_emp);
+	    foreach ($list_emp as $key => $value) {
+	    	$uid = $value->user_id;
+	    	$info_user = $this->acc_model->get_info($uid);
+	    	if($info_user->account_type < 3){
+	    		unset($list_emp[$key]);
+	    	}
+	    }
+	    $this->data_layout['list_emp'] = $list_emp;
+
+	    //pre($list_emp);
+	    $list_emp_reported = $list_emp_unreport = array();
+	    foreach ($list_emp as $key => $value) {
+	    	$user_id = $value->user_id;
+	    	$input_report = array();
+	    	$input_report['where']['create_date']  = $today;
+	    	$input_report['where']['create_by']  = $user_id;
+	    	$list_r = $this->view_report_model->get_list($input_report);
+	    	
+	    	if($list_r) {
+	    		$list_emp_reported[] = $value;
+	    	}
+	    	else {
+	    		$list_emp_unreport[] = $value;
+	    	}
+
+	    }
+	    $this->data_layout['list_emp_reported'] = $list_emp_reported;
+	    $this->data_layout['list_emp_unreport'] = $list_emp_unreport;
+
+
+	    $this->data_layout['temp'] = 'report_statics';
+		$this->load->view('layout/main', $this->data_layout);
+	}
 
 }
