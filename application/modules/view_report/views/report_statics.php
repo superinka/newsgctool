@@ -33,26 +33,26 @@
 <?php 
 	$c = array();
 	if(count($list_emp_unreport) == 0){
-		$c = ['100','0'];
+		$c = array(100,0);
 	}
 	if(count($list_emp_reported) == 0){
-		$c = ['0','100'];
+		$c = array(0,100);
 	}
 	if(count($list_emp_unreport)!=0 && count($list_emp_reported)!=0) {
-		$c1 = round(count($list_emp_reported) / (count($list_emp_unreport) + count($list_emp_reported)),2);
+		$c1 = round(count($list_emp_reported) / (count($list_emp_unreport) + count($list_emp_reported)),2) * 100;
 		$c2 = 100- $c1;
 		$c[0] = $c1; $c[1] = $c2;
 	}
 
 	$d = array();
 	if(count($list_report_today_uncheck) == 0){
-		$d = ['100','0'];
+		$d = array(100,0);
 	}
 	if(count($list_report_today_checked) == 0){
-		$d = ['0','100'];
+		$d = array(0,100);
 	}
 	if(count($list_report_today_checked)!=0 && count($list_report_today_uncheck)!=0) {
-		$d1 = round(count($list_report_today_checked) / (count($list_report_today_uncheck) + count($list_report_today_checked)),2);
+		$d1 = round(count($list_report_today_checked) / (count($list_report_today_uncheck) + count($list_report_today_checked)),2) * 100;
 		$d2 = 100- $d1;
 		$d[0] = $d1; $d[1] = $d2;
 	}
@@ -169,6 +169,21 @@
 
 	$room = $this->department_model->get_info($y);
 	$room_name = $room->name;
+
+	switch ($room_name) {
+    case 'Trung Tâm Vận Hành Và Khai Thác':
+        $room_name = 'Vận Hành & Khai Thác';
+        break;
+    case 'Trung Tâm Nghiên Cứu Và Phát Triển':
+        $room_name = 'Nghiên Cứu & Phát Triển';
+        break;
+    case 'Kế Toán Và Hành Chính Nhân Sự':
+        $room_name = 'Kế Toán & HCNS';
+        break;
+    default:
+        # code...
+        break;
+}
 	$center1 = $this->CI->list_member_by_room($y);
 	//pre($center1);
 	$center1_unreport = $center1_reported = 0;
@@ -188,14 +203,14 @@
 
 		$c1 = array();
 		if($center1_unreport == 0){
-			$c1 = ['100','0'];
+			$c1 = array(100,0);
 		}
 		if($center1_reported == 0){
-			$c1 = ['0','100'];
+			$c1 = array(0,100);
 		}
 		if($center1_reported!=0 && $center1_unreport!=0) {
-			$a = round($center1_reported / ($center1_unreport + $center1_reported),2);
-			$b = 100- $d1;
+			$a = round($center1_reported / ($center1_unreport + $center1_reported),2) * 100;
+			$b = 100- $a;
 			$c1[0] = $a; $c1[1] = $b;
 		}		
 	}
@@ -276,11 +291,11 @@
 	            datasets: [{
 	              data: dt4,
 	              backgroundColor: [
-	                "#26B99A",
+	                "#3498DB",
 	                "#E74C3C"
 	              ],
 	              hoverBackgroundColor: [
-	                "#26B99A",
+	                "#3498DB",
 	                "#E74C3C"
 	              ]
 	            }]
@@ -319,11 +334,11 @@
             datasets: [{
               data: dt,
               backgroundColor: [
-                "#26B99A",
+                "#3498DB",
                 "#E74C3C"
               ],
               hoverBackgroundColor: [
-                "#26B99A",
+                "#3498DB",
                 "#E74C3C"
               ]
             }]
@@ -357,11 +372,11 @@
             datasets: [{
               data: dt2,
               backgroundColor: [
-                "#26B99A",
+                "#3498DB",
                 "#E74C3C"
               ],
               hoverBackgroundColor: [
-                "#26B99A",
+                "#3498DB",
                 "#E74C3C"
               ]
             }]

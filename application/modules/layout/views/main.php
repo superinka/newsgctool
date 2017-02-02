@@ -119,7 +119,9 @@
       if ($this->uri->segment(3)=='edit_profile') {
         $this->load->view('js-home');
       }
-      
+       if ($this->uri->segment(1)=='home') {
+        $this->load->view('js-home');
+      }     
     ?>
     
   </body>

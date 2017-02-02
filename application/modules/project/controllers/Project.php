@@ -160,7 +160,7 @@ Class Project extends MY_Controller {
 								'proportion' => $value->new
 								);
 
-							if($this->proportion_department_model->update_rule($where=array('department_id'=>$value->department_id), $data)) {
+							if($this->proportion_department_model->update_rule($where=array('department_id'=>$value->department_id, 'project_id'=>$project_id), $data)) {
 								$this->session->set_flashdata('message','Sửa dữ liệu thành công');
 							}
 							else {

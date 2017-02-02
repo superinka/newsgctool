@@ -82,6 +82,9 @@
 	      		//$nwd = $nwd+1;
 	      		$percent_day = 0;
 
+            $department_info = $this->department_model->get_info($row->department_id);
+            $department_name = $department_info->name;
+
     				$date1 = strtotime($row->start_date);
     				$date2 = strtotime($row->end_date);
     				$total_day = ($date2 - $date1) / (60 * 60 * 24);
@@ -125,10 +128,10 @@
               <td style="padding-top: 2%;">
                 <a href="<?php echo base_url('project/mission/index/'.$row->id) ?>"style="color:blue"><?php echo $row->project_name ?></a>
                 <br />
-                <small>Ngày tạo:  <?php echo $row->create_date ?></small><br>
                 <small>Ngày bắt đầu:  <?php echo $row->start_date ?></small><br>
                 <small>Ngày kết thúc:  <?php echo $row->end_date ?></small><br>
-                <small>Người tạo:  <?php echo $create_name ?></small>
+                <small>Người tạo:  <?php echo $create_name ?></small><br>
+                <small style="color:#d9534f"><?php echo $department_name ?></small>
               </td>
               <td style="padding-top: 4%; width:20%">
                 <ul class="list-inline">
@@ -138,7 +141,7 @@
                   <?php $l[] = $r->user_id ?>
                   <?php 
                   $uid = $r->user_id;
-                  $info_user = $create_name = $this->home_model->get_info_rule($where = array('user_id'=>$uid));
+                  $info_user = $this->home_model->get_info_rule($where = array('user_id'=>$uid));
                   $ava_link = $info_user->avatar;
 
                   if($ava_link == null) {

@@ -155,10 +155,10 @@
                     <small>
                     <?php echo 'Tổng :' .$total_day.' Ngày - ';
                     if($percent_day > 100 ) {
-                      echo "Quá hạn";
+                      echo "Quá hạn : ".$value->start_date .' --> ' .$value->end_date;;
                     }
                     else if($percent_day < 0 ){
-                      echo "Chưa bắt đầu";
+                      echo "Chưa bắt đầu : ".$value->start_date .' --> ' .$value->end_date;;
                     }
                     else {
                       echo $value->start_date .' --> ' .$value->end_date;
