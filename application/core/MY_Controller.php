@@ -61,6 +61,13 @@ Class MY_Controller extends CI_Controller {
 
 	}
 
+	function get_fullname_employee($userid){
+		$i =  $this->home_model->get_column('tb_employee', 'fullname',$where=array('user_id'=>$userid));
+		if($i) return $i;
+		else return null;		
+
+	}
+
 	function get_my_avatar() {
 
 		$my_id = $this->data_layout['id'];

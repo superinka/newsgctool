@@ -288,15 +288,19 @@ if($old_pro != $total){
 	    	$total = 0;
 	    	foreach ($list_mission_by_department as $k=>$v) {
 	  			?>
-	  			<div>
-		          <p><?php echo $v['department_name'] ?></a> - <?php echo $v['score'] ?> %</p>
+					<div class="row">
+	  			<div class="col-md-3">
+		          <?php echo $v['department_name'] ?></a> - <?php echo $v['score'] ?> %
+		      </div>
+					<div class="col-md-3">
 		          <div class="">
 		            <div class="progress progress_sm" style="width: 80%;">
 		              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php  echo  $v['score']  ?>"></div>
 		            </div>
-		            <div class="ln_solid"></div>
-		          </div>
-		        </div>
+		            
+		          </div>						
+					</div>
+					</div>
 	  			<?php
 	      	}
 	    	?>
@@ -348,21 +352,37 @@ if($old_pro != $total){
 	      	}
 	      	else if ($list_mission!=null) {
 	      		foreach ($list_mission as $key => $value) {
+							$employee_name = $this->CI->get_fullname_employee($value->create_by);
+							$employee_name = $employee_name[0]->fullname;
+							$end_date = strtotime($value->end_date);
+	  					$newformat_end_date = date('d/m/Y',$end_date);
 	      			
 	      			?>
-	      			<div>
-			          <p><a href="<?php echo base_url('project/mission/view_detail/'.$project_id.'/'.$value->id) ?>"><?php echo $value->name ?></a> - <?php echo $value->progress ?> % - Thuộc : <?php echo $value->department_name ?></p>
+	      			<div class="row">
+							<div class="col-md-10">
+			          <p>
+								<?php if($account_type<4) {?>
+								<a href="http://localhost/newsgctool/project/edit/44" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+								<?php }?>
+								<a data-toggle="tooltip" data-placement="top" title="<?php echo $value->progress ?> % - 
+								Thuộc : <?php echo $value->department_name ?>" href="<?php echo base_url('project/mission/view_detail/'.$project_id.'/'.$value->id) ?>">
+								<?php echo $value->name ?>
+								</a>
+								<small> 
+								- <?php echo $employee_name; ?> - 
+								Deadline : <?php echo $newformat_end_date ?>
+								</small>
+								</p>
+							</div>
+							<div class="col-md-2">
 			          <div class="">
 			            <div class="progress progress_sm" style="width: 80%;">
 			              <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php echo $value->progress ?>"></div>
 			            </div>
-			            <?php if($account_type<4) {?>  
-			            <div class="">
-			            	<a href="<?php echo base_url('project/mission/edit_mission/'.$project_id.'/'.$value->id.'/') ?>">Sửa</a>
-			            </div>
-			            <?php }?>
-			            <div class="ln_solid"></div>
-			          </div>
+			            
+			          </div>							
+							</div>
+							<div class="ln_solid"></div>
 			        </div>
 	      			<?php
 	      		}
