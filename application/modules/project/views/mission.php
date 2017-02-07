@@ -1,5 +1,5 @@
 <?php //pre($list_emp); ?>
-<?php pre($list_mission); ?>
+<?php //pre($list_mission); ?>
 <?php  //echo $project_id;?>
 <?php //pre($list_room_by_project);?>
 <?php //pre($list_emp['member']);?>
@@ -351,6 +351,7 @@ if($old_pro != $total){
 	      		<?php
 	      	}
 	      	else if ($list_mission!=null) {
+						//pre($list_mission);
 	      		foreach ($list_mission as $key => $value) {
 							$employee_name = $this->CI->get_fullname_employee($value->create_by);
 							$employee_name = $employee_name[0]->fullname;
@@ -369,7 +370,7 @@ if($old_pro != $total){
 								<?php echo $value->name ?>
 								</a>
 								<small> 
-								- <?php echo $employee_name; ?> - 
+								- <?php echo $value->mission_for; ?> - 
 								Deadline : <?php echo $newformat_end_date ?>
 								</small>
 								</p>

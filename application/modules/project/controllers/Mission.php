@@ -325,7 +325,27 @@ Class Mission extends MY_Controller {
 				}
 			}
 
+			foreach ($list_mission as $key => $value) {
+				$mission_id = $value->id;
+				$mission = $this->mission_user_model->get_columns('tb_mission_user',$where = array('mission_id'=>$mission_id));
+				$user_id = $mission[0]->user_id;
+				$employee_name = null;
+				$employee_name = $this->CI->get_fullname_employee($user_id);
+				//pre($employee_name);
+				if($employee_name!=null){
+					$employee_name = $employee_name[0]->fullname;
+					
+				}
+				else {
+					$employee_name = ' Không xác định !';
+				}
+
+				$value->mission_for = $employee_name;
+
+			}
 			//pre($list_mission);
+
+
 
 			$this->data_layout['list_mission'] = $list_mission;
 
