@@ -1,3 +1,4 @@
+<div class="row">
 <h1>Trạng tạo mới nhân viên</h1>
 <div class="col-md-9">
 	<p style="color:red; font-weight:600"><?php echo validation_errors(); ?></p>
@@ -123,4 +124,5 @@
 	  </div>
 
 	</form>
+</div>
 </div>

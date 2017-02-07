@@ -286,15 +286,21 @@ Class Project extends MY_Controller {
 
 				$old_data =null;
 
+				//pre($list_emp);
+
 				if ($list_emp!=null) {
 						foreach ($list_emp as $k => $v) {
 
 						$emp_name = $this->home_model->get_column('tb_employee', 'fullname',$where=array('user_id'=>$v->user_id));
 						//pre($room_name[0]->name);
-						$v->emp_name = $emp_name[0]->fullname;
-						//$this->data_layout['room_name'] = $room_name;
-						//pre($room_name);
-						$old_data[] = $v->user_id;
+						//pre($emp_name);
+						if($emp_name!=null) {
+							$v->emp_name = $emp_name[0]->fullname;
+							//$this->data_layout['room_name'] = $room_name;
+							//pre($room_name);
+							$old_data[] = $v->user_id;
+						}
+						
 						}
 
 					}

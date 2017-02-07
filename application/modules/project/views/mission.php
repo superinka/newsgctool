@@ -1,5 +1,5 @@
 <?php //pre($list_emp); ?>
-<?php //pre($list_mission); ?>
+<?php pre($list_mission); ?>
 <?php  //echo $project_id;?>
 <?php //pre($list_room_by_project);?>
 <?php //pre($list_emp['member']);?>
@@ -362,7 +362,7 @@ if($old_pro != $total){
 							<div class="col-md-10">
 			          <p>
 								<?php if($account_type<4) {?>
-								<a href="http://localhost/newsgctool/project/edit/44" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
+								<a href="<?php echo base_url('project/mission/edit_mission/'.$project_id.'/'.$value->id.'/') ?>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Sửa </a>
 								<?php }?>
 								<a data-toggle="tooltip" data-placement="top" title="<?php echo $value->progress ?> % - 
 								Thuộc : <?php echo $value->department_name ?>" href="<?php echo base_url('project/mission/view_detail/'.$project_id.'/'.$value->id) ?>">

@@ -14,7 +14,7 @@
             if ($account_type ==1) {
               ?>
               
-              <li><a href="<?php echo base_url('home/acc'); ?>">Tài khoản</a></li>
+              <li><a href="<?php echo base_url('home/index'); ?>">Tài khoản</a></li>
               <?php
             }
           ?>

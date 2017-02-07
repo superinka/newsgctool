@@ -142,6 +142,7 @@
                   <?php 
                   $uid = $r->user_id;
                   $info_user = $this->home_model->get_info_rule($where = array('user_id'=>$uid));
+                  
                   $ava_link = $info_user->avatar;
 
                   if($ava_link == null) {

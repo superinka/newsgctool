@@ -71,7 +71,7 @@
 		  </div>
 	      </div>
 	      <?php 
-	  	  //pre($list_emp);
+	  	  pre($list_emp);
 	  	  $c= array();
 	  	  if ($list_emp !=null) {
 	      	for ($i=0; $i < count($list_emp) ; $i++) { 
