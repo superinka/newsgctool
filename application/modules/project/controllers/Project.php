@@ -337,6 +337,7 @@ Class Project extends MY_Controller {
 					);
 
 					$short_name = $this->input->post('short_name');
+					$center_id = $this->input->post('center');
 
 					if($short_name!=$now_project_shortname) {
 						$this->form_validation->set_rules('short_name', 'Tên viết tắt', 'trim|callback_check_shortname');	
@@ -345,7 +346,7 @@ Class Project extends MY_Controller {
 					if($this->form_validation->run()){
 
 						
-
+						$center_id = $this->input->post('center');
 						$project_name = $this->input->post('project_name');
 						$description = $this->input->post('description');
 						$status = $this->input->post('status');
@@ -359,6 +360,7 @@ Class Project extends MY_Controller {
 						$end_date = strtotime($end_date);
 						$newformat_end_date = date('Y-m-d',$end_date);
 
+
 						$data_project = array(
 							'project_name'  => $project_name,
 							'description'   => $description,
@@ -368,8 +370,12 @@ Class Project extends MY_Controller {
 							'status'        => $status,
 							'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
 							'update_by'     => $now_user_id,
-							'progress'      => $progress
+							'progress'      => $progress,
+							'department_id' => $center_id
 						);
+
+						//pre($data_project);
+				
 
 						$project_users_and_room = $this->input->post('project_users');
 

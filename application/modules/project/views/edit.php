@@ -1,4 +1,7 @@
 <div class="row">
+<?php 
+$my_center_id = $this->CI->get_my_center_id();
+?>
 
 <ol class="breadcrumb" style="border-bottom: 2px solid #E6E9ED;">
   <li class="breadcrumb-item">
@@ -115,7 +118,19 @@
 			</select>
 		  </div>
 	      </div>
+			<div class="form-group">
+					<label class="control-label col-md-2 col-sm-2 col-xs-12">Trung tâm chính</label>
+					<div class="col-md-6 col-sm-6 col-xs-12">
+					<select class="form-control" name="center">
+					<?php foreach ($my_center_id as $key => $value) {
+						$info_center = $this->department_model->get_info($value);
+				  ?>
+						<option value="<?php echo $value ?>"><?php echo $info_center->name ?></option>
+						<?php }?>
+					</select>
+					</div>
 
+			</div>
 		  <div class="ln_solid"></div>
 		  <div class="form-group">
 		    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">

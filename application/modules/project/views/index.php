@@ -81,9 +81,14 @@
 	      		$nwd = networkdays($start_date, $end_date, $holidays);
 	      		//$nwd = $nwd+1;
 	      		$percent_day = 0;
+            
+            $department_name = null;
 
             $department_info = $this->department_model->get_info($row->department_id);
-            $department_name = $department_info->name;
+            if($department_info!=null){
+                $department_name = $department_info->name;
+            }
+            
 
     				$date1 = strtotime($row->start_date);
     				$date2 = strtotime($row->end_date);

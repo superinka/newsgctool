@@ -96,6 +96,7 @@ Class Add extends MY_Controller {
 					$end_date = $this->input->post('end_date');
 					$status = $this->input->post('status');
 					$progress = $this->input->post('progress');
+					$center_id = $this->input->post('center');
 
 					$update_id = $id;
 					$create_id = $id;
@@ -118,8 +119,11 @@ Class Add extends MY_Controller {
 						'update_time'   => date_create('now' ,new \DateTimeZone( 'Asia/Ho_Chi_Minh' ))->format('Y-m-d H:i:s'),
 						'update_by'     => $update_id,
 						'create_by'     => $create_id,
-						'progress'      => $progress
+						'progress'      => $progress,
+						'department_id' => $center_id
 					);
+
+					//pre($data_project);
 
 					$project_users_and_room = $this->input->post('project_users');
 

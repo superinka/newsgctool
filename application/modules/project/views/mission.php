@@ -51,7 +51,7 @@ if($old_pro != $total){
         </div>
       </div>
       <div class="x_title">
-        <h2>Code : <?php echo $info_project->short_name ?></h2>
+        <h2>Dự án</h2>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">

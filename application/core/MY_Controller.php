@@ -190,6 +190,39 @@ Class MY_Controller extends CI_Controller {
 
 	}
 
+	function get_my_center_id(){
+
+		$my_id = $this->data_layout['id'];
+		$my_account_level = $this->data_layout['account_type'];
+
+		$my_room = array();
+
+		if($my_account_level == 1 || $my_account_level == 2 ){
+			return '1';
+		}
+
+		if($my_account_level == 3 || $my_account_level ==4){
+			$input_depart = array();
+			$input_depart['where']['user_id'] = $my_id;
+			$list_depart = $this->role_model->get_list($input_depart);
+
+			foreach ($list_depart as $key => $value) {
+				$my_room[] = $value->department_id;
+			}
+
+			foreach ($my_room as $key => $value) {
+				$info_room = $this->department_model->get_info($value);
+				$center_id = $info_room->parent_id;
+				$my_center[] = $center_id;
+				
+			}
+		}
+
+		$my_center = array_unique($my_center);
+
+		return $my_center;
+
+	}
 	function get_my_task_active_by_room_id($room_id=''){
 
 		$my_id = $this->data_layout['id'];
