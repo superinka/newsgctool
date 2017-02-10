@@ -187,17 +187,50 @@ $(document).ready(function()
 });
 </script>
 <script type="text/javascript">
+$( document ).ready(function() {
+  // Handler for .ready() called.
+
  var select = document.getElementById('list_task');
  var input = document.getElementById('out_pro');
+ //console.log(select);
+
 
   select.onchange = function() {
+    var b = document.getElementById("gg");
+    var x = b.options[b.selectedIndex].getAttribute('completion');
+    console.log(x);
+    input.value = b.options[b.selectedIndex].getAttribute("completion");
+    var att = document.createAttribute("min");
+    var m = b.options[b.selectedIndex].getAttribute('completion');
+    att.value = m;
+    input.setAttributeNode(att);
+    //   b.onchange= function(){
+    //   var m = this.options[this.selectedIndex].getAttribute('completion');
+    //   //console.log(m);
+    //   input.value = this.options[this.selectedIndex].getAttribute("completion");
+    //   var att = document.createAttribute("min");
+    //   att.value = m;   
+    //   input.setAttributeNode(att);  
+    // }
+      // console.log(select);
+      // console.log('ok');
 
-      var x = this.options[this.selectedIndex].getAttribute("completion");
-      input.value = this.options[this.selectedIndex].getAttribute("completion");
-      var att = document.createAttribute("min");
-      att.value = x;                           // Set the value of the class attribute
-      input.setAttributeNode(att);   
+      // var a  = document.getElementById('gg');
+      // //console.log(a);
+      // var y = a.selectedIndex.getAttribute("completion");
+      // console.log(y);
+      // var x = this.options[this.selectedIndex].getAttribute("completion");
+      // console.log('ok2');
+      // input.value = this.options[this.selectedIndex].getAttribute("completion");
+      // var att = document.createAttribute("min");
+      // att.value = x;                           // Set the value of the class attribute
+      // input.setAttributeNode(att);   
+  
+
+
+ 
+
   } 
 
-
+});
 </script>
