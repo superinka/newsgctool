@@ -1,6 +1,12 @@
 <?php //pre($info_mission); ?>
 <?php //pre($info_project); ?>
 <?php //pre($list_task);?>
+<?php 
+$data = array('progress'=>$final_progress);
+if ($info_mission->progress!= $final_progress){
+    $this->mission_model->update($mission_view_id,$data);
+}
+?>
 <script src="<?php echo admin_theme('');?>/vendors/jquery/dist/jquery.min.js"></script>
 <?php if ($message){$this->load->view('layout/message',$this->data_layout); }?>
 <style type="text/css">
@@ -42,14 +48,14 @@
             <span class="percent"></span>
             </span>
           </div>
-          <?php  if ($account_type == 2 || $account_type == 3 || $account_type == 1) {?>
+          <!--<?php  if ($account_type == 2 || $account_type == 3 || $account_type == 1) {?>
           <p>
             <a href="<?php echo base_url('project/mission/update_progress/'.$project_id.'/'.$mission_view_id .'/' .$final_progress) ?>">
               <i class="fa fa-repeat"></i> Cập nhật
             </a>
           </p>
           
-          <?php } ?>
+          <?php } ?>-->
           <h3 class="name_title"><?php echo $info_mission->name ?></h3>
           <p><?php echo $info_mission->description ?></p>
 
